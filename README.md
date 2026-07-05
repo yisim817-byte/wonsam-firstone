@@ -16,8 +16,7 @@ README.md
 
 - 본 페이지는 공식 분양 홈페이지가 아닌 사전검토 안내 페이지입니다.
 - 상담폼 버튼의 `href="#"` 위치에 Google Form 링크를 삽입하면 됩니다.
-- PDF 버튼은 `assets/wonsam-centreville-first-one-company-housing-proposal.pdf` 파일을 바라보도록 설정되어 있습니다.
-- 실제 PDF 파일을 연결하려면 동일 파일명으로 `assets/` 폴더에 업로드하세요.
+- 기업 제안서 원본 PDF는 무단 사용 방지를 위해 공개 assets에서 제거함. 홈페이지에서는 직접 다운로드가 아닌 '제안서 열람 요청' 방식으로 전환함. 추후 Google Form 연결 후 담당자 확인 방식으로 제공 예정.
 - 자료 확인 섹션은 분석 PDF, 광고 슬라이드 PDF, 광고 영상, NotebookLM 참고자료 상태를 카드형으로 안내합니다.
 - NotebookLM 참고 텍스트 파일이 준비되면 `assets/wonsam-firstone-source-note.txt` 파일로 업로드하고 해당 카드 링크를 연결하세요.
 - SK하이닉스 공식 안내 페이지로 오해되지 않도록 footer 유의사항을 유지하세요.
