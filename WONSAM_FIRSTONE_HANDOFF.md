@@ -264,3 +264,10 @@ Recommended review points:
 - **Action required from the user before this works in production:** add `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `ADMIN_TOKEN` to the Vercel project's Environment Variables (see README.md "기업자료 요청 백엔드" section for exact steps). The service_role key must be copied from the Supabase dashboard directly — it was intentionally never printed in chat or committed to the repo.
 - A separate, isolated Supabase project was created specifically for this (rather than reusing the existing "yisim817-byte's Project" that backs the main HUMANE site's `site_diagnoses`/`accounts` tables), to avoid mixing wonsam-firstone data with unrelated production data.
 - Did not attempt to convert the 142-page proposal PDF (`원삼센트레빌_기업숙소_제안서_v3_표지최종_수정본.pdf`) into HTML content — `pdftoppm`/`poppler` isn't installed so page images couldn't be rendered, and `pdftotext` output was garbled (embedded font/CID issue). `corporate-report.html`'s hand-written sections already serve the "read-only" requirement; if the client wants the actual proposal book's content reproduced page-by-page, that needs a proper PDF text/image extraction pass done separately.
+
+## Disclaimer Wording Policy Change (this round)
+
+- Removed the "본 페이지는 공식 분양 홈페이지가 아닌 ...", "본 페이지는 SK하이닉스의 공식 안내 페이지가 아닙니다" defensive-disclaimer pattern from every page (`index.html`, `corporate-report.html`, `corporate-request.html`, `consultation.html`). The client felt it read as "this looks like an unofficial site" and undercut trust, especially on the corporate request page whose whole purpose is inviting a confident inquiry.
+- Replaced with a short neutral note: "본 페이지의 정보는 상담 안내용 자료이며, 세부 조건은 상담 시 최신 자료 기준으로 확인됩니다." kept small in the footer only — no negative disclaimers near the hero, cards, or CTAs anymore.
+- Genuinely useful consumer-protection language (수익/가치 상승 보장하지 않음, 가격·조건 변동 가능) was kept, just decoupled from the "not an official page" framing.
+- Going forward: do not reintroduce "SK하이닉스 공식/지정/전용" or "확정/보장 수요" style phrasing anywhere — stick to descriptive language like "반도체 클러스터 배후수요", "인근 산업단지 근무자 주거 수요", "기업숙소 활용 가능성".
