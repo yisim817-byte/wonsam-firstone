@@ -6,8 +6,8 @@
 - Repository: https://github.com/yisim817-byte/wonsam-firstone
 - Final domain: https://www.wonsam-firstone.co.kr
 - Base domain: https://wonsam-firstone.co.kr
-- Proposal PDF status: removed from public assets
-- Representative phone number: not issued yet
+- Proposal PDF status: removed from public assets, not restored
+- Representative phone number: issued and in use — `010-3138-1712`
 
 ## Files Checked
 
@@ -145,7 +145,13 @@ Do not add unverified numbers, prices, conditions, or official-looking claims. L
 
 The infographic section now includes `assets/wonsam-firstone-infographic.png` plus the existing HTML/CSS summary cards.
 
-## Google Form Link Follow-up
+## Google Form Link Follow-up (OBSOLETE — kept for history only)
+
+> **This entire section describes an approach that was abandoned.** The Google Form
+> plan below was replaced by the Supabase + Vercel Functions backend described in
+> "HUMANE Brand Colors + Admin Backend". There are no `href="#"` placeholders left
+> anywhere on the site — every CTA points to a real page. Do not act on anything in
+> this section; it is left only so the reasoning trail isn't lost.
 
 The Google Form URL should be applied only after the final form link is confirmed.
 
@@ -213,31 +219,23 @@ Positions to update after issuance:
   - Current value: `010-3138-1712`
   - Update the documentation contact number.
 
-## Proposal PDF Access Follow-up
+## Proposal PDF Access Follow-up (superseded — see status below)
 
-The original company proposal PDF is no longer served from public assets. Keep proposal access request-based until a Google Form or another gated confirmation flow is approved.
+> Updated status: the "Next Owner Tasks" below (create a Google Form) were never
+> done and are no longer the plan — superseded by the Supabase + Vercel Functions
+> backend. Current, accurate status:
+> - Company proposal PDF direct download is blocked — confirmed, still true.
+> - No direct proposal PDF link remains anywhere on the site — confirmed, still true.
+> - Proposal-related buttons are **real links**, not `href="#"` — `corporate-report.html`
+>   and `corporate-request.html` both exist and are fully wired up.
+> - Corporate inquiries are collected via `corporate-request.html` → Supabase, not email-after-form.
 
-### Current Status
+The original company proposal PDF is no longer served from public assets and stays that way permanently.
 
-- Company proposal PDF direct download is blocked.
-- Proposal-related button labels have been changed.
-- No direct proposal PDF link remains in `index.html`.
-- Google Form link is not confirmed yet.
-- Proposal-related buttons are temporarily set to `href="#"`.
-
-### Next Owner Tasks
-
-- Create the Google Form for company proposal access requests.
-- Confirm the final Form URL.
-- Insert the Form URL into proposal-related button `href` values in `index.html`.
-- Test proposal request button clicks.
-- Update `README.md` and this handoff document with the final Form URL.
-
-Recommended review points:
+Recommended review points (still valid):
 
 - Do not restore the original proposal PDF to public assets without approval.
-- Connect proposal request buttons to the final Google Form only after the form is confirmed.
-- Provide the proposal individually after company and 담당자 confirmation.
+- Provide the proposal content individually only after a request is received and a company/담당자 is confirmed.
 
 ## Do Not Change Without Approval
 
@@ -252,7 +250,7 @@ Recommended review points:
 - `index.html` and `consultation.html` rebuilt in an Airbnb-style visual language (white canvas, Rausch-red CTA, rounded photo/card grid, pill summary bar). Tokens live under `body.theme-airbnb` in `style.css`.
 - `corporate-report.html` and new `corporate-request.html` rebuilt in a Notion-style document/form language (warm canvas-soft background, blue pill CTA, hairline cards, tables). Tokens live under `body.theme-notion` in `style.css`.
 - General-customer flow is phone-only (`tel:010-3138-1712` / `consultation.html`); corporate flow is report + request form (`corporate-report.html` / `corporate-request.html`). No forms are exposed to general customers.
-- `corporate-request.html` submits via `mailto:` (`action="mailto:yisim817@gmail.com" enctype="text/plain"`) since the site is static. The form explicitly states "현재는 이메일 문의로 접수됩니다" and includes a direct mailto fallback link. Replace with a real Google Form / backend endpoint when available.
+- `corporate-request.html` originally submitted via `mailto:` — **this was replaced** in the next round by the Supabase + Vercel Functions backend described below. It now submits via `fetch('/api/corporate-request')`, not mailto.
 - The old on-page rent/loan simulator section on `index.html` was removed — it wasn't part of the redefined customer journey and risked implying guaranteed returns.
 - `assets/wonsam-firstone-ad-slide.pdf` and `assets/wonsam-firstone-analysis.pdf` are **not linked from any page** (no direct PDF links per policy). They are currently orphaned files in the repo — needs a decision: convert to an in-page HTML/image reading section, or remove from the repo entirely.
 - `assets/wonsam-centreville-first-one-company-housing-proposal.pdf` remains deleted and was not restored.
@@ -271,3 +269,43 @@ Recommended review points:
 - Replaced with a short neutral note: "본 페이지의 정보는 상담 안내용 자료이며, 세부 조건은 상담 시 최신 자료 기준으로 확인됩니다." kept small in the footer only — no negative disclaimers near the hero, cards, or CTAs anymore.
 - Genuinely useful consumer-protection language (수익/가치 상승 보장하지 않음, 가격·조건 변동 가능) was kept, just decoupled from the "not an official page" framing.
 - Going forward: do not reintroduce "SK하이닉스 공식/지정/전용" or "확정/보장 수요" style phrasing anywhere — stick to descriptive language like "반도체 클러스터 배후수요", "인근 산업단지 근무자 주거 수요", "기업숙소 활용 가능성".
+- The remaining hero mention "SK하이닉스 용인 반도체클러스터 정문권" (`index.html`) was rephrased to "용인 반도체클러스터 배후 생활권" — no company name in the hero anymore.
+
+## Handoff Verification (this round — "집 컴퓨터" continuation check)
+
+Confirmed before starting work: `git fetch origin` + `git pull origin main` showed the local clone already at `origin/main` HEAD, working tree clean, no uncommitted changes to report. Both baseline commits the user asked to verify (`0f6d476…` disclaimer cleanup, `ab672c2…` CTA link fix) are ancestors of HEAD — confirmed via `git merge-base --is-ancestor`. HEAD was actually one commit ahead of what the handoff prompt assumed (`0c810c0`, the SK Hynix hero-wording fix from the immediately preceding turn), so nothing was missed.
+
+### Current implementation summary
+- **General customers**: phone-only (`tel:010-3138-1712`), no forms, via `index.html` hero/CTA-split and `consultation.html`.
+- **Corporate customers**: `corporate-report.html` (8-section HTML-only read briefing, no PDF) → `corporate-request.html` (company_name/phone/email required, purpose optional) → `POST /api/corporate-request` → Supabase `corporate_requests` table.
+- **Admin review**: `admin.html` (password field, `noindex`) → `GET /api/admin-requests` with `Authorization: Bearer <token>` → server compares against `process.env.ADMIN_TOKEN` via `crypto.timingSafeEqual` → returns the row list only on match.
+- No secrets anywhere in the repo. No `.env` file tracked. No `package.json`/`vercel.json` needed — Vercel auto-detects the two `api/*.js` files as Node serverless functions (confirmed in build logs: `lambdaRuntimeStats: {"nodejs":2}`).
+
+### Verified this round (live, on www.wonsam-firstone.co.kr)
+- `GET /api/admin-requests` with no auth header → 401, no data. Same result with a wrong bearer token → 401, no data. Never tested with the real `ADMIN_TOKEN` — the assistant does not know it and was instructed not to try to find out or print it.
+- index.html → 기업자료 요청 → `corporate-request.html` ✓; index.html → 기업수요 보고서 열람 → `corporate-report.html` ✓; corporate-report.html hero CTA → `corporate-request.html` ✓; consultation.html has no `<form>` element and links to `corporate-request.html` for corporate visitors ✓.
+- `corporate-request.html` form fields confirmed via DOM: `company_name`/`phone`/`email` all `required`, `purpose` optional select, submit button present, status message container present.
+- No `.pdf` references, no download buttons, no restored proposal PDF, no banned disclaimer/SK-Hynix/guaranteed-return phrasing found in any of the 4 customer-facing pages (checked by fetching live HTML and string-matching the full banned list).
+- Mobile viewport emulation could not be re-verified live this round — `resize_window` on the remote Chrome tab does not actually change `window.innerWidth` in this environment (tried on 3 separate occasions across sessions, always stays at the underlying display's native width). This is a tooling limitation, not a site regression: the responsive CSS (`@media (max-width: 920px)` / `(max-width: 640px)` in `style.css`) has not been touched since it was last visually confirmed correct (1-column card stacks, working hamburger nav, unbroken form) via the dedicated Preview tool's device emulation, before local preview servers were ruled out for this project (see the "no local servers" feedback below).
+
+### Known remaining tasks / open decisions
+- **Vercel env vars** (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_TOKEN`) — status unknown to the assistant; only the project owner can confirm these are set in the Vercel dashboard. Until they are, `/api/corporate-request` and `/api/admin-requests` will both return `500 서버 설정이 완료되지 않았습니다`.
+- `assets/wonsam-firstone-ad-slide.pdf` and `assets/wonsam-firstone-analysis.pdf` are still orphaned (unlinked) in the repo — decide whether to convert to in-page reading sections or delete.
+- No automated test for the "correct password" admin path exists or should exist in this repo/session — that verification is the account owner's to do, manually, with their own credential.
+
+### Security limits (unchanged from previous rounds, still accurate)
+- `admin.html` auth is a single shared password, not per-user accounts — no session expiry, no login-attempt throttling, no audit log.
+- If `ADMIN_TOKEN` leaks, submitted company/phone/email data becomes readable by whoever has it. Rotate periodically; only Vercel dashboard access should be able to see/change it.
+- Supabase project is on the free tier — revisit if traffic/storage grows.
+
+### How to check the current deployment
+`git log --oneline -5` locally, then confirm the same commit SHA appears as `githubCommitSha` in the latest Vercel deployment for project `wonsam-firstone` (or just check `https://www.wonsam-firstone.co.kr` directly — CTA labels/colors are a quick visual tell for which build is live).
+
+### Do-not-touch reminders for the next owner
+- Never commit `.env`, never print/paste `ADMIN_TOKEN` or the Supabase `service_role` key into chat, code, README, or this file.
+- Never restore `assets/wonsam-centreville-first-one-company-housing-proposal.pdf`.
+- Never add a PDF download button or direct PDF link on any customer-facing page.
+- Never add a general-customer form — general customers stay phone-only.
+- Never reintroduce `href="#"` or an internal anchor on a core CTA (상담/신청/자료요청/기업수요).
+- Never use "SK하이닉스 공식/지정/전용", "확정 기업수요", "보장 수요", or return-guarantee language ("확정수익", "수익보장", "원금보장", etc.) anywhere.
+- Do not run local dev/preview servers (`python -m http.server`, `npm run dev` via the Preview tool, etc.) for this project — it triggers a Windows Firewall prompt the user does not want. Verify changes by reading code directly or checking the live Vercel URL instead.
