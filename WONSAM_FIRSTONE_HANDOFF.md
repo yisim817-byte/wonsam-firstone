@@ -246,3 +246,13 @@ Recommended review points:
 - DNS settings
 - Domain settings
 - Contact number before representative number issuance
+
+## Design Rebuild (Airbnb / Notion split)
+
+- `index.html` and `consultation.html` rebuilt in an Airbnb-style visual language (white canvas, Rausch-red CTA, rounded photo/card grid, pill summary bar). Tokens live under `body.theme-airbnb` in `style.css`.
+- `corporate-report.html` and new `corporate-request.html` rebuilt in a Notion-style document/form language (warm canvas-soft background, blue pill CTA, hairline cards, tables). Tokens live under `body.theme-notion` in `style.css`.
+- General-customer flow is phone-only (`tel:010-3138-1712` / `consultation.html`); corporate flow is report + request form (`corporate-report.html` / `corporate-request.html`). No forms are exposed to general customers.
+- `corporate-request.html` submits via `mailto:` (`action="mailto:yisim817@gmail.com" enctype="text/plain"`) since the site is static. The form explicitly states "현재는 이메일 문의로 접수됩니다" and includes a direct mailto fallback link. Replace with a real Google Form / backend endpoint when available.
+- The old on-page rent/loan simulator section on `index.html` was removed — it wasn't part of the redefined customer journey and risked implying guaranteed returns.
+- `assets/wonsam-firstone-ad-slide.pdf` and `assets/wonsam-firstone-analysis.pdf` are **not linked from any page** (no direct PDF links per policy). They are currently orphaned files in the repo — needs a decision: convert to an in-page HTML/image reading section, or remove from the repo entirely.
+- `assets/wonsam-centreville-first-one-company-housing-proposal.pdf` remains deleted and was not restored.
