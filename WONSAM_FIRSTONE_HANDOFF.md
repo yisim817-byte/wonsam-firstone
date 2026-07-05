@@ -42,12 +42,22 @@ Added a source materials section and a card-based infographic section while keep
 
 ## Read-only Request-based Resource Flow
 
+### Emergency Fix Standard
+
+- Simple file creation is not considered complete.
+- Main page banners and CTAs must move users to real detail pages.
+- `consultation.html` must include both individual-customer and corporate-customer consultation paths.
+- `corporate-report.html` must be a readable report-style detail page, not a short placeholder summary.
+- All resources should be operated as reading, in-page playback, or consultation request flows.
+- Until the Google Form is confirmed, route users to internal detail pages or email-based inquiry paths.
+- Direct file links should be removed from user-facing screens.
+
 ### Current Direction
 
 - The homepage targets both individual customers and corporate customers.
 - Resources are operated as read-only or request-based access, not public download flows.
-- `consultation.html` has been added for general consultation, corporate demand review, and material request guidance.
-- `corporate-report.html` has been added as a reading-only corporate demand report summary page.
+- `consultation.html` has been implemented as a detail page for general consultation, corporate demand review, material request guidance, and expected input fields.
+- `corporate-report.html` has been implemented as a report-style detail page with overview, location review, individual demand, corporate demand, material delivery, and caution sections.
 - Company attraction reports and company proposal materials should be sent individually by email after consultation form submission.
 - Direct PDF links are prohibited in public page CTAs.
 - Original PDF exposure in public assets should be avoided.
@@ -62,9 +72,12 @@ Added a source materials section and a card-based infographic section while keep
 
 - Create the final Google Form.
 - Connect consultation and material request buttons to the confirmed Form URL.
+- Organize the email delivery process for company attraction reports and detailed materials.
 - Re-check all pages for direct PDF links.
-- Keep `corporate-report.html` as a no-PDF summary page unless an approved restricted viewer is introduced.
+- Review whether resource PDFs should be converted into HTML or image-based reading pages.
+- Keep `corporate-report.html` as a no-file-link report page unless an approved restricted viewer is introduced.
 - Keep video/audio controls configured to reduce visible save actions where browser support allows.
+- Final-check mobile click paths.
 - Update `README.md` and this handoff when final links are confirmed.
 
 ## Project Overview And Content Audit
