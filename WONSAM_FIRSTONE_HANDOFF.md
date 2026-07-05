@@ -22,6 +22,24 @@ Added a source materials section and a card-based infographic section while keep
 
 기업 제안서 원본 PDF는 무단 사용 방지를 위해 공개 assets에서 제거함. 홈페이지에서는 직접 다운로드가 아닌 '제안서 열람 요청' 방식으로 전환함. 추후 Google Form 연결 후 담당자 확인 방식으로 제공 예정.
 
+## General And Corporate Customer Reframe
+
+### Current Direction
+
+- The Wonsam First One homepage is not a corporate-only page.
+- The page targets both individual customers and corporate customers.
+- Individual customer targets: 실거주, 인근 근무자 주거, 가족 거주, 투자 검토.
+- Corporate customer targets: 기업숙소, 직원숙소, 법인 임차.
+- Copy should remain balanced so general customers do not feel excluded.
+
+### Copy Guidance
+
+- Keep the corporate housing angle as a sub-target, not the whole page center.
+- Include general consultation CTAs such as 가격, 잔여호실, 계약조건, 분양자료 요청.
+- Keep the company proposal request separate from general consultation.
+- Use confirmed source material only for price, remaining units, contract terms, address, and scale.
+- Do not add unverified numbers or conditions.
+
 ## Project Overview And Content Audit
 
 ### Completed In Current Update
@@ -36,10 +54,10 @@ Added a source materials section and a card-based infographic section while keep
 ### Overview Fields Added
 
 - Location: `경기도 용인시 처인구 원삼면 일대`
-- Product character: `주거형 상품 / 기업숙소 검토 가능 상품`
-- Target demand: `기업숙소, 직원숙소, 법인 임차, 반도체 배후 주거 수요`
+- Product character: `주거형 상품 / 일반·기업 수요 검토 가능 상품`
+- Target demand: 실거주, 인근 근무자 주거, 가족 거주, 투자 검토, 기업숙소, 직원숙소, 법인 임차
 - Price range: `가격 정보 확인 필요`
-- Review points: 직주근접성, 기업숙소 활용성, 반도체 배후수요, 법인 수요 대응 가능성
+- Review points: 반도체 배후수요, 직주근접 가능성, 원삼 생활권, 일반 주거 수요, 기업숙소 활용성, 법인 수요 대응 가능성
 - Material access: request-based access for the company proposal
 
 ### Must Confirm Before Final Publication
@@ -90,9 +108,14 @@ The Google Form URL should be applied only after the final form link is confirme
 
 ### `href="#"` Positions For Google Form
 
-- `index.html:253`
-  - Current element: `<a class="btn btn-primary" href="#">상담폼 열기</a>`
-  - Action after form URL is confirmed: replace `href="#"` with the final Google Form URL.
+- Button text: `일반·기업 상담 요청`
+  - Action after form URL is confirmed: replace `href="#"` with the final general consultation Form URL.
+- Button text: `분양자료 요청`
+  - Action after form URL is confirmed: replace `href="#"` with the final material request Form URL.
+- Button text: `가격 및 잔여호실 문의`
+  - Action after form URL is confirmed: replace `href="#"` with the final consultation Form URL.
+- Button text: `기업 제안서 열람 요청`
+  - Action after form URL is confirmed: replace `href="#"` with the final company proposal request Form URL.
 
 ### Consultation-Related Links And Buttons
 
@@ -106,18 +129,18 @@ The Google Form URL should be applied only after the final form link is confirme
   - Current target: `#consult`
   - Type: mobile navigation link
 
-- `index.html:60`
-  - Text: `기업숙소 수요 검토 요청`
+- Hero primary CTA
+  - Text: `일반·기업 상담 요청`
   - Current target: `#consult`
   - Type: hero primary CTA button
 
-- `index.html:66`
-  - Text: `상담 문의`
-  - Current target: `#consult`
-  - Type: hero secondary consultation CTA button
+- Hero material request CTA
+  - Text: `분양자료 요청`
+  - Current target: `#`
+  - Type: hero material request CTA button
 
-- `index.html:253`
-  - Text: `상담폼 열기`
+- Consultation section CTA
+  - Text: `일반·기업 상담 요청`
   - Current target: `#`
   - Type: consultation form CTA button
 
@@ -125,9 +148,9 @@ Consultation-related link/button count: 5 total.
 
 Class-based consultation CTA button count: 3 total.
 
-- `index.html:60` - `기업숙소 수요 검토 요청`
-- `index.html:66` - `상담 문의`
-- `index.html:253` - `상담폼 열기`
+- Hero - `일반·기업 상담 요청`
+- Hero - `분양자료 요청`
+- Consultation section - `일반·기업 상담 요청`
 
 ## Representative Phone Number Follow-up
 
