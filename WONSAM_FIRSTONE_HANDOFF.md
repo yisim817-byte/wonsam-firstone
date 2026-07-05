@@ -450,3 +450,44 @@ All previous rounds' reminders still apply, plus:
 - Never trust an automated PDF page-count tool for `원삼센트레빌_기업숙소_제안서_v3_표지최종_수정본.pdf` specifically — it has now been misreported as both 142 and (in an earlier round) some other wrong number at least twice. Always ask the user to confirm the page count in their own viewer.
 - `api/corporate-request.js`, `api/admin-requests.js`, `admin.html`'s original table/markup, `corporate-request.html` — still untouched, still protected.
 - New files this round (`pre-interest.html`, `corporate-interest.html`, `api/interest-request.js`, `api/admin-interest-requests.js`) share the same Supabase project/env vars as the existing backend — no new Vercel configuration is required beyond what was already documented.
+
+## Conversion-Point Visual Repositioning (this round, after `db5078d` was live)
+
+### Why this round happened
+The user checked the live/preview result of the previous round and reported that, despite everything being technically wired up, the actual conversion points (기업제안서 열람, 기업의향서 접수, 사전의향서 접수, 기업자료 요청) read as buried inside other copy, the hero's right-hand "사업 개요 핵심 요약" card felt unstable ("위로 올라갔다 내려갔다" — moving up and down), the phone number wasn't prominent, and general-vs-corporate CTAs weren't visually distinct enough. This round is explicitly **not** a new-feature round — it's a visual/structural repositioning of already-existing links using already-existing pages/backend.
+
+### Root cause of the "unstable" summary card
+`.hero-summary-card` had `position: sticky; top: 96px;` from the previous round. In a hero section only slightly taller than the sticky offset, a sticky element pins and unpins abruptly on scroll, which reads as the card jumping/moving rather than staying put. Fixed by removing `position: sticky` entirely (now static, `width: 100%`) and pinning the grid to `grid-template-columns: minmax(0, 1fr) minmax(360px, 520px); align-items: start;` — a comment was left directly above `.hero-summary-card` in `style.css` explaining why sticky must not be reintroduced there.
+
+### index.html changes
+- `hero-actions` reduced from 5 buttons to 2 (사전의향서 접수 primary, 가격 및 잔여호실 문의 secondary) — the other 3 links moved into the new panel below instead of competing for space in one row.
+- New `<section class="hero-cta-panel">` directly after the hero, before `.intel-banner`: a 4-card grid (`.cta-card-grid`, defined as a standalone reusable class, 4 cols → 2 cols ≤960px → 1 col ≤560px) containing 사전의향서 접수 / 기업의향서 접수 / 기업제안서 열람 / a `.phone-cta` card (large `tel:` link + "대표번호 개통 후 변경 예정" note + 가격 및 잔여호실 문의 button). Each card has its own title + one-line description + button — deliberately not just bare links in a sentence.
+- `#overview` section's old 5-card `.overview-grid` (일반상담/기업제안서열람/기업의향서접수/기업자료요청/자료열람) was replaced with a 2-card `.audience-cta-grid` (`.audience-card` / `.audience-card.is-corporate`): "일반 분양 상담" (사전의향서 접수 / 가격 및 잔여호실 문의 / 전화 상담) and "기업 검토 상담" (기업제안서 열람 / 기업의향서 접수 / 기업자료 요청), each with a one-paragraph description of what that audience should do first. This directly addresses the "역할 구분이 더 선명해야 한다" instruction.
+- Top nav (`nav-links`) trimmed to 대시보드/입지수요/수익분석/특화설계/인텔리전스 리포트/기업제안서 (dropped "분양전략", added "기업제안서" → `corporate-report.html` directly) — this is a deliberate change from the previous round's nav, which had "분양전략" instead of "기업제안서". `nav-cta` buttons changed from (상담예약, 기업자료요청) to (의향서 접수 → `pre-interest.html`, 상담예약 → `consultation.html`) — 기업자료요청 was dropped from the nav bar specifically because it's now prominent in the new CTA panel/audience cards, and cramming a 4th button into the nav bar risked the "메뉴가 너무 많아진다" mobile-wrap problem the user warned about. Mobile nav mirrors the same set.
+
+### corporate-report.html changes
+- Added a 3-card `.cta-card-grid.is-tri` (own responsive class: 3 cols → 2 ≤800px → 1 ≤560px) directly in the hero, above the existing 6-card `.hero-info-grid`: 기업제안서 열람 / 기업의향서 접수 (accent-bordered `is-corporate`) / 기업자료 요청, each with a short role-clarifying description ("숙소 검토 의향만 먼저 남깁니다" vs "세부 제안서 원본·검토자료가 필요할 때 요청 목적과 함께 남깁니다").
+- `nav-cta` gained a second button (기업의향서 접수) alongside the existing 기업자료 요청하기 button — both now visible in the header on every scroll position via `.top-nav`'s `position: sticky`.
+- The proposal-viewer section's own CTA rows (from the previous round: mid-scroll banner, page-06 회신양식 CTA row, final CTA row) were **not** touched this round — they already had 기업의향서 접수/기업자료 요청 links from last round's work.
+
+### CSS additions (style.css)
+New reusable classes, all under the existing `--primary`/`--accent`/`--bg-soft`/`--hairline` token system (no new colors introduced):
+- `.hero-cta-panel`, `.cta-card-grid` (standalone, was previously scoped under `.hero-cta-panel` by mistake in an intermediate edit — fixed to be reusable so `corporate-report.html` could reuse it too), `.cta-card` / `.cta-card.is-primary` / `.cta-card.is-corporate`
+- `.phone-cta`, `.phone-cta .phone-number` (the one spot to edit when the real 대표번호 arrives — has an inline comment saying so), `.phone-cta .phone-note`
+- `.audience-cta-grid`, `.audience-card` / `.audience-card.is-corporate`, `.audience-card-actions`
+- `.cta-card-grid.is-tri` (3-column variant used only on `corporate-report.html`'s hero)
+
+### Representative phone number (대표번호) — tracked for next owner
+The current number `010-3138-1712` is temporary; the user said a representative (대표) number will be issued "조만간" (soon). It appears hardcoded in 8 files: `index.html`, `corporate-report.html`, `corporate-request.html`, `consultation.html`, `intelligence-report.html`, `admin.html`, `corporate-interest.html`, `pre-interest.html`. There's no shared template/include system in this static site, so a true single-source-of-truth isn't possible without introducing a build step (out of scope this round). When the real number is issued: grep the whole repo for `010-3138-1712` and replace both the `tel:` href values and the visible text in all 8 files — the `.phone-cta` in `index.html`'s hero panel is the most visually prominent one and has an HTML comment marking it, but it is not the *only* place that needs updating.
+
+### Verified this round — real browser rendering
+Used the same `wonsam-firstone` launch.json entry (`npx serve`, primary-working-directory `.claude/launch.json`, absolute path arg) as the previous round.
+- `index.html` at 1440px: confirmed via screenshot + accessibility snapshot that nav shows the trimmed 6-link set + 의향서접수/상담예약 buttons, hero shows only 2 buttons, the 4-card CTA panel renders as 4 visually distinct bordered cards (사전의향서/기업의향서 with colored border accents, 기업제안서, phone card with the tel link and note), and the audience-split section shows the 2-card general/corporate grouping with correct button sets.
+- Mobile (375px): CTA panel cards confirmed to stack in a single column with clear borders per screenshot (`getComputedStyle` reported unreliable numbers for actual applied breakpoint at this tool's resize width in this environment — same known tooling quirk noted in the previous round's verification section — but the rendered screenshot itself unambiguously showed 1-column stacking, which is what was being verified).
+- `corporate-report.html` at 1440px: confirmed 3-card CTA grid renders above the existing 6-card info grid, with 기업의향서 접수 card visually bordered in the accent color.
+- Did not re-verify `/api/admin-requests` 401 or the interest-form submit flow this round — no backend logic changed, only markup/CSS, so the previous round's verification of those still applies unchanged.
+
+### Do-not-touch reminders (this round's additions)
+- Don't reintroduce `position: sticky` on `.hero-summary-card` — read the comment in `style.css` above that rule before touching it again.
+- Don't cram more than 2 buttons back into `.nav-cta` without checking mobile wrap — that's exactly the problem this round fixed.
+- `.cta-card-grid` is intentionally a standalone class (not nested under `.hero-cta-panel`) so `corporate-report.html` can reuse it — don't re-scope it back under one page's section.

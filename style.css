@@ -315,9 +315,9 @@ body.theme-notion {
 
 .hero .container.hero-split {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 44px;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 520px);
   align-items: start;
+  gap: 44px;
 }
 
 @media (max-width: 960px) {
@@ -327,19 +327,15 @@ body.theme-notion {
 }
 
 .hero-summary-card {
-  position: sticky;
-  top: 96px;
+  /* Static position on purpose — do not add position: sticky here.
+     A sticky card in a short hero section pins/unpins abruptly while
+     scrolling, which reads as the card "jumping" up and down. */
+  width: 100%;
   padding: 28px 26px;
   border: 1px solid var(--hairline);
   border-radius: var(--radius-lg);
   background: var(--bg-soft);
   box-shadow: var(--shadow-1);
-}
-
-@media (max-width: 960px) {
-  .hero-summary-card {
-    position: static;
-  }
 }
 
 .hero-summary-card h3 {
@@ -416,6 +412,169 @@ body.theme-notion {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+/* ==========================================================================
+   AIRBNB — HERO CTA PANEL (4 primary conversion cards, full hero width)
+   ========================================================================== */
+
+.hero-cta-panel {
+  padding: 8px 0 40px;
+}
+
+.cta-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 960px) {
+  .cta-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .cta-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cta-card-grid.is-tri {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 28px;
+}
+
+@media (max-width: 800px) {
+  .cta-card-grid.is-tri {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .cta-card-grid.is-tri {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cta-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 20px;
+  border: 2px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+  box-shadow: var(--shadow-1);
+}
+
+.cta-card h3 {
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.cta-card p {
+  flex: 1;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.cta-card .btn {
+  margin-top: auto;
+}
+
+.cta-card.is-primary {
+  border-color: var(--primary);
+}
+
+.cta-card.is-corporate {
+  border-color: var(--accent);
+}
+
+.phone-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 22px 20px;
+  border: 2px solid var(--primary);
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+  box-shadow: var(--shadow-1);
+}
+
+.phone-cta .phone-label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* NOTE for next owner: this is the one place the number needs to change
+   when the representative (대표) number is issued — tel: href + visible
+   text both live in this single .phone-number element. */
+.phone-cta .phone-number {
+  color: var(--primary);
+  font-size: 26px;
+  font-weight: 800;
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+.phone-cta .phone-note {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.phone-cta .btn {
+  margin-top: 8px;
+}
+
+/* ==========================================================================
+   AIRBNB — AUDIENCE SPLIT (general vs corporate CTA grouping)
+   ========================================================================== */
+
+.audience-cta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 800px) {
+  .audience-cta-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.audience-card {
+  padding: 30px 28px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+}
+
+.audience-card.is-corporate {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.audience-card h3 {
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.audience-card > p {
+  color: var(--body-text);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.audience-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .hero-eyebrow {
