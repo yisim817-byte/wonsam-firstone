@@ -69,3 +69,39 @@ if (corporateRequestForm) {
     }
   });
 }
+
+function openModal(modal) {
+  if (!modal) return;
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+}
+
+function closeAllModals() {
+  document.querySelectorAll(".media-modal.is-open").forEach((modal) => {
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+  });
+  document.body.classList.remove("modal-open");
+}
+
+document.querySelectorAll("[data-modal-target]").forEach((trigger) => {
+  trigger.addEventListener("click", () => {
+    openModal(document.getElementById(trigger.dataset.modalTarget));
+  });
+
+  trigger.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    openModal(document.getElementById(trigger.dataset.modalTarget));
+  });
+});
+
+document.querySelectorAll("[data-modal-close]").forEach((closeEl) => {
+  closeEl.addEventListener("click", closeAllModals);
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  closeAllModals();
+});

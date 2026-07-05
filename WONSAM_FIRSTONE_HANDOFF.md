@@ -309,3 +309,36 @@ Confirmed before starting work: `git fetch origin` + `git pull origin main` show
 - Never reintroduce `href="#"` or an internal anchor on a core CTA (상담/신청/자료요청/기업수요).
 - Never use "SK하이닉스 공식/지정/전용", "확정 기업수요", "보장 수요", or return-guarantee language ("확정수익", "수익보장", "원금보장", etc.) anywhere.
 - Do not run local dev/preview servers (`python -m http.server`, `npm run dev` via the Preview tool, etc.) for this project — it triggers a Windows Firewall prompt the user does not want. Verify changes by reading code directly or checking the live Vercel URL instead.
+
+## Proposal Reading Feature + Infographic Modal (this round)
+
+### What changed
+- `corporate-report.html`: inserted a new unnumbered `.proposal-viewer-section` right after section "1. 기업수요 검토 개요" (before "2. 입지 및 배후수요", which keeps its own numbering — the new section deliberately uses a "READ ONLY" eyebrow badge instead of a number so nothing downstream had to be renumbered). It renders 8 page images in a vertical scroll of white cards, each `<figure class="proposal-page">` with an `<img>` + page-number `<figcaption>`, ending in a `기업자료 요청하기` / `메인으로 돌아가기` CTA row (real links, no anchors).
+- `index.html`: the infographic `<img>` in the "자료 열람" media grid is now wrapped in a `.infographic-card` (`role="button" tabindex="0"`, `data-modal-target="infographicModal"`) with a "클릭해서 크게 보기" hint. A `#infographicModal` (`.media-modal`) was added near the end of `<body>`, reusing the same `assets/wonsam-firstone-infographic.png` file (no new image).
+- `script.js`: added generic modal open/close wiring (`[data-modal-target]` click + Enter/Space, `[data-modal-close]` click, Escape key, `body.modal-open` scroll lock). Purely additive — did not touch the existing nav-toggle or corporate-request-form submit logic.
+- `style.css`: added `.proposal-viewer-section`, `.read-only-note`, `.proposal-page-viewer`, `.proposal-page`, `.proposal-page img/figcaption` (Notion-theme document card look), and `.infographic-card`, `.click-hint`, `.media-modal` + its `__backdrop`/`__content`/`__close` parts, `body.modal-open` (theme-agnostic, works on either theme since both define the same `--bg-soft`/--hairline/--primary/--accent` tokens). Reused `--primary` (HUMANE orange) for the modal close button and `--accent` (HUMANE green) for `.click-hint` — no Airbnb red or Notion blue introduced.
+
+### Source files identified (not committed as PDFs)
+Three candidate "proposal" PDFs existed outside the repo, in the user's local OneDrive folders (never tracked by git):
+1. `원삼_센트레빌_퍼스트원_제안서.pdf` (12 pages, image-heavy, general marketing deck) — not used.
+2. **`원삼센트레빌_기업숙소_제안서_v3_표지최종_수정본.pdf`** (8 pages per PyMuPDF — an earlier file-read tool had reported "142 pages" for this file, which was wrong; PyMuPDF is the authoritative parser here) — this is the one used. Its content and title ("원삼 센트레빌 퍼스트원 · 기업 직원숙소 검토 제안서") match the "기업제안서/기업검토제안서" request exactly, addressed to "총무팀·인사팀·경영지원팀" — this is almost certainly the source the previously-deleted `assets/wonsam-centreville-first-one-company-housing-proposal.pdf` came from.
+3. `원삼_센트레빌_퍼스트원_비전.pdf` (16 pages, "vision" deck) — not used.
+
+Content check before publishing: no third-party PII, no other named companies beyond HUMANE's own already-public contact info (`010-3138-1712`, `yisim817@gmail.com`, business registration `320-60-00456`) and location references (SK Hynix, 동부건설 as builder brand) that are already used elsewhere on the live site. Page 7 is a blank "회신 양식" (response form template) with empty fields, not filled-in customer data.
+
+### Policy note the next owner should know
+The proposal's page 6 includes specific pricing figures (평균 분양가 약 2억 2,500만 원, 계약금 10%, 중도금 조건, 청약금 범위) that earlier rounds of this project deliberately kept gated behind "상담 후 개별 안내" (consultation-only). Rendering the actual proposal pages as images necessarily makes that same information visible on the public page now — this is a direct consequence of this round's explicit instruction ("업로드된 기업제안서 원문을 실제로 읽을 수 있게 만든다"), not an oversight. If the account owner wants pricing kept confidential again, the fix is either to drop `page-06.webp` from the viewer or to source a redacted version of that page — flagged in README.md too.
+
+### Files/folders added
+- `assets/corporate-proposal-pages/page-01.webp` … `page-08.webp` (8 files, ~0.51 MB total, converted from the PDF above via PyMuPDF + Pillow, no PDF committed).
+
+### Confirmed unaffected (protected per this round's instructions)
+`git diff --stat` on `api/corporate-request.js`, `api/admin-requests.js`, `admin.html`, and `corporate-request.html` showed **zero changes** — none of them were touched. Re-verified live after deploy: `/api/admin-requests` still 401s with no auth and with a wrong token; `corporate-request.html` form fields (company_name/phone/email required, purpose optional) unchanged; no admin password anywhere in source.
+
+### How to check the deployment
+Same as before: compare `git log --oneline -3` locally against the `githubCommitSha` on the latest Vercel production deployment for project `wonsam-firstone`, or just load `https://www.wonsam-firstone.co.kr/corporate-report.html` and scroll past section 1 — the "기업제안서 열람" section with 8 page images should appear immediately.
+
+### Remaining open items
+- Vercel env var status (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_TOKEN`) still unconfirmed by the assistant — unchanged from previous rounds.
+- `assets/wonsam-firstone-ad-slide.pdf` and `assets/wonsam-firstone-analysis.pdf` remain orphaned (unlinked) — still an open decision from previous rounds.
+- No automated regression test suite exists; every round has relied on manual live-fetch/DOM checks against production. Consider a lightweight Playwright smoke test if this project keeps growing.
