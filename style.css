@@ -681,6 +681,15 @@ body.theme-notion {
   box-shadow: var(--shadow-1);
 }
 
+.site-image-grid figure.image-zoom-trigger {
+  cursor: zoom-in;
+}
+
+.site-image-grid figure.image-zoom-trigger:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
 .site-image-feature img,
 .site-image-grid img {
   display: block;
@@ -1803,11 +1812,20 @@ tr:last-child td {
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
 }
 
+.media-modal--double .media-modal__content {
+  width: min(92vw, 680px);
+}
+
 .media-modal__content img {
   width: 100%;
   height: auto;
   display: block;
   border-radius: var(--radius-card);
+}
+
+.media-modal--double .media-modal__content img {
+  max-height: 76vh;
+  object-fit: contain;
 }
 
 .media-modal__caption {

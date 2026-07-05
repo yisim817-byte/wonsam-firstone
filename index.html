@@ -233,7 +233,14 @@
               <figcaption>SK기숙사 및 상업시설용지 인접 구조 참고 이미지</figcaption>
             </figure>
             <div class="site-image-grid">
-              <figure>
+              <figure
+                class="image-zoom-trigger"
+                data-modal-target="locationImageModal1"
+                data-caption="FAB1~FAB4 및 E2-1 상업시설용지 위치 참고 이미지"
+                role="button"
+                tabindex="0"
+                aria-label="FAB1~FAB4 및 E2-1 상업시설용지 위치 참고 이미지 2배 확대 보기"
+              >
                 <img
                   src="assets/site-source-images/cluster-aerial-e2-location.webp"
                   alt="용인 반도체클러스터 FAB 배치와 E2-1 상업시설용지 위치 참고 항공 이미지"
@@ -241,7 +248,14 @@
                 >
                 <figcaption>FAB1~FAB4 및 E2-1 상업시설용지 위치 참고 이미지</figcaption>
               </figure>
-              <figure>
+              <figure
+                class="image-zoom-trigger"
+                data-modal-target="locationImageModal2"
+                data-caption="용인 반도체클러스터 광역 입지 참고 이미지"
+                role="button"
+                tabindex="0"
+                aria-label="용인 반도체클러스터 광역 입지 참고 이미지 2배 확대 보기"
+              >
                 <img
                   src="assets/site-source-images/yongin-cluster-wide-map.webp"
                   alt="용인 주요 반도체 클러스터 현황과 광역 입지를 정리한 참고 지도"
@@ -249,7 +263,14 @@
                 >
                 <figcaption>용인 반도체클러스터 광역 입지 참고 이미지</figcaption>
               </figure>
-              <figure>
+              <figure
+                class="image-zoom-trigger"
+                data-modal-target="locationImageModal3"
+                data-caption="FAB1~FAB4 및 주요 출입 동선 참고 이미지"
+                role="button"
+                tabindex="0"
+                aria-label="FAB1~FAB4 및 주요 출입 동선 참고 이미지 2배 확대 보기"
+              >
                 <img
                   src="assets/site-source-images/fab1-fab4-e2-location.webp"
                   alt="FAB1부터 FAB4까지 주요 시설과 E2 상업시설용지 관계를 보여주는 참고 이미지"
@@ -257,7 +278,14 @@
                 >
                 <figcaption>FAB1~FAB4 및 주요 출입 동선 참고 이미지</figcaption>
               </figure>
-              <figure>
+              <figure
+                class="image-zoom-trigger"
+                data-modal-target="locationImageModal4"
+                data-caption="산단 배치 및 SITE 핀 참고 이미지"
+                role="button"
+                tabindex="0"
+                aria-label="산단 배치 및 SITE 핀 참고 이미지 2배 확대 보기"
+              >
                 <img
                   src="assets/site-source-images/industrial-site-layout-site-pin.webp"
                   alt="산업단지 배치와 현장 위치 핀을 함께 표시한 참고 이미지"
@@ -607,6 +635,42 @@
           alt="원삼 센트레빌 퍼스트원 건물 투시도와 사업개요표를 정리한 참고 이미지 확대"
         >
         <p class="media-modal__caption">원삼 센트레빌 퍼스트원 건물 투시도 및 사업개요 참고 이미지</p>
+      </div>
+    </div>
+
+    <div id="locationImageModal1" class="media-modal media-modal--double" aria-hidden="true">
+      <div class="media-modal__backdrop" data-modal-close></div>
+      <div class="media-modal__content" role="dialog" aria-modal="true" aria-label="FAB1~FAB4 및 E2-1 상업시설용지 위치 참고 이미지 2배 확대 보기">
+        <button class="media-modal__close" type="button" data-modal-close>닫기</button>
+        <img src="assets/site-source-images/cluster-aerial-e2-location.webp" alt="용인 반도체클러스터 FAB 배치와 E2-1 상업시설용지 위치 참고 항공 이미지 확대">
+        <p class="media-modal__caption">FAB1~FAB4 및 E2-1 상업시설용지 위치 참고 이미지</p>
+      </div>
+    </div>
+
+    <div id="locationImageModal2" class="media-modal media-modal--double" aria-hidden="true">
+      <div class="media-modal__backdrop" data-modal-close></div>
+      <div class="media-modal__content" role="dialog" aria-modal="true" aria-label="용인 반도체클러스터 광역 입지 참고 이미지 2배 확대 보기">
+        <button class="media-modal__close" type="button" data-modal-close>닫기</button>
+        <img src="assets/site-source-images/yongin-cluster-wide-map.webp" alt="용인 주요 반도체 클러스터 현황과 광역 입지를 정리한 참고 지도 확대">
+        <p class="media-modal__caption">용인 반도체클러스터 광역 입지 참고 이미지</p>
+      </div>
+    </div>
+
+    <div id="locationImageModal3" class="media-modal media-modal--double" aria-hidden="true">
+      <div class="media-modal__backdrop" data-modal-close></div>
+      <div class="media-modal__content" role="dialog" aria-modal="true" aria-label="FAB1~FAB4 및 주요 출입 동선 참고 이미지 2배 확대 보기">
+        <button class="media-modal__close" type="button" data-modal-close>닫기</button>
+        <img src="assets/site-source-images/fab1-fab4-e2-location.webp" alt="FAB1부터 FAB4까지 주요 시설과 E2 상업시설용지 관계를 보여주는 참고 이미지 확대">
+        <p class="media-modal__caption">FAB1~FAB4 및 주요 출입 동선 참고 이미지</p>
+      </div>
+    </div>
+
+    <div id="locationImageModal4" class="media-modal media-modal--double" aria-hidden="true">
+      <div class="media-modal__backdrop" data-modal-close></div>
+      <div class="media-modal__content" role="dialog" aria-modal="true" aria-label="산단 배치 및 SITE 핀 참고 이미지 2배 확대 보기">
+        <button class="media-modal__close" type="button" data-modal-close>닫기</button>
+        <img src="assets/site-source-images/industrial-site-layout-site-pin.webp" alt="산업단지 배치와 현장 위치 핀을 함께 표시한 참고 이미지 확대">
+        <p class="media-modal__caption">산단 배치 및 SITE 핀 참고 이미지</p>
       </div>
     </div>
 
