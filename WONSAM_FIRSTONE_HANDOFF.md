@@ -22,11 +22,47 @@ Added a source materials section and a card-based infographic section while keep
 
 기업 제안서 원본 PDF는 무단 사용 방지를 위해 공개 assets에서 제거함. 홈페이지에서는 직접 다운로드가 아닌 '제안서 열람 요청' 방식으로 전환함. 추후 Google Form 연결 후 담당자 확인 방식으로 제공 예정.
 
+## Project Overview And Content Audit
+
+### Completed In Current Update
+
+- Added a project overview section near the top of `index.html`.
+- Added overview fields for location, product character, target demand, price range, review points, and material access method.
+- Kept unclear values as `확인 필요` instead of inventing numbers or conditions.
+- Reorganized the source materials section as `검토 자료 모음`.
+- Audited uploaded content and connected available files.
+- Kept the company proposal PDF blocked from direct public download.
+
+### Overview Fields Added
+
+- Location: `경기도 용인시 처인구 원삼면 일대`
+- Product character: `주거형 상품 / 기업숙소 검토 가능 상품`
+- Target demand: `기업숙소, 직원숙소, 법인 임차, 반도체 배후 주거 수요`
+- Price range: `가격 정보 확인 필요`
+- Review points: 직주근접성, 기업숙소 활용성, 반도체 배후수요, 법인 수요 대응 가능성
+- Material access: request-based access for the company proposal
+
+### Must Confirm Before Final Publication
+
+- Actual detailed address
+- Official product type / permitted use
+- Unit count or project scale
+- Price range
+- Sale conditions
+- Uploaded slide filename
+- Podcast filename
+- Infographic filename
+- Website material filename
+
+Do not add unverified numbers, prices, conditions, or official-looking claims. Leave unclear items as `확인 필요`.
+
 ### Added Assets
 
 - `assets/wonsam-firstone-analysis.pdf`
 - `assets/wonsam-firstone-ad-slide.pdf`
 - `assets/wonsam-firstone-ad-video.mp4`
+- `assets/wonsam-firstone-podcast.m4a`
+- `assets/wonsam-firstone-infographic.png`
 
 ### Connected Material Buttons
 
@@ -34,15 +70,19 @@ Added a source materials section and a card-based infographic section while keep
 - `원삼 센트레빌 분석자료` -> `assets/wonsam-firstone-analysis.pdf`
 - `광고 슬라이드 자료` -> `assets/wonsam-firstone-ad-slide.pdf`
 - `광고 영상` -> `assets/wonsam-firstone-ad-video.mp4`
+- `팟캐스트 자료` -> `assets/wonsam-firstone-podcast.m4a`
+- `인포그래픽` -> `assets/wonsam-firstone-infographic.png`
 
 ### Pending Material
 
 - `NotebookLM 참고 텍스트`
   - Keep as `자료 준비 중` until `assets/wonsam-firstone-source-note.txt` is available.
+- `NotebookLM 웹사이트 자료`
+  - Uploaded `code_artifact.html` and `code_artifact (1).html` were checked but not linked because they need expression review before publication.
 
 ### Infographic Section
 
-The infographic area is currently implemented as HTML/CSS cards, not as an image embed, to avoid exposing unconfirmed contact-number details inside draft image materials.
+The infographic section now includes `assets/wonsam-firstone-infographic.png` plus the existing HTML/CSS summary cards.
 
 ## Google Form Link Follow-up
 
