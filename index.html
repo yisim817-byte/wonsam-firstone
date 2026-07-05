@@ -91,33 +91,52 @@
             </div>
           </div>
 
-          <aside class="hero-summary-card">
-            <h3>사업 개요 핵심 요약</h3>
-            <div class="hero-summary-row">
-              <span>사업명</span>
-              <span>원삼 센트레빌 퍼스트원 신축공사 (가칭)</span>
-            </div>
-            <div class="hero-summary-row">
-              <span>위치</span>
-              <span>용인시 처인구 원삼면 고당리 E2-1·E2-2 블록</span>
-            </div>
-            <div class="hero-summary-row">
-              <span>건축 규모</span>
-              <span>지하 1~4층 주차장 / 지상 1~15층 오피스텔 (확인 필요)</span>
-            </div>
-            <div class="hero-summary-row">
-              <span>주요 용도</span>
-              <span>오피스텔(아파텔) 및 근린생활시설</span>
-            </div>
-            <div class="hero-summary-row">
-              <span>주차대수</span>
-              <span>1,370대 (100% 자주식)</span>
-            </div>
-            <div class="hero-summary-row">
-              <span>시공사</span>
-              <span>동부건설 센트레빌 브랜드 적용 예정</span>
-            </div>
-          </aside>
+          <div class="hero-side">
+            <aside class="hero-summary-card">
+              <h3>사업 개요 핵심 요약</h3>
+              <div class="hero-summary-row">
+                <span>사업명</span>
+                <span>원삼 센트레빌 퍼스트원 신축공사 (가칭)</span>
+              </div>
+              <div class="hero-summary-row">
+                <span>위치</span>
+                <span>용인시 처인구 원삼면 고당리 E2-1·E2-2 블록</span>
+              </div>
+              <div class="hero-summary-row">
+                <span>건축 규모</span>
+                <span>지하 1~4층 주차장 / 지상 1~15층 오피스텔 (확인 필요)</span>
+              </div>
+              <div class="hero-summary-row">
+                <span>주요 용도</span>
+                <span>오피스텔(아파텔) 및 근린생활시설</span>
+              </div>
+              <div class="hero-summary-row">
+                <span>주차대수</span>
+                <span>1,370대 (100% 자주식)</span>
+              </div>
+              <div class="hero-summary-row">
+                <span>시공사</span>
+                <span>동부건설 센트레빌 브랜드 적용 예정</span>
+              </div>
+            </aside>
+
+            <figure
+              class="hero-overview-image-card image-zoom-trigger"
+              data-modal-target="businessOverviewModal"
+              data-caption="원삼 센트레빌 퍼스트원 건물 투시도 및 사업개요 참고 이미지"
+              role="button"
+              tabindex="0"
+              aria-label="사업개요 참고 이미지 크게 보기"
+            >
+              <h3>사업개요 참고 이미지</h3>
+              <img
+                src="assets/site-source-images/business-summary-overview.webp"
+                alt="원삼 센트레빌 퍼스트원 건물 투시도와 사업개요표를 정리한 참고 이미지"
+                loading="eager"
+              >
+              <figcaption>원삼 센트레빌 퍼스트원 건물 투시도 및 사업개요 참고 이미지</figcaption>
+            </figure>
+          </div>
         </div>
       </section>
 
@@ -167,7 +186,7 @@
         <div class="container">
           <div class="section-head">
             <h2>일반고객과 기업고객, 문의 경로가 다릅니다</h2>
-            <p>필요한 영역을 선택해 주세요. 자료 열람은 상단 인텔리전스 리포트 배너와 하단 자료 열람 섹션에서 확인할 수 있습니다.</p>
+            <p>필요한 영역을 선택해 주세요. 인텔리전스 리포트는 상단 배너와 메뉴에서 확인할 수 있습니다.</p>
           </div>
 
           <div class="audience-cta-grid">
@@ -245,14 +264,6 @@
                   loading="lazy"
                 >
                 <figcaption>산단 배치 및 SITE 핀 참고 이미지</figcaption>
-              </figure>
-              <figure>
-                <img
-                  src="assets/site-source-images/business-summary-overview.webp"
-                  alt="원삼 센트레빌 퍼스트원 건물 투시도와 사업개요표를 정리한 참고 이미지"
-                  loading="lazy"
-                >
-                <figcaption>원삼 센트레빌 퍼스트원 사업개요 참고 이미지</figcaption>
               </figure>
             </div>
           </div>
@@ -520,11 +531,6 @@
                 <source src="assets/wonsam-firstone-podcast.m4a" type="audio/mp4">
               </audio>
             </div>
-            <div class="media-card">
-              <h3>인텔리전스 리포트</h3>
-              <p>희소성 분석, 수요 데이터, 수익 시뮬레이션을 정리한 보조 리포트 페이지입니다.</p>
-              <a class="btn btn-secondary btn-block" href="intelligence-report.html">인텔리전스 리포트 보기</a>
-            </div>
           </div>
         </div>
       </section>
@@ -589,6 +595,18 @@
       <div class="media-modal__content" role="dialog" aria-modal="true" aria-label="인포그래픽 확대 보기">
         <button class="media-modal__close" type="button" data-modal-close>닫기</button>
         <img src="assets/wonsam-firstone-infographic.png" alt="원삼 센트레빌 퍼스트원 핵심 인포그래픽 확대 이미지">
+      </div>
+    </div>
+
+    <div id="businessOverviewModal" class="media-modal" aria-hidden="true">
+      <div class="media-modal__backdrop" data-modal-close></div>
+      <div class="media-modal__content" role="dialog" aria-modal="true" aria-label="사업개요 참고 이미지 확대 보기">
+        <button class="media-modal__close" type="button" data-modal-close>닫기</button>
+        <img
+          src="assets/site-source-images/business-summary-overview.webp"
+          alt="원삼 센트레빌 퍼스트원 건물 투시도와 사업개요표를 정리한 참고 이미지 확대"
+        >
+        <p class="media-modal__caption">원삼 센트레빌 퍼스트원 건물 투시도 및 사업개요 참고 이미지</p>
       </div>
     </div>
 
