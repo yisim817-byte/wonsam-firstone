@@ -168,6 +168,32 @@ Vercel 프로젝트(`wonsam-firstone`) → Settings → Environment Variables에
 
 이번 라운드부터는 curl 문자열 검색만으로 완료를 보고하지 않고, 실제 배포된 `www.wonsam-firstone.co.kr`에 브라우저로 접속해 DOM/렌더링 기준으로 검증했습니다: 히어로 4버튼 텍스트, 대시보드 6카드, `#analysis` 차트 캔버스 픽셀 렌더링, ROI 슬라이더 실시간 값 변화, 인포그래픽 모달 열림/닫힘, `corporate-report.html`의 `#proposal-viewer` 위치·12개 이미지 `naturalWidth`, `intelligence-report.html` 차트 3개 렌더링과 CTA 링크, `/api/admin-requests` 401 응답을 모두 브라우저 JS 실행으로 직접 확인했습니다.
 
+## 집 컴퓨터 인수인계 작업 (4번째 라운드)
+
+집 컴퓨터에서 기존 GitHub/Vercel 프로젝트(`work/wonsam-firstone-repo`, 원격 `https://github.com/yisim817-byte/wonsam-firstone`)를 이어받아 진행한 라운드입니다.
+
+- 작업 시작 전 로컬 클론이 `origin/main`보다 18커밋 뒤처져 있었고 미커밋 변경사항은 없었음을 확인 후 `git pull origin main`으로 fast-forward 했습니다(`60059aa` → `0b00ea2`).
+- `index.html` 첫 화면을 사용자가 업로드한 `code_artifact.html`(라이트 대시보드 톤) 구조 기준으로 좌/우 2단 히어로로 재구성했습니다. 좌측: Premium Investment 배지, 헤드라인, 4개 핵심 수치 카드(단지 규모 1,168 / 도보 직주근접 3분 / 상업지 희소성 0.8% / 참고 자기자본 수익률 8.6%), 5개 CTA 버튼. 우측: `사업 개요 핵심 요약` 카드(사업명·위치·건축규모·주요용도·주차대수·시공사)를 스크롤 없이 첫 화면에 노출(`.hero-split`, 960px 이하에서는 세로 스택으로 전환).
+- 상단 네비게이션에 대시보드/입지수요/수익분석/특화설계/분양전략/인텔리전스 리포트 앵커·링크를 추가했습니다. "분양전략" 메뉴는 내부 영업전략(FOMO 등)을 노출하지 않는다는 기존 방침에 따라 고객 안전한 "검토 절차" 섹션에 연결됩니다.
+- 히어로 바로 아래, `#analysis` 섹션 앞에 `인텔리전스 리포트 공개` 배너(`.intel-banner`)를 신규 추가했습니다. 버튼: 인텔리전스 리포트 보기 → `intelligence-report.html`, 기업제안서 열람 → `corporate-report.html`.
+- **`pre-interest.html` 신규 생성**: 일반 사전의향서 접수(이름/전화번호/이메일), Supabase `interest_requests` 테이블에 `type=pre_interest`로 저장.
+- **`corporate-interest.html` 신규 생성**: 기업의향서 접수(기업명/담당자명/전화번호/이메일), 같은 테이블에 `type=corporate_interest`로 저장.
+- 저장 방식: 기존 `corporate_requests` 테이블/API(`api/corporate-request.js`, `api/admin-requests.js`)는 전혀 건드리지 않았습니다. 새 테이블 `interest_requests`(RLS 활성화, 정책 없음 — service_role 키로만 접근 가능)와 새 API `api/interest-request.js`(접수), `api/admin-interest-requests.js`(관리자 조회, 기존과 동일한 `ADMIN_TOKEN` + `crypto.timingSafeEqual` 인증 방식)를 추가했습니다.
+- `admin.html`에 두 번째 섹션(사전의향서·기업의향서 접수 목록)을 추가했습니다. 기존 로그인 폼과 동일한 비밀번호로 두 API를 모두 조회합니다. 기존 기업자료 요청 표/로직은 변경하지 않았습니다.
+- 기업제안서(`corporate-report.html`)의 "기업제안서 열람" 섹션을 실제 v3 원본 PDF(`원삼센트레빌_기업숙소_제안서_v3_표지최종_수정본.pdf`, 8페이지 — 아래 "기업제안서 v3 확인" 참고) 내용 기준으로 전면 재작성했습니다. PDF 래스터화 도구(poppler/mupdf)를 설치하지 않기로 한 사용자 결정에 따라, **이미지가 아닌 사이트 디자인(표/카드/콜아웃)으로 8페이지 전체를 재구성**했습니다. 표지 문구에는 사용자 지시대로 "SK하이닉스 용인반도체 클러스터 정문"을 그대로 반영했습니다.
+- 기존 `assets/corporate-proposal-pages/page-01.webp`~`page-12.webp`(이전 라운드의 12페이지 NotebookLM 덱 이미지)는 더 이상 어느 페이지에서도 사용되지 않습니다. 폴더 전체 삭제는 자동 승인 정책상 차단되어(재현 불가한 로컬 삭제로 분류) 삭제하지 못했습니다 — 필요 시 사용자가 직접 삭제하거나 별도 승인 후 정리해야 합니다.
+- 모든 페이지의 CTA를 최종 구조에 맞게 연결했습니다: 사전의향서 접수 → `pre-interest.html`, 기업의향서 접수 → `corporate-interest.html`, 기업자료 요청 → `corporate-request.html`, 기업제안서 열람 → `corporate-report.html`, 가격 및 잔여호실 문의/상담 예약 → `consultation.html`, 인텔리전스 리포트 보기 → `intelligence-report.html`. `href="#"`, 다운로드 버튼, PDF 직접 링크는 전체 저장소에서 grep으로 재확인했으며 발견되지 않았습니다.
+- 리스크 문구 조정: `intelligence-report.html`의 "SK하이닉스 정문 인근"을 "용인 반도체클러스터 주요 출입 동선 인근"으로 완화했습니다. `corporate-report.html`의 실제 제안서 재현 내용("SK하이닉스 제1팹 정문 기준...") 은 사용자의 실제 승인된 영업 문서를 그대로 옮긴 것이므로 완화하지 않고 원문 그대로 유지했습니다 — 이는 사이트 자체 마케팅 카피(완화 대상)와 원본 문서 읽기전용 재현(원문 유지 대상)을 구분한 것입니다.
+- 로컬 정적 서버(`npx serve`, `.claude/launch.json`에 `wonsam-firstone` 설정 추가)로 실제 브라우저 렌더링을 확인했습니다. **주의:** 이전 라운드 HANDOFF에는 "로컬 서버를 띄우지 말 것(Windows 방화벽 프롬프트 때문)"이라는 기록이 있었으나, 이번 라운드에서는 방화벽 프롬프트 없이 정상 동작했습니다. 다음 작업자는 이 방화벽 이슈가 재현되는지 참고만 하시기 바랍니다.
+
+### 기업제안서 v3 확인 결과
+
+- 사용한 원본: `원삼센트레빌_기업숙소_제안서_v3_표지최종_수정본.pdf` (Desktop `원삼홈페이지광고` 폴더, MD5 동일본이 Downloads에도 존재).
+- 페이지 수: 실제로는 8페이지(사용자 PDF 뷰어로 직접 확인). 이 세션의 PDF 페이지 수 자동 판별 도구가 이 파일에 대해 142페이지라고 두 차례 잘못 보고했습니다 — 이전 라운드 HANDOFF에도 같은 파일에 대한 다른 오판(142페이지 vs 실제 8페이지) 기록이 있어, 이 파일은 자동 페이지수 판별 도구로 신뢰하지 말고 항상 사용자 확인을 거쳐야 합니다.
+- 실제 텍스트 내용은 크기가 작은 사본(`Downloads/원삼센트레빌_기업숙소_제안서_v2.pdf`, 158.6KB)을 통해 전체 확보했으며, 구성은 표지 / 01.제안요약 / 02.입지 / 03.사업개요·공급규모 / 04.활용모델 / 05.예상공급조건·법인검토포인트 / 06.수요검토요청서·회신양식 / 07.제안마무리·다음단계로 사용자가 설명한 v3 목차와 정확히 일치합니다.
+- v3 반영 여부: **반영 완료** — 12페이지/142페이지 파일은 사용하지 않았고, 8페이지 실제 v3 내용을 `corporate-report.html`에 텍스트/표 기반으로 전량 반영했습니다.
+- 이미지 수: 0장(이미지 래스터화 도구를 설치하지 않기로 한 사용자 결정에 따라, 텍스트/표/카드 형태로 재구성).
+
 ## 연락처
 
 HUMANE  

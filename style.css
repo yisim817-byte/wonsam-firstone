@@ -313,6 +313,111 @@ body.theme-notion {
   padding: 56px 0 48px;
 }
 
+.hero .container.hero-split {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 44px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .hero .container.hero-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hero-summary-card {
+  position: sticky;
+  top: 96px;
+  padding: 28px 26px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+  box-shadow: var(--shadow-1);
+}
+
+@media (max-width: 960px) {
+  .hero-summary-card {
+    position: static;
+  }
+}
+
+.hero-summary-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.hero-summary-card h3::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--primary);
+}
+
+.hero-summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 14px;
+}
+
+.hero-summary-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.hero-summary-row span:first-child {
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+.hero-summary-row span:last-child {
+  color: var(--ink);
+  font-weight: 700;
+  text-align: right;
+}
+
+.intel-banner {
+  padding: 40px 0;
+  background: var(--primary-soft);
+}
+
+.intel-banner .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.intel-banner h2 {
+  color: var(--primary);
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.intel-banner p {
+  max-width: 560px;
+  color: var(--body-text);
+  font-size: 15px;
+}
+
+.intel-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .hero-eyebrow {
   display: inline-flex;
   align-items: center;
@@ -439,7 +544,7 @@ body.theme-notion {
 
 .overview-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 18px;
 }
 
@@ -1110,6 +1215,98 @@ tr:last-child td {
     padding: 8px;
     border-radius: var(--radius-card);
   }
+}
+
+/* ==========================================================================
+   NOTION — PROPOSAL VIEWER (text-based page recreation, v3 8p)
+   ========================================================================== */
+
+.proposal-doc-page {
+  padding: 32px clamp(20px, 4vw, 40px);
+}
+
+.proposal-doc-page .page-badge {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.proposal-doc-page .doc-eyebrow-strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.proposal-doc-page h3 {
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.proposal-doc-page > p {
+  color: var(--body-text);
+  font-size: 15px;
+  margin-bottom: 16px;
+}
+
+.proposal-doc-page .proposal-meta-list {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 18px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.proposal-doc-page .proposal-meta-list strong {
+  color: var(--ink);
+  margin-right: 8px;
+}
+
+.proposal-doc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 640px) {
+  .proposal-doc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.proposal-doc-grid > div {
+  padding: 18px 20px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  background: var(--bg-soft);
+}
+
+.proposal-doc-grid h4 {
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.proposal-doc-grid p {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.proposal-doc-page .table-wrap,
+.proposal-doc-page .callout {
+  margin-bottom: 18px;
 }
 
 /* ==========================================================================

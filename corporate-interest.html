@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>기업자료 요청 | 원삼 센트레빌 퍼스트원</title>
+    <title>기업의향서 접수 | 원삼 센트레빌 퍼스트원</title>
     <meta
       name="description"
-      content="원삼 센트레빌 퍼스트원 기업숙소, 직원숙소, 법인 임차 검토를 위한 기업자료 요청 페이지입니다."
+      content="원삼 센트레빌 퍼스트원 기업의향서 접수 페이지입니다. 기업숙소, 직원숙소, 법인 임차 검토를 위한 기업 담당자 접수 창구입니다."
     >
     <link rel="stylesheet" href="style.css">
   </head>
@@ -23,7 +23,7 @@
         <a href="index.html">메인으로</a>
       </nav>
       <div class="nav-cta">
-        <a class="btn btn-secondary btn-sm" href="corporate-report.html">기업수요 보고서 보기</a>
+        <a class="btn btn-secondary btn-sm" href="corporate-report.html">기업제안서 열람</a>
       </div>
     </header>
 
@@ -31,59 +31,54 @@
       <section class="doc-hero">
         <div class="container">
           <span class="doc-eyebrow">기업고객 전용</span>
-          <h1>기업자료 요청</h1>
+          <h1>기업의향서 접수</h1>
           <p class="doc-hero-lead">
-            기업숙소, 직원숙소, 법인 임차, 현장 근무자 숙소 검토를 원하는 기업 담당자는
-            아래 정보를 남겨주시면 담당자가 확인 후 이메일 또는 유선으로 자료를 안내합니다.
+            기업숙소, 직원숙소, 법인 임차, 장기 임차 검토가 필요한 기업 담당자는 기업명과
+            담당자 연락처를 남겨주시면 담당자가 확인 후 기업 검토자료와 상담 일정을 개별
+            안내드립니다.
           </p>
         </div>
       </section>
 
       <section class="section">
         <div class="container">
-          <form id="corporate-request-form" class="form-card">
+          <form id="corporate-interest-form" class="form-card">
             <div class="form-field">
-              <label for="company">기업명</label>
-              <input id="company" name="company_name" type="text" required autocomplete="organization">
+              <label for="ci-company">기업명</label>
+              <input id="ci-company" name="company_name" type="text" required autocomplete="organization">
             </div>
             <div class="form-field">
-              <label for="phone">전화번호</label>
-              <input id="phone" name="phone" type="tel" required autocomplete="tel" placeholder="010-0000-0000">
+              <label for="ci-contact">담당자명</label>
+              <input id="ci-contact" name="contact_name" type="text" required autocomplete="name">
             </div>
             <div class="form-field">
-              <label for="email">이메일</label>
-              <input id="email" name="email" type="email" required autocomplete="email">
+              <label for="ci-phone">전화번호</label>
+              <input id="ci-phone" name="phone" type="tel" required autocomplete="tel" placeholder="010-0000-0000">
             </div>
             <div class="form-field">
-              <label for="purpose">요청 목적</label>
-              <select id="purpose" name="purpose">
-                <option value="">선택해 주세요</option>
-                <option value="기업숙소 검토">기업숙소 검토</option>
-                <option value="직원숙소 검토">직원숙소 검토</option>
-                <option value="법인 임차 검토">법인 임차 검토</option>
-                <option value="기타">기타</option>
-              </select>
+              <label for="ci-email">이메일</label>
+              <input id="ci-email" name="email" type="email" required autocomplete="email">
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block">기업자료 요청하기</button>
+            <button type="submit" class="btn btn-primary btn-block">기업의향서 제출</button>
 
-            <div id="corporate-request-status" class="form-note" role="status" hidden></div>
+            <div id="corporate-interest-status" class="form-note" role="status" hidden></div>
 
             <div class="form-note">
-              접수된 정보는 관리자만 확인할 수 있으며, 담당자가 확인 후 이메일 또는 유선으로
-              개별 안내합니다. 메일 프로그램 연결 없이 즉시 접수됩니다.
+              본 기업의향서는 계약 확정 또는 호실 배정을 의미하지 않으며, 기업 검토 상담을
+              위한 사전 접수입니다.
             </div>
           </form>
 
           <p style="text-align:center; margin-top:18px; color:var(--muted); font-size:14px;">
             접수가 계속 실패한다면
-            <a class="btn-text" href="mailto:yisim817@gmail.com?subject=원삼 센트레빌 퍼스트원 기업자료 요청">yisim817@gmail.com</a>
+            <a class="btn-text" href="mailto:yisim817@gmail.com?subject=원삼 센트레빌 퍼스트원 기업의향서 접수">yisim817@gmail.com</a>
             으로 직접 문의해 주세요.
           </p>
 
           <div class="form-secondary-actions">
-            <a class="btn btn-secondary" href="corporate-interest.html">기업의향서 접수</a>
-            <a class="btn btn-secondary" href="corporate-report.html">기업수요 보고서 보기</a>
+            <a class="btn btn-secondary" href="corporate-report.html">기업제안서 열람</a>
+            <a class="btn btn-secondary" href="corporate-request.html">기업자료 요청</a>
             <a class="btn btn-secondary" href="index.html">메인으로 돌아가기</a>
           </div>
         </div>
@@ -92,7 +87,7 @@
       <section class="section is-surface doc-section">
         <div class="container">
           <div class="callout">
-            <p>입력하신 정보는 자료 안내 및 상담 목적 외에는 사용하지 않습니다.</p>
+            <p>입력하신 정보는 기업 검토 상담 목적 외에는 사용하지 않습니다.</p>
             <p>세부 가격자료, 잔여호실, 기업유치 보고자료는 담당자 확인 후 개별 안내됩니다.</p>
           </div>
         </div>

@@ -70,6 +70,117 @@ if (corporateRequestForm) {
   });
 }
 
+const preInterestForm = document.querySelector("#pre-interest-form");
+
+if (preInterestForm) {
+  const statusBox = preInterestForm.querySelector("#pre-interest-status");
+  const submitButton = preInterestForm.querySelector('button[type="submit"]');
+
+  const showStatus = (message, isError) => {
+    statusBox.hidden = false;
+    statusBox.textContent = message;
+    statusBox.style.color = isError ? "#b91c1c" : "var(--ink)";
+    statusBox.style.background = isError ? "#fef2f2" : "var(--bg)";
+  };
+
+  preInterestForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const payload = {
+      type: "pre_interest",
+      name: preInterestForm.name.value.trim(),
+      phone: preInterestForm.phone.value.trim(),
+      email: preInterestForm.email.value.trim(),
+    };
+
+    if (!payload.name || !payload.phone || !payload.email) {
+      showStatus("이름, 전화번호, 이메일을 모두 입력해 주세요.", true);
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "접수 중...";
+
+    try {
+      const response = await fetch("/api/interest-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("request-failed");
+      }
+
+      preInterestForm.reset();
+      preInterestForm.parentElement.insertBefore(statusBox, preInterestForm);
+      preInterestForm.hidden = true;
+      showStatus("사전의향서가 접수되었습니다. 담당자가 확인 후 순차적으로 연락드리겠습니다.", false);
+    } catch (err) {
+      showStatus("접수 중 문제가 발생했습니다. 잠시 후 다시 시도하거나 전화로 문의해 주세요.", true);
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "사전의향서 제출";
+    }
+  });
+}
+
+const corporateInterestForm = document.querySelector("#corporate-interest-form");
+
+if (corporateInterestForm) {
+  const statusBox = corporateInterestForm.querySelector("#corporate-interest-status");
+  const submitButton = corporateInterestForm.querySelector('button[type="submit"]');
+
+  const showStatus = (message, isError) => {
+    statusBox.hidden = false;
+    statusBox.textContent = message;
+    statusBox.style.color = isError ? "#b91c1c" : "var(--ink)";
+    statusBox.style.background = isError ? "#fef2f2" : "var(--bg)";
+  };
+
+  corporateInterestForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const payload = {
+      type: "corporate_interest",
+      company_name: corporateInterestForm.company_name.value.trim(),
+      contact_name: corporateInterestForm.contact_name.value.trim(),
+      phone: corporateInterestForm.phone.value.trim(),
+      email: corporateInterestForm.email.value.trim(),
+    };
+
+    if (!payload.company_name || !payload.contact_name || !payload.phone || !payload.email) {
+      showStatus("기업명, 담당자명, 전화번호, 이메일을 모두 입력해 주세요.", true);
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "접수 중...";
+
+    try {
+      const response = await fetch("/api/interest-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("request-failed");
+      }
+
+      corporateInterestForm.reset();
+      corporateInterestForm.parentElement.insertBefore(statusBox, corporateInterestForm);
+      corporateInterestForm.hidden = true;
+      showStatus("기업의향서가 접수되었습니다. 담당자가 확인 후 순차적으로 연락드리겠습니다.", false);
+    } catch (err) {
+      showStatus("접수 중 문제가 발생했습니다. 잠시 후 다시 시도하거나 이메일로 문의해 주세요.", true);
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "기업의향서 제출";
+    }
+  });
+}
+
 function openModal(modal) {
   if (!modal) return;
   modal.classList.add("is-open");
