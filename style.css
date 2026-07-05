@@ -316,14 +316,18 @@ h3 {
 
 .reason-list,
 .feature-grid,
-.model-grid {
+.model-grid,
+.material-grid,
+.info-grid {
   display: grid;
   gap: 18px;
 }
 
 .reason-list article,
 .feature-grid article,
-.model-card {
+.model-card,
+.material-card,
+.info-grid article {
   padding: 26px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -331,7 +335,9 @@ h3 {
 }
 
 .reason-list span,
-.model-card span {
+.model-card span,
+.material-card span,
+.info-grid span {
   display: inline-block;
   margin-bottom: 14px;
   color: var(--blue);
@@ -341,7 +347,9 @@ h3 {
 .reason-list p,
 .feature-grid p,
 .model-card p,
-.check-list p {
+.check-list p,
+.material-card p,
+.info-grid p {
   color: var(--muted);
 }
 
@@ -361,6 +369,74 @@ h3 {
 .feature-grid,
 .model-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.material-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.material-card {
+  display: flex;
+  min-height: 300px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.material-card h3 {
+  min-height: 54px;
+}
+
+.material-card p {
+  flex: 1;
+}
+
+.material-card .btn,
+.material-status {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.material-card-pending {
+  background: var(--beige-2);
+}
+
+.material-status {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 20px;
+  border: 1px dashed rgba(16, 42, 67, 0.24);
+  border-radius: 8px;
+  color: var(--muted);
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.material-notice {
+  margin: 28px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.info-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.info-grid article {
+  background:
+    linear-gradient(180deg, rgba(234, 242, 255, 0.72), rgba(255, 255, 255, 0.94)),
+    var(--white);
+}
+
+.info-grid span {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--white);
+  background: var(--navy);
 }
 
 .check-list {
@@ -519,7 +595,9 @@ h3 {
   }
 
   .feature-grid,
-  .model-grid {
+  .model-grid,
+  .material-grid,
+  .info-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -560,14 +638,26 @@ h3 {
   }
 
   .feature-grid,
-  .model-grid {
+  .model-grid,
+  .material-grid,
+  .info-grid {
     grid-template-columns: 1fr;
   }
 
   .hero-panel,
   .simulation,
   .contact-card,
-  .notice-box {
+  .notice-box,
+  .material-card,
+  .info-grid article {
     padding: 22px;
+  }
+
+  .material-card {
+    min-height: auto;
+  }
+
+  .material-card h3 {
+    min-height: auto;
   }
 }
