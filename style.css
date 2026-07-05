@@ -51,14 +51,19 @@ h1, h2, h3, p {
 }
 
 /* ==========================================================================
-   HUMANE BRAND COLORS
-   Extracted from the live humanekorea.co.kr site: logo "H" green / "A" orange.
-   Orange carries primary CTAs (strongest brand color); green is reserved for
-   accent labels/tags/badges, mirroring how the main HUMANE site uses green
-   for its "MODULE 01" style section labels. No Airbnb red or Notion blue.
+   BRAND COLORS
+   Primary is a navy blue matching the NotebookLM-style report/dashboard
+   material (corporate proposal deck, code_artifact mockups) that the client
+   found more suitable than a full HUMANE orange/green treatment. Orange and
+   green (from humanekorea.co.kr's logo) are kept only as minor accents —
+   green for section labels/tags, orange used sparingly. No Airbnb red, no
+   flat Notion blue.
    ========================================================================== */
 
 :root {
+  --humane-navy: #1e3a8a;
+  --humane-navy-active: #16295e;
+  --humane-navy-soft: #dbe4f7;
   --humane-orange: #fe6301;
   --humane-orange-active: #d95300;
   --humane-orange-soft: #ffe1cc;
@@ -80,9 +85,9 @@ body.theme-airbnb {
   --muted-soft: #929292;
   --hairline: #e5e7eb;
   --hairline-soft: #ebebeb;
-  --primary: var(--humane-orange);
-  --primary-active: var(--humane-orange-active);
-  --primary-soft: var(--humane-orange-soft);
+  --primary: var(--humane-navy);
+  --primary-active: var(--humane-navy-active);
+  --primary-soft: var(--humane-navy-soft);
   --accent: var(--humane-green);
   --on-primary: #ffffff;
 
@@ -109,9 +114,9 @@ body.theme-notion {
   --muted-soft: #a39e98;
   --hairline: #e5e7eb;
   --hairline-soft: #ececec;
-  --primary: var(--humane-orange);
-  --primary-active: var(--humane-orange-active);
-  --primary-soft: var(--humane-orange-soft);
+  --primary: var(--humane-navy);
+  --primary-active: var(--humane-navy-active);
+  --primary-soft: var(--humane-navy-soft);
   --accent: var(--humane-green);
   --on-primary: #ffffff;
 
@@ -619,7 +624,7 @@ body.theme-notion {
 }
 
 .cta-split-card.is-primary span {
-  color: #ffb37a;
+  color: #d4a656;
 }
 
 .cta-split-card h3 {
@@ -800,6 +805,23 @@ body.theme-notion {
   margin-bottom: 26px;
 }
 
+.hero-info-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 32px;
+}
+
+@media (max-width: 920px) {
+  .hero-info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .doc-label {
   display: block;
   margin-bottom: 10px;
@@ -973,7 +995,7 @@ tr:last-child td {
 .form-field textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(254, 99, 1, 0.15);
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
 }
 
 .form-note {
@@ -1043,7 +1065,32 @@ tr:last-child td {
   text-align: center;
 }
 
+.proposal-inline-request {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 26px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+}
+
+.proposal-inline-request p {
+  margin: 0;
+  max-width: 560px;
+  color: var(--body-text);
+  font-size: 15px;
+}
+
 @media (max-width: 640px) {
+  .proposal-inline-request {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
   .proposal-page {
     padding: 8px;
     border-radius: var(--radius-card);
