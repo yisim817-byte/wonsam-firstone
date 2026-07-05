@@ -512,3 +512,44 @@ If a legitimately-licensed real site-plan/aerial image becomes available later, 
 
 ### Verified this round
 Loaded both pages via the same `wonsam-firstone` local static-server launch config; confirmed via screenshot that the diagram renders (dashed boundary, tinted E2-1·E2-2 block, pin, route line, legend) on both `index.html` (light/navy theme) and `intelligence-report.html` (dark/indigo theme), confirmed the 3 CTA hrefs resolve to `consultation.html`/`corporate-interest.html`/`corporate-report.html` via DOM query, and re-ran the banned-phrase grep across the whole repo (clean). No PDF link, no download button was added — this feature is purely an inline SVG + text section.
+
+---
+
+## 2026-07-05 Codex 현장 이미지 자료 반영
+
+Claude Code에서 외부 이미지 다운로드 권한 차단으로 현장 이미지 반영 작업이 중단되어 Codex로 이관됐다. Codex는 외부 다운로드를 재시도하지 않고, 사용자가 로컬에 확보해 제공한 webp 파일만 사용했다.
+
+### 저장 위치
+
+`assets/site-source-images/`
+
+### 저장한 이미지 파일
+
+- `cluster-aerial-e2-location.webp`
+- `fab1-fab4-e2-location.webp`
+- `industrial-site-layout-site-pin.webp`
+- `sk-dormitory-e2-site-map.webp`
+- `yongin-cluster-wide-map.webp`
+
+### 반영 위치
+
+- `index.html`: 기존 `#location-map` 위치도 섹션 상단을 `입지·현장 이미지 자료`로 확장. 대표 이미지 1장(`sk-dormitory-e2-site-map.webp`)과 보조 이미지 4장 카드형 그리드를 추가.
+- `intelligence-report.html`: 기존 `#location` 섹션 제목을 `용인 반도체클러스터 위치 분석`으로 정리. 위치 분석 이미지 3장(`cluster-aerial-e2-location.webp`, `sk-dormitory-e2-site-map.webp`, `yongin-cluster-wide-map.webp`) 추가.
+- `corporate-report.html`: 히어로와 기업제안서 열람 섹션 사이에 `기업 검토용 현장 이미지` 섹션 추가. 기업의향서 접수, 기업자료 요청, 상담 문의 CTA 유지.
+
+### 삽입한 공통 고지
+
+`본 이미지는 공개 웹자료 및 현장 홍보자료를 기반으로 위치 이해를 돕기 위한 참고 이미지입니다. 세부 위치, 공급 조건, 일정은 상담 시 최신 자료 기준으로 확인됩니다.`
+
+### 사용권 및 향후 교체 메모
+
+- 현재 이미지는 사용자가 확보해 제공한 현장 홍보자료 기반 참고 이미지다.
+- 운영 전 외부 이미지 사용권, 재배포 가능 범위, 상업적 사용 가능 여부를 별도 확인해야 한다.
+- 향후 정식 사용 승인 이미지 또는 자체 제작 이미지가 확보되면 같은 파일명으로 교체 가능하다.
+- 이미지 안에 포함된 원본 문구와 별개로, 사이트 본문에는 `SK하이닉스 공식 자료`, `공식 숙소`, `지정 숙소`, `확정 수요`, `수익 보장` 등 오해 소지가 있는 표현을 추가하지 않았다.
+
+### 보호한 기능
+
+- `api/` 폴더, `admin.html`, `pre-interest.html`, `corporate-interest.html`, `corporate-request.html`, `consultation.html`, `script.js`는 수정하지 않았다.
+- PDF 직접 링크 또는 다운로드 버튼을 추가하지 않았다.
+- 기존 CTA href 구조는 유지했다.

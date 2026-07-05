@@ -33,6 +33,26 @@
             border: 1px solid rgba(79, 70, 229, 0.2);
             border-radius: 1.5rem;
         }
+        .source-image-feature,
+        .source-image-card {
+            overflow: hidden;
+            background: rgba(17, 24, 39, 0.72);
+            border: 1px solid rgba(129, 140, 248, 0.22);
+            border-radius: 1.5rem;
+        }
+        .source-image-feature img,
+        .source-image-card img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .source-image-feature figcaption,
+        .source-image-card figcaption {
+            padding: 1rem 1.25rem;
+            color: #d1d5db;
+            font-size: 0.92rem;
+            font-weight: 700;
+        }
         .stat-value {
             background: linear-gradient(to right, #818cf8, #60a5fa);
             -webkit-background-clip: text;
@@ -134,11 +154,40 @@
         <section id="location" class="py-24 px-6">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl font-extrabold mb-6">입지·현장 위치도</h2>
+                    <h2 class="text-4xl font-extrabold mb-6">용인 반도체클러스터 위치 분석</h2>
                     <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
-                        원삼 센트레빌 퍼스트원은 용인 반도체클러스터 상업시설용지 E2-1 · E2-2 블록
-                        일대에 위치한 주거형 오피스텔 및 근린생활시설 검토 상품입니다.
+                        E2-1·E2-2 상업시설용지는 용인 반도체클러스터 주요 출입 동선과 인접한
+                        배후 생활권으로, 기업숙소·직원숙소 검토 시 위치 이해가 중요한 구간입니다.
                     </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-[1.18fr_0.82fr] gap-8 mb-12">
+                    <figure class="source-image-feature">
+                        <img
+                            src="assets/site-source-images/cluster-aerial-e2-location.webp"
+                            alt="용인 반도체클러스터 FAB 배치와 E2-1 상업시설용지 위치 참고 항공 이미지"
+                            loading="lazy"
+                        >
+                        <figcaption>용인 반도체클러스터 E2-1·E2-2 상업시설용지 위치 참고 이미지</figcaption>
+                    </figure>
+                    <div class="grid gap-8">
+                        <figure class="source-image-card">
+                            <img
+                                src="assets/site-source-images/sk-dormitory-e2-site-map.webp"
+                                alt="용인 반도체클러스터 주요 출입 동선과 E2 상업시설용지 위치를 설명한 참고 지도"
+                                loading="lazy"
+                            >
+                            <figcaption>SK기숙사 및 상업시설용지 인접 구조 참고 이미지</figcaption>
+                        </figure>
+                        <figure class="source-image-card">
+                            <img
+                                src="assets/site-source-images/yongin-cluster-wide-map.webp"
+                                alt="용인 주요 반도체 클러스터 현황과 광역 입지를 정리한 참고 지도"
+                                loading="lazy"
+                            >
+                            <figcaption>용인 반도체클러스터 광역 입지 참고 이미지</figcaption>
+                        </figure>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -208,7 +257,8 @@
                     </div>
                 </div>
                 <p class="text-xs text-center text-gray-500 mt-8">
-                    공개 웹자료 기반 위치 참고도이며, 세부 위치와 조건은 상담 시 최신 자료 기준으로 확인됩니다.
+                    본 이미지는 공개 웹자료 및 현장 홍보자료를 기반으로 위치 이해를 돕기 위한 참고 이미지입니다.
+                    세부 위치, 공급 조건, 일정은 상담 시 최신 자료 기준으로 확인됩니다.
                 </p>
             </div>
         </section>

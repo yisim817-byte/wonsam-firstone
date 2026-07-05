@@ -608,6 +608,92 @@ body.theme-notion {
   height: auto;
 }
 
+.site-image-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  gap: 24px;
+  align-items: start;
+  margin-bottom: 32px;
+}
+
+.site-image-showcase.is-compact {
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.85fr);
+}
+
+.site-image-feature,
+.site-image-grid figure {
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+  box-shadow: var(--shadow-1);
+}
+
+.site-image-feature img,
+.site-image-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.site-image-feature figcaption,
+.site-image-grid figcaption {
+  padding: 14px 16px;
+  color: var(--body-text);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.site-image-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.corporate-image-points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.corporate-image-points article {
+  padding: 20px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+}
+
+.corporate-image-points h3 {
+  margin-bottom: 8px;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.corporate-image-points p {
+  margin: 0;
+  color: var(--body-text);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+@media (max-width: 980px) {
+  .site-image-showcase,
+  .site-image-showcase.is-compact {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .site-image-grid,
+  .corporate-image-points {
+    grid-template-columns: 1fr;
+  }
+}
+
 .location-legend {
   display: flex;
   flex-wrap: wrap;
@@ -1478,6 +1564,9 @@ tr:last-child td {
 }
 
 .proposal-page {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
   background: #fff;
   border: 1px solid var(--hairline);
   border-radius: var(--radius-lg);
@@ -1537,6 +1626,11 @@ tr:last-child td {
 
 .proposal-doc-page {
   padding: 32px clamp(20px, 4vw, 40px);
+  overflow-wrap: anywhere;
+}
+
+.proposal-doc-page * {
+  min-width: 0;
 }
 
 .proposal-doc-page .page-badge {
