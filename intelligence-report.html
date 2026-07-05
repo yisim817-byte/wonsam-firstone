@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인텔리전스 리포트 | 원삼 센트레빌 퍼스트원</title>
+    <meta name="description" content="원삼 센트레빌 퍼스트원 입지 희소성, 배후 수요, 수익률 시뮬레이션을 정리한 참고용 인텔리전스 리포트입니다.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #030712;
+            color: #f9fafb;
+            margin: 0;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        .vibrant-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #4f46e5 100%);
+        }
+        .card-glass {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(79, 70, 229, 0.2);
+            border-radius: 1.5rem;
+        }
+        .stat-value {
+            background: linear-gradient(to right, #818cf8, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #1f2937;
+            border-radius: 5px;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #818cf8;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(129, 140, 248, 0.5);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <nav class="fixed top-0 w-full z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-3">
+                <div class="w-10 h-10 vibrant-gradient rounded-xl flex items-center justify-center font-black text-white italic">W</div>
+                <span class="text-xl font-extrabold tracking-tighter uppercase">Wonsam <span class="text-indigo-400">Centreville</span></span>
+            </a>
+            <div class="hidden md:flex space-x-10 text-sm font-semibold tracking-wide">
+                <a href="#scarcity" class="hover:text-indigo-400 transition-colors">희소성 분석</a>
+                <a href="#demand" class="hover:text-indigo-400 transition-colors">수요 데이터</a>
+                <a href="#finance" class="hover:text-indigo-400 transition-colors">수익 시뮬레이션</a>
+            </div>
+            <a href="consultation.html" class="px-6 py-2.5 rounded-full vibrant-gradient text-sm font-bold shadow-lg shadow-indigo-500/20 hover:scale-105 transition-transform">상담 문의</a>
+        </div>
+    </nav>
+
+    <main class="pt-20">
+        <section class="relative min-h-[70vh] flex items-center justify-center px-6 py-20 overflow-hidden">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px]"></div>
+
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+                <div>
+                    <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-bold mb-6 tracking-widest uppercase">
+                        참고용 인텔리전스 리포트
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-extrabold leading-[1.15] mb-8">
+                        용인 반도체클러스터<br>
+                        배후 생활권, <span class="stat-value italic">도보 3분</span> 거리<br>
+                        입지 검토 자료
+                    </h1>
+                    <p class="text-lg text-gray-400 mb-10 leading-relaxed max-w-xl">
+                        SK하이닉스 정문 인근, 전체 면적 중 약 0.8% 수준인 일반상업용지 검토 자료입니다.
+                        아래 수치는 검토를 돕기 위한 참고 자료이며, 정확한 수치는 공식 자료 확인이 필요합니다.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="card-glass px-8 py-5 border-l-4 border-indigo-500">
+                            <div class="text-sm text-gray-500 mb-1 font-medium">사업 규모</div>
+                            <div class="text-3xl font-black italic">1,168<span class="text-lg font-normal not-italic ml-1">실</span></div>
+                        </div>
+                        <div class="card-glass px-8 py-5 border-l-4 border-blue-500">
+                            <div class="text-sm text-gray-500 mb-1 font-medium">직주근접 검토</div>
+                            <div class="text-3xl font-black italic">도보 3<span class="text-lg font-normal not-italic ml-1">분</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-glass p-8 md:p-12 shadow-2xl relative">
+                    <h3 class="text-2xl font-bold mb-8 flex items-center">
+                        <span class="w-2 h-8 vibrant-gradient mr-4 rounded-full"></span>
+                        검토 요약
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+                            <span class="text-gray-400 font-medium text-sm">위치</span>
+                            <span class="font-bold text-indigo-300">용인 처인구 원삼면 E2-1·E2-2</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+                            <span class="text-gray-400 font-medium text-sm">계약 조건</span>
+                            <span class="font-bold text-indigo-300">계약금 10% (예정, 확인 필요)</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+                            <span class="text-gray-400 font-medium text-sm">공급 일정</span>
+                            <span class="font-bold text-indigo-300">2026년 6~7월 예정 (확인 필요)</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-4">
+                            <span class="text-gray-400 font-medium text-sm">주차 사양</span>
+                            <span class="font-bold text-indigo-300">100% 자주식 (확인 필요)</span>
+                        </div>
+                    </div>
+                    <a href="consultation.html" class="block w-full mt-8 py-4 rounded-xl border border-indigo-500/50 text-indigo-400 font-bold hover:bg-indigo-500/10 transition-all text-center">사전의향서 접수</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="scarcity" class="py-24 px-6 bg-gray-900/50">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-20">
+                    <h2 class="text-4xl font-extrabold mb-6">상업용지 희소성 검토 (참고)</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+                        산업단지 전체 면적 중 일반상업용지의 비중을 인근 신도시와 비교한 참고 자료입니다.
+                        비교 수치는 참고용이며 정확한 수치는 각 지구 공식 자료를 확인하시기 바랍니다.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="card-glass p-10">
+                        <h4 class="text-xl font-bold mb-8 text-indigo-400 flex items-center">
+                            ◈ 권역별 상업용지 비율 비교 (참고)
+                        </h4>
+                        <div class="chart-container">
+                            <canvas id="scarcityChart"></canvas>
+                        </div>
+                        <div class="mt-8 p-6 bg-indigo-500/5 rounded-xl border border-indigo-500/10">
+                            <p class="text-sm leading-relaxed text-gray-300">
+                                평택 고덕(4%)이나 동탄2(2.5%) 대비 원삼 클러스터(0.8%)는 상업지 비율이
+                                낮은 편으로 검토됩니다. 정확한 수치는 공식 자료 확인이 필요합니다.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card-glass p-10">
+                        <h4 class="text-xl font-bold mb-8 text-blue-400 flex items-center">
+                            ◈ 배후 인구 대비 기숙사 공급 (참고)
+                        </h4>
+                        <div class="chart-container">
+                            <canvas id="populationChart"></canvas>
+                        </div>
+                        <div class="mt-8 p-6 bg-blue-500/5 rounded-xl border border-blue-500/10">
+                            <p class="text-sm leading-relaxed text-gray-300">
+                                반도체클러스터 가동 시 유입이 예상되는 인력 규모 대비, 원삼면 일대
+                                신축 주거 공급은 부족한 것으로 검토됩니다. 유입 인구 및 공급 수치는
+                                확인이 필요한 예상치입니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="demand" class="py-24 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                    <div>
+                        <h2 class="text-4xl font-extrabold mb-8">배후 수요 검토<br><span class="text-indigo-400">참고 데이터</span></h2>
+                        <p class="text-gray-400 mb-10 text-lg leading-relaxed">
+                            SK하이닉스 본사 인력과 협력업체 종사자의 유입 규모를 기숙사 공급 계획과
+                            비교한 참고 자료입니다. 아래 수치는 사업 계획 확정 전 예상치입니다.
+                        </p>
+                        <div class="space-y-6">
+                            <div class="flex items-center space-x-6 p-6 card-glass border-none bg-gray-800/40">
+                                <div class="text-4xl font-black text-indigo-500">15만+</div>
+                                <div>
+                                    <div class="font-bold text-white text-lg">유입 예상 인구 (참고)</div>
+                                    <p class="text-sm text-gray-500">본사, 협력사 및 유동 인구 합계 추정치</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-6 p-6 card-glass border-none bg-gray-800/40">
+                                <div class="text-4xl font-black text-blue-500">2,500</div>
+                                <div>
+                                    <div class="font-bold text-white text-lg">계획 기숙사 세대 (참고)</div>
+                                    <p class="text-sm text-gray-500">단지 내 계획 기숙사 수용 가능 규모 추정치</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-glass p-10 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent"></div>
+                        <h4 class="text-xl font-bold mb-8 text-center">단계별 인구 유입 전망 (참고)</h4>
+                        <div class="chart-container">
+                            <canvas id="timelineChart"></canvas>
+                        </div>
+                        <p class="text-xs text-center text-gray-500 mt-6">* 공개 자료를 바탕으로 재구성한 참고용 추정치이며, 확정된 수치가 아닙니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="finance" class="py-24 px-6 bg-indigo-950/20">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-extrabold mb-6">수익률 시뮬레이션 (참고용)</h2>
+                    <p class="text-gray-400 text-lg">대출 비율과 금리를 조정해 참고용 자기자본 수익률을 확인할 수 있습니다. 실제 조건과 다를 수 있으며 수익을 보장하지 않습니다.</p>
+                </div>
+
+                <div class="max-w-4xl mx-auto card-glass p-8 md:p-12 shadow-indigo-500/10 shadow-2xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div class="space-y-10">
+                            <div>
+                                <label class="flex justify-between text-sm font-bold mb-4 uppercase tracking-tighter">
+                                    <span>대출 비율 (LTV)</span>
+                                    <span id="ltvDisplay" class="text-indigo-400 text-lg font-black">60%</span>
+                                </label>
+                                <input type="range" id="ltvInput" min="0" max="80" step="10" value="60">
+                            </div>
+                            <div>
+                                <label class="flex justify-between text-sm font-bold mb-4 uppercase tracking-tighter">
+                                    <span>담보 대출 금리 (연)</span>
+                                    <span id="rateDisplay" class="text-indigo-400 text-lg font-black">4.5%</span>
+                                </label>
+                                <input type="range" id="rateInput" min="2" max="7" step="0.1" value="4.5">
+                            </div>
+                            <div class="pt-6 border-t border-gray-800">
+                                <div class="flex justify-between mb-4">
+                                    <span class="text-gray-500 text-sm">실 투자금(자기자본)</span>
+                                    <span id="equityText" class="font-bold text-white">9,000만 원</span>
+                                </div>
+                                <div class="flex justify-between mb-4">
+                                    <span class="text-gray-500 text-sm">연간 이자 비용</span>
+                                    <span id="interestText" class="font-bold text-red-400">608만 원</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500 text-sm">연간 임대 순수익</span>
+                                    <span id="netIncomeText" class="font-bold text-green-400">772만 원</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vibrant-gradient rounded-2xl p-8 flex flex-col justify-center items-center text-center shadow-xl">
+                            <span class="text-indigo-100/70 text-sm font-bold mb-4 uppercase tracking-widest">참고 자기자본 수익률</span>
+                            <div id="roeDisplay" class="text-6xl font-black italic tracking-tighter mb-4">8.6%</div>
+                            <p class="text-indigo-100 text-sm leading-relaxed font-medium">
+                                분양가 2억 2,500만 원(참고),<br>월세 115만 원(보증금 500만 원, 인근 시세 참고)<br>기준 참고용 추정치입니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 px-6">
+            <div class="max-w-4xl mx-auto card-glass p-10">
+                <h2 class="text-2xl font-bold mb-4">유의사항</h2>
+                <div class="space-y-2 text-sm text-gray-400 leading-relaxed">
+                    <p>본 페이지는 공식 분양 자료가 아닌 참고용 인텔리전스 리포트입니다.</p>
+                    <p>수록된 수치는 공개 자료를 바탕으로 재구성한 참고 추정치이며, 사업 계획 확정 전 변경될 수 있습니다.</p>
+                    <p>본 페이지는 수익이나 가치 상승을 보장하지 않습니다.</p>
+                    <p>세부 조건은 상담 또는 기업자료 요청을 통해 최신 자료 기준으로 확인해 주시기 바랍니다.</p>
+                </div>
+                <div class="flex flex-wrap gap-4 mt-8">
+                    <a href="consultation.html" class="px-6 py-3 rounded-full vibrant-gradient text-sm font-bold">전화 상담 문의</a>
+                    <a href="corporate-request.html" class="px-6 py-3 rounded-full border border-indigo-500/50 text-indigo-400 text-sm font-bold">기업자료 요청</a>
+                    <a href="index.html" class="px-6 py-3 rounded-full border border-gray-700 text-gray-400 text-sm font-bold">메인으로 돌아가기</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-950 py-16 px-6 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-8 h-8 vibrant-gradient rounded-lg flex items-center justify-center font-black text-white italic text-sm">W</div>
+                    <span class="text-lg font-extrabold uppercase">Wonsam <span class="text-indigo-400">Centreville</span></span>
+                </div>
+                <p class="text-xs text-gray-600 max-w-sm">
+                    HUMANE | 010-3138-1712 | yisim817@gmail.com | www.humanekorea.co.kr
+                </p>
+            </div>
+            <p class="text-xs text-gray-700">wonsam-firstone.co.kr</p>
+        </div>
+    </footer>
+
+    <script>
+        function initCharts() {
+            var scarcityCtx = document.getElementById('scarcityChart');
+            if (scarcityCtx) {
+                new Chart(scarcityCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['원삼 클러스터', '동탄2 신도시', '평택 고덕', '신도시 평균'],
+                        datasets: [{
+                            label: '상업용지 비율 (%)',
+                            data: [0.8, 2.5, 4.0, 3.2],
+                            backgroundColor: ['#818cf8', '#4b5563', '#4b5563', '#4b5563'],
+                            borderRadius: 10,
+                            borderWidth: 0,
+                            barThickness: 40
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#6b7280' } },
+                            x: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 11 } } }
+                        }
+                    }
+                });
+            }
+
+            var populationCtx = document.getElementById('populationChart');
+            if (populationCtx) {
+                new Chart(populationCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['유입 예상 인구', '계획 기숙사 세대'],
+                        datasets: [{
+                            label: '규모',
+                            data: [150000, 2500],
+                            backgroundColor: ['#818cf8', '#4b5563'],
+                            borderRadius: 10
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#6b7280' } },
+                            x: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 11 } } }
+                        }
+                    }
+                });
+            }
+
+            var timelineCtx = document.getElementById('timelineChart');
+            if (timelineCtx) {
+                new Chart(timelineCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['1차 FAB 착공', '1차 FAB 가동(2027 초)', '전체 가동(추정)'],
+                        datasets: [
+                            { label: '예상 유입 인구', data: [15000, 55000, 150000], backgroundColor: '#4f46e5', borderRadius: 6 },
+                            { label: '계획 기숙사', data: [500, 2500, 2500], backgroundColor: '#f43f5e', borderRadius: 6 }
+                        ]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom', labels: { color: '#9ca3af', boxWidth: 10, font: { size: 10 } } } },
+                        scales: {
+                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#4b5563' } },
+                            x: { ticks: { color: '#9ca3af', font: { size: 10 } } }
+                        }
+                    }
+                });
+            }
+        }
+
+        var ltvInput = document.getElementById('ltvInput');
+        var rateInput = document.getElementById('rateInput');
+        var ltvDisplay = document.getElementById('ltvDisplay');
+        var rateDisplay = document.getElementById('rateDisplay');
+        var equityText = document.getElementById('equityText');
+        var interestText = document.getElementById('interestText');
+        var netIncomeText = document.getElementById('netIncomeText');
+        var roeDisplay = document.getElementById('roeDisplay');
+
+        function calculateFinance() {
+            var price = 225000000;
+            var deposit = 5000000;
+            var monthlyRent = 1150000;
+            var yearlyRevenue = monthlyRent * 12;
+
+            var ltv = parseInt(ltvInput.value, 10) / 100;
+            var rate = parseFloat(rateInput.value) / 100;
+
+            ltvDisplay.textContent = (ltv * 100) + '%';
+            rateDisplay.textContent = (rate * 100).toFixed(1) + '%';
+
+            var loan = price * ltv;
+            var equity = price - deposit - loan;
+            var yearlyInterest = loan * rate;
+            var netIncome = yearlyRevenue - yearlyInterest;
+            var roe = equity > 0 ? (netIncome / equity) * 100 : 0;
+
+            equityText.textContent = Math.round(equity / 10000).toLocaleString() + '만 원';
+            interestText.textContent = Math.round(yearlyInterest / 10000).toLocaleString() + '만 원';
+            netIncomeText.textContent = Math.round(netIncome / 10000).toLocaleString() + '만 원';
+            roeDisplay.textContent = roe.toFixed(1) + '%';
+        }
+
+        if (ltvInput && rateInput) {
+            ltvInput.addEventListener('input', calculateFinance);
+            rateInput.addEventListener('input', calculateFinance);
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            initCharts();
+            calculateFinance();
+        });
+    </script>
+</body>
+</html>
