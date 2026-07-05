@@ -40,6 +40,33 @@ Added a source materials section and a card-based infographic section while keep
 - Use confirmed source material only for price, remaining units, contract terms, address, and scale.
 - Do not add unverified numbers or conditions.
 
+## Read-only Request-based Resource Flow
+
+### Current Direction
+
+- The homepage targets both individual customers and corporate customers.
+- Resources are operated as read-only or request-based access, not public download flows.
+- `consultation.html` has been added for general consultation, corporate demand review, and material request guidance.
+- `corporate-report.html` has been added as a reading-only corporate demand report summary page.
+- Company attraction reports and company proposal materials should be sent individually by email after consultation form submission.
+- Direct PDF links are prohibited in public page CTAs.
+- Original PDF exposure in public assets should be avoided.
+
+### Static Site Limitation
+
+- A static site cannot guarantee 100% file access prevention if source files are placed in public assets.
+- Current implementation minimizes exposure by removing direct file links and avoiding proposal PDF assets.
+- Full prevention requires an authenticated viewer, server-side access control, or a restricted external viewing platform.
+
+### Remaining Resource Flow Tasks
+
+- Create the final Google Form.
+- Connect consultation and material request buttons to the confirmed Form URL.
+- Re-check all pages for direct PDF links.
+- Keep `corporate-report.html` as a no-PDF summary page unless an approved restricted viewer is introduced.
+- Keep video/audio controls configured to reduce visible save actions where browser support allows.
+- Update `README.md` and this handoff when final links are confirmed.
+
 ## Project Overview And Content Audit
 
 ### Completed In Current Update
@@ -82,14 +109,15 @@ Do not add unverified numbers, prices, conditions, or official-looking claims. L
 - `assets/wonsam-firstone-podcast.m4a`
 - `assets/wonsam-firstone-infographic.png`
 
-### Connected Material Buttons
+### Connected Material Flows
 
-- `기업 직원숙소 제안서` -> `#` pending Google Form link
-- `원삼 센트레빌 분석자료` -> `assets/wonsam-firstone-analysis.pdf`
-- `광고 슬라이드 자료` -> `assets/wonsam-firstone-ad-slide.pdf`
-- `광고 영상` -> `assets/wonsam-firstone-ad-video.mp4`
-- `팟캐스트 자료` -> `assets/wonsam-firstone-podcast.m4a`
-- `인포그래픽` -> `assets/wonsam-firstone-infographic.png`
+- `입지·상품 분석자료` -> `corporate-report.html`
+- `광고 슬라이드 자료` -> `consultation.html`
+- `광고 영상` -> inline video player with `controlsList="nodownload"`
+- `팟캐스트 자료` -> inline audio player with `controlsList="nodownload"`
+- `인포그래픽` -> in-page `#infographic` section
+- `기업수요 검토 보고서` -> `corporate-report.html`
+- `상담 및 자료 요청` -> `consultation.html`
 
 ### Pending Material
 
@@ -97,6 +125,8 @@ Do not add unverified numbers, prices, conditions, or official-looking claims. L
   - Keep as `자료 준비 중` until `assets/wonsam-firstone-source-note.txt` is available.
 - `NotebookLM 웹사이트 자료`
   - Uploaded `code_artifact.html` and `code_artifact (1).html` were checked but not linked because they need expression review before publication.
+- Final Google Form URL
+  - Keep request buttons as `href="#"` or route to `consultation.html` until the final URL is confirmed.
 
 ### Infographic Section
 
