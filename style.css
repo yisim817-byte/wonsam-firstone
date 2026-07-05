@@ -577,6 +577,161 @@ body.theme-notion {
   gap: 10px;
 }
 
+/* ==========================================================================
+   AIRBNB — LOCATION / SITE MAP DIAGRAM (self-made SVG, no external map image)
+   ========================================================================== */
+
+.location-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .location-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.location-diagram-card {
+  padding: 20px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+  box-shadow: var(--shadow-1);
+}
+
+.location-diagram-card svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.location-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.location-legend .swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.location-summary-card {
+  padding: 26px 24px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+  box-shadow: var(--shadow-1);
+}
+
+.location-summary-card h3 {
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.location-summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 14px;
+}
+
+.location-summary-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.location-summary-row span:first-child {
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+.location-summary-row span:last-child {
+  color: var(--ink);
+  font-weight: 700;
+  text-align: right;
+}
+
+.location-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.location-disclaimer {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.location-diagram-card svg text {
+  font-family: inherit;
+  fill: var(--ink);
+  font-size: 13px;
+}
+
+.location-diagram-card svg .loc-label-muted {
+  fill: var(--muted);
+  font-size: 12px;
+}
+
+.location-diagram-card svg .loc-label-strong {
+  font-weight: 700;
+}
+
+.location-diagram-card svg .loc-cluster-boundary {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 2;
+  stroke-dasharray: 6 5;
+}
+
+.location-diagram-card svg .loc-block {
+  fill: var(--primary);
+  fill-opacity: 0.12;
+  stroke: var(--primary);
+  stroke-width: 2;
+}
+
+.location-diagram-card svg .loc-route {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+}
+
+.location-diagram-card svg .loc-access {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-dasharray: 5 4;
+}
+
+.location-diagram-card svg .loc-ic-node {
+  fill: #fff;
+  stroke: var(--muted);
+  stroke-width: 1.5;
+}
+
+.location-diagram-card svg .loc-pin-mark {
+  fill: var(--primary);
+}
+
 .hero-eyebrow {
   display: inline-flex;
   align-items: center;
