@@ -111,6 +111,22 @@ Positions to update after issuance:
 
 The original company proposal PDF is no longer served from public assets. Keep proposal access request-based until a Google Form or another gated confirmation flow is approved.
 
+### Current Status
+
+- Company proposal PDF direct download is blocked.
+- Proposal-related button labels have been changed.
+- No direct proposal PDF link remains in `index.html`.
+- Google Form link is not confirmed yet.
+- Proposal-related buttons are temporarily set to `href="#"`.
+
+### Next Owner Tasks
+
+- Create the Google Form for company proposal access requests.
+- Confirm the final Form URL.
+- Insert the Form URL into proposal-related button `href` values in `index.html`.
+- Test proposal request button clicks.
+- Update `README.md` and this handoff document with the final Form URL.
+
 Recommended review points:
 
 - Do not restore the original proposal PDF to public assets without approval.
