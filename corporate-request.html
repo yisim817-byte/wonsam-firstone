@@ -41,22 +41,22 @@
 
       <section class="section">
         <div class="container">
-          <form class="form-card" action="mailto:yisim817@gmail.com" method="post" enctype="text/plain">
+          <form id="corporate-request-form" class="form-card">
             <div class="form-field">
               <label for="company">기업명</label>
-              <input id="company" name="기업명" type="text" required autocomplete="organization">
+              <input id="company" name="company_name" type="text" required autocomplete="organization">
             </div>
             <div class="form-field">
               <label for="phone">전화번호</label>
-              <input id="phone" name="전화번호" type="tel" required autocomplete="tel" placeholder="010-0000-0000">
+              <input id="phone" name="phone" type="tel" required autocomplete="tel" placeholder="010-0000-0000">
             </div>
             <div class="form-field">
               <label for="email">이메일</label>
-              <input id="email" name="이메일" type="email" required autocomplete="email">
+              <input id="email" name="email" type="email" required autocomplete="email">
             </div>
             <div class="form-field">
               <label for="purpose">요청 목적</label>
-              <select id="purpose" name="요청 목적" required>
+              <select id="purpose" name="purpose">
                 <option value="">선택해 주세요</option>
                 <option value="기업숙소 검토">기업숙소 검토</option>
                 <option value="직원숙소 검토">직원숙소 검토</option>
@@ -67,17 +67,16 @@
 
             <button type="submit" class="btn btn-primary btn-block">기업자료 요청하기</button>
 
+            <div id="corporate-request-status" class="form-note" role="status" hidden></div>
+
             <div class="form-note">
-              <strong>현재는 이메일 문의로 접수됩니다.</strong>
-              이 페이지는 정적 사이트로 운영되어 서버로 자동 접수되지 않습니다. "기업자료 요청하기"를
-              누르면 입력하신 내용을 담은 이메일 작성창이 열립니다. 메일 프로그램이 연결되어 있지
-              않다면 아래 이메일로 직접 문의해 주세요. 추후 Google Form 연결을 통해 접수 방식을
-              개선할 예정입니다.
+              접수된 정보는 관리자만 확인할 수 있으며, 담당자가 확인 후 이메일 또는 유선으로
+              개별 안내합니다. 메일 프로그램 연결 없이 즉시 접수됩니다.
             </div>
           </form>
 
           <p style="text-align:center; margin-top:18px; color:var(--muted); font-size:14px;">
-            메일 작성창이 열리지 않는다면
+            접수가 계속 실패한다면
             <a class="btn-text" href="mailto:yisim817@gmail.com?subject=원삼 센트레빌 퍼스트원 기업자료 요청">yisim817@gmail.com</a>
             으로 직접 문의해 주세요.
           </p>
@@ -113,5 +112,7 @@
         </div>
       </div>
     </footer>
+
+    <script src="script.js"></script>
   </body>
 </html>

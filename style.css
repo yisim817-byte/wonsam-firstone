@@ -51,22 +51,39 @@ h1, h2, h3, p {
 }
 
 /* ==========================================================================
-   THEME: AIRBNB  (index.html, consultation.html)
+   HUMANE BRAND COLORS
+   Extracted from the live humanekorea.co.kr site: logo "H" green / "A" orange.
+   Orange carries primary CTAs (strongest brand color); green is reserved for
+   accent labels/tags/badges, mirroring how the main HUMANE site uses green
+   for its "MODULE 01" style section labels. No Airbnb red or Notion blue.
+   ========================================================================== */
+
+:root {
+  --humane-orange: #fe6301;
+  --humane-orange-active: #d95300;
+  --humane-orange-soft: #ffe1cc;
+  --humane-green: #017c2e;
+  --humane-green-soft: #d7f0dd;
+}
+
+/* ==========================================================================
+   THEME: AIRBNB STRUCTURE  (index.html, consultation.html)
    ========================================================================== */
 
 body.theme-airbnb {
   --bg: #ffffff;
-  --bg-soft: #f7f7f7;
+  --bg-soft: #f9fafb;
   --bg-strong: #f2f2f2;
-  --ink: #222222;
-  --body-text: #3f3f3f;
-  --muted: #6a6a6a;
+  --ink: #111827;
+  --body-text: #374151;
+  --muted: #6b7280;
   --muted-soft: #929292;
-  --hairline: #dddddd;
+  --hairline: #e5e7eb;
   --hairline-soft: #ebebeb;
-  --primary: #ff385c;
-  --primary-active: #e00b41;
-  --primary-soft: #ffd1da;
+  --primary: var(--humane-orange);
+  --primary-active: var(--humane-orange-active);
+  --primary-soft: var(--humane-orange-soft);
+  --accent: var(--humane-green);
   --on-primary: #ffffff;
 
   --radius-btn: 8px;
@@ -79,22 +96,23 @@ body.theme-airbnb {
 }
 
 /* ==========================================================================
-   THEME: NOTION  (corporate-report.html, corporate-request.html)
+   THEME: NOTION STRUCTURE  (corporate-report.html, corporate-request.html, admin.html)
    ========================================================================== */
 
 body.theme-notion {
-  --bg: #f6f5f4;
+  --bg: #f9fafb;
   --bg-soft: #ffffff;
   --bg-strong: #eceae7;
-  --ink: #000000;
-  --body-text: #31302e;
-  --muted: #615d59;
+  --ink: #111827;
+  --body-text: #374151;
+  --muted: #6b7280;
   --muted-soft: #a39e98;
-  --hairline: #e6e6e6;
+  --hairline: #e5e7eb;
   --hairline-soft: #ececec;
-  --primary: #0075de;
-  --primary-active: #005bab;
-  --primary-soft: #cfe6fb;
+  --primary: var(--humane-orange);
+  --primary-active: var(--humane-orange-active);
+  --primary-soft: var(--humane-orange-soft);
+  --accent: var(--humane-green);
   --on-primary: #ffffff;
 
   --radius-btn: 9999px;
@@ -494,7 +512,7 @@ body.theme-notion {
 .model-grid span {
   display: inline-block;
   margin-bottom: 10px;
-  color: var(--primary);
+  color: var(--accent);
   font-weight: 800;
 }
 
@@ -579,11 +597,11 @@ body.theme-notion {
   margin-bottom: 10px;
   font-size: 13px;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--accent);
 }
 
 .cta-split-card.is-primary span {
-  color: #ffb3c2;
+  color: #ffb37a;
 }
 
 .cta-split-card h3 {
@@ -701,8 +719,8 @@ body.theme-notion {
   top: 22px;
   width: 12px;
   height: 7px;
-  border-left: 2px solid var(--primary);
-  border-bottom: 2px solid var(--primary);
+  border-left: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
   transform: rotate(-45deg);
 }
 
@@ -743,7 +761,7 @@ body.theme-notion {
   margin-bottom: 16px;
   border-radius: var(--radius-full);
   background: var(--bg-soft);
-  color: var(--primary);
+  color: var(--accent);
   font-size: 12px;
   font-weight: 700;
 }
@@ -767,7 +785,7 @@ body.theme-notion {
 .doc-label {
   display: block;
   margin-bottom: 10px;
-  color: var(--primary);
+  color: var(--accent);
   font-size: 13px;
   font-weight: 700;
 }
@@ -937,7 +955,7 @@ tr:last-child td {
 .form-field textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(0, 117, 222, 0.15);
+  box-shadow: 0 0 0 3px rgba(254, 99, 1, 0.15);
 }
 
 .form-note {
