@@ -805,19 +805,19 @@ body.theme-notion {
   margin-bottom: 26px;
 }
 
-.hero-info-grid {
+.info-card-grid.hero-info-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 32px;
 }
 
 @media (max-width: 920px) {
-  .hero-info-grid {
+  .info-card-grid.hero-info-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 640px) {
-  .hero-info-grid {
+  .info-card-grid.hero-info-grid {
     grid-template-columns: 1fr;
   }
 }
