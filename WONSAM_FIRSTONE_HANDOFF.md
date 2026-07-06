@@ -120,7 +120,8 @@ Do not add unverified numbers, prices, conditions, or official-looking claims. L
 - `assets/wonsam-firstone-ad-slide.pdf`
 - `assets/wonsam-firstone-ad-video.mp4`
 - `assets/wonsam-firstone-podcast.m4a`
-- `assets/wonsam-firstone-infographic.png`
+- `assets/wonsam-firstone-infographic.png` (legacy NotebookLM infographic, no longer referenced by HTML)
+- `assets/site-source-images/wonsam-customer-infographic-updated.webp` (current customer-facing infographic)
 
 ### Connected Material Flows
 
@@ -143,7 +144,7 @@ Do not add unverified numbers, prices, conditions, or official-looking claims. L
 
 ### Infographic Section
 
-The infographic section now includes `assets/wonsam-firstone-infographic.png` plus the existing HTML/CSS summary cards.
+The infographic section now uses `assets/site-source-images/wonsam-customer-infographic-updated.webp`. The previous NotebookLM infographic (`assets/wonsam-firstone-infographic.png`) is retained in assets for now but is no longer referenced by HTML because it contained an incorrect "4베이/4Bay" concept and an arbitrary phone-number style contact treatment. The replacement image was supplied by the user, not downloaded externally or generated. It is applied on `index.html` only, and the existing `.infographic-card` -> `#infographicModal` click-to-expand flow remains in place. Representative phone details remain tracked separately and should be changed later only when the final number is confirmed.
 
 ## Google Form Link Follow-up (OBSOLETE — kept for history only)
 
@@ -314,7 +315,7 @@ Confirmed before starting work: `git fetch origin` + `git pull origin main` show
 
 ### What changed
 - `corporate-report.html`: inserted a new unnumbered `.proposal-viewer-section` right after section "1. 기업수요 검토 개요" (before "2. 입지 및 배후수요", which keeps its own numbering — the new section deliberately uses a "READ ONLY" eyebrow badge instead of a number so nothing downstream had to be renumbered). It renders 8 page images in a vertical scroll of white cards, each `<figure class="proposal-page">` with an `<img>` + page-number `<figcaption>`, ending in a `기업자료 요청하기` / `메인으로 돌아가기` CTA row (real links, no anchors).
-- `index.html`: the infographic `<img>` in the "자료 열람" media grid is now wrapped in a `.infographic-card` (`role="button" tabindex="0"`, `data-modal-target="infographicModal"`) with a "클릭해서 크게 보기" hint. A `#infographicModal` (`.media-modal`) was added near the end of `<body>`, reusing the same `assets/wonsam-firstone-infographic.png` file (no new image).
+- `index.html`: the infographic `<img>` in the "자료 열람" media grid is wrapped in a `.infographic-card` (`role="button" tabindex="0"`, `data-modal-target="infographicModal"`) with a "클릭해서 크게 보기" hint. The active image is now `assets/site-source-images/wonsam-customer-infographic-updated.webp`; `#infographicModal` (`.media-modal`) uses the same updated image for enlarged viewing.
 - `script.js`: added generic modal open/close wiring (`[data-modal-target]` click + Enter/Space, `[data-modal-close]` click, Escape key, `body.modal-open` scroll lock). Purely additive — did not touch the existing nav-toggle or corporate-request-form submit logic.
 - `style.css`: added `.proposal-viewer-section`, `.read-only-note`, `.proposal-page-viewer`, `.proposal-page`, `.proposal-page img/figcaption` (Notion-theme document card look), and `.infographic-card`, `.click-hint`, `.media-modal` + its `__backdrop`/`__content`/`__close` parts, `body.modal-open` (theme-agnostic, works on either theme since both define the same `--bg-soft`/--hairline/--primary/--accent` tokens). Reused `--primary` (HUMANE orange) for the modal close button and `--accent` (HUMANE green) for `.click-hint` — no Airbnb red or Notion blue introduced.
 

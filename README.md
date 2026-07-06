@@ -104,7 +104,11 @@ Vercel 프로젝트(`wonsam-firstone`) → Settings → Environment Variables에
 - 기존 카드형 미리보기(`.infographic-card`)를 클릭(또는 Enter/Space 키)하면 전체화면에 가까운 모달(`#infographicModal`)로 원본 이미지가 크게 표시됩니다.
 - 닫기: 우측 상단 "닫기" 버튼, 배경(어두운 영역) 클릭, ESC 키 — 3가지 모두 지원합니다.
 - 모달이 열리면 `body`에 스크롤 잠금이 걸리고, 닫으면 해제됩니다.
-- 사용된 이미지 파일은 기존 `assets/wonsam-firstone-infographic.png`를 그대로 재사용했습니다(파일 교체 없음) — 이 파일이 곧 실제 표시되는 인포그래픽 원본입니다.
+- 2026-07-06 교체: 기존 NotebookLM 인포그래픽은 "4베이" 표현과 임의 전화번호 문제가 있어 페이지 참조에서 제외했습니다.
+- 현재 표시되는 인포그래픽 원본은 사용자가 업로드한 이미지를 변환한 `assets/site-source-images/wonsam-customer-infographic-updated.webp`입니다.
+- 적용 페이지는 `index.html`이며, `.infographic-card`와 `#infographicModal`을 통한 클릭 확대 기능은 유지했습니다.
+- 대표번호는 추후 변경 예정이며, 인포그래픽 이미지 안에는 임의 전화번호를 추가하지 않았습니다.
+- 기존 CTA/API/PDF 구조에는 영향이 없습니다.
 - 모달은 홈페이지 내 열람을 크게 보여주기 위한 기능이며, 다운로드 방지의 완전한 수단은 아닙니다(브라우저에서 이미지 자체는 여전히 로드되므로 우클릭 저장 등은 막지 않습니다).
 
 ## 현장 이미지 자료 반영 (2026-07-05)
