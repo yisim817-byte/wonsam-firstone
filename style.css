@@ -61,14 +61,14 @@ h1, h2, h3, p {
    ========================================================================== */
 
 :root {
-  --원삼 센트레빌 퍼스트원 현장 안내-navy: #1e3a8a;
-  --원삼 센트레빌 퍼스트원 현장 안내-navy-active: #16295e;
-  --원삼 센트레빌 퍼스트원 현장 안내-navy-soft: #dbe4f7;
-  --원삼 센트레빌 퍼스트원 현장 안내-orange: #fe6301;
-  --원삼 센트레빌 퍼스트원 현장 안내-orange-active: #d95300;
-  --원삼 센트레빌 퍼스트원 현장 안내-orange-soft: #ffe1cc;
-  --원삼 센트레빌 퍼스트원 현장 안내-green: #017c2e;
-  --원삼 센트레빌 퍼스트원 현장 안내-green-soft: #d7f0dd;
+  --humane-navy: #1e3a8a;
+  --humane-navy-active: #16295e;
+  --humane-navy-soft: #dbe4f7;
+  --humane-orange: #fe6301;
+  --humane-orange-active: #d95300;
+  --humane-orange-soft: #ffe1cc;
+  --humane-green: #017c2e;
+  --humane-green-soft: #d7f0dd;
 }
 
 /* ==========================================================================
@@ -85,10 +85,10 @@ body.theme-airbnb {
   --muted-soft: #929292;
   --hairline: #e5e7eb;
   --hairline-soft: #ebebeb;
-  --primary: var(--원삼 센트레빌 퍼스트원 현장 안내-navy);
-  --primary-active: var(--원삼 센트레빌 퍼스트원 현장 안내-navy-active);
-  --primary-soft: var(--원삼 센트레빌 퍼스트원 현장 안내-navy-soft);
-  --accent: var(--원삼 센트레빌 퍼스트원 현장 안내-green);
+  --primary: var(--humane-navy);
+  --primary-active: var(--humane-navy-active);
+  --primary-soft: var(--humane-navy-soft);
+  --accent: var(--humane-green);
   --on-primary: #ffffff;
 
   --radius-btn: 8px;
@@ -114,10 +114,10 @@ body.theme-notion {
   --muted-soft: #a39e98;
   --hairline: #e5e7eb;
   --hairline-soft: #ececec;
-  --primary: var(--원삼 센트레빌 퍼스트원 현장 안내-navy);
-  --primary-active: var(--원삼 센트레빌 퍼스트원 현장 안내-navy-active);
-  --primary-soft: var(--원삼 센트레빌 퍼스트원 현장 안내-navy-soft);
-  --accent: var(--원삼 센트레빌 퍼스트원 현장 안내-green);
+  --primary: var(--humane-navy);
+  --primary-active: var(--humane-navy-active);
+  --primary-soft: var(--humane-navy-soft);
+  --accent: var(--humane-green);
   --on-primary: #ffffff;
 
   --radius-btn: 9999px;
