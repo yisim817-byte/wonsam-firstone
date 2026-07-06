@@ -134,7 +134,7 @@ assets/site-source-images/
 
 - `index.html`: `#location-map` 섹션의 제목을 `입지·현장 이미지 자료`로 정리하고, 사업개요 참고 이미지는 히어로 오른쪽 `사업 개요 핵심 요약` 카드 아래로 이동했습니다.
 - `intelligence-report.html`: `#location` 섹션을 `용인 반도체클러스터 위치 분석`으로 정리하고, 위치 분석 이미지 3장을 추가했습니다.
-- `corporate-report.html`: 히어로와 기업제안서 열람 섹션 사이에 `기업 검토용 현장 이미지` 섹션을 추가하고 사업개요 참고 이미지를 함께 반영했습니다.
+- `corporate-report.html`: 히어로와 기업제안서 열람 섹션 사이에 `기업 검토용 현장 이미지` 섹션을 추가하고 사업개요 참고 이미지를 함께 반영했습니다. 2026-07-06에는 같은 섹션의 2열 보조 이미지 그리드 빈 칸을 채우기 위해 `wonsam-customer-infographic-updated.webp`를 사업개요 및 공급규모 참고 이미지 옆에 추가했습니다.
 
 이미지 하단 고지 문구:
 
