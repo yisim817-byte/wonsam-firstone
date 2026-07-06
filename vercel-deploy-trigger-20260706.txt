@@ -1,0 +1,2 @@
+Trigger Vercel redeploy after restoring homepage.
+No website HTML, CSS, or JavaScript changes are included in this file.
