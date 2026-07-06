@@ -7,7 +7,7 @@
 - Final domain: https://www.wonsam-firstone.co.kr
 - Base domain: https://wonsam-firstone.co.kr
 - Proposal PDF status: removed from public assets, not restored
-- Representative phone number: issued and in use — `010-3138-1712`
+- Representative phone number: issued and in use — `1644-6873`
 
 ## Files Checked
 
@@ -208,15 +208,15 @@ Do not change the current phone number until the representative phone number is 
 Positions to update after issuance:
 
 - `index.html:257`
-  - Current value: `<a href="tel:010-3138-1712">010-3138-1712</a>`
+  - Current value: `<a href="tel:16446873">1644-6873</a>`
   - Update both the `tel:` value and the visible text.
 
 - `index.html:283`
-  - Current value: `<p>010-3138-1712</p>`
+  - Current value: `<p>1644-6873</p>`
   - Update the visible footer phone number.
 
 - `README.md:50`
-  - Current value: `010-3138-1712`
+  - Current value: `1644-6873`
   - Update the documentation contact number.
 
 ## Proposal PDF Access Follow-up (superseded — see status below)
@@ -249,7 +249,7 @@ Recommended review points (still valid):
 
 - `index.html` and `consultation.html` rebuilt in an Airbnb-style visual language (white canvas, Rausch-red CTA, rounded photo/card grid, pill summary bar). Tokens live under `body.theme-airbnb` in `style.css`.
 - `corporate-report.html` and new `corporate-request.html` rebuilt in a Notion-style document/form language (warm canvas-soft background, blue pill CTA, hairline cards, tables). Tokens live under `body.theme-notion` in `style.css`.
-- General-customer flow is phone-only (`tel:010-3138-1712` / `consultation.html`); corporate flow is report + request form (`corporate-report.html` / `corporate-request.html`). No forms are exposed to general customers.
+- General-customer flow is phone-only (`tel:16446873` / `consultation.html`); corporate flow is report + request form (`corporate-report.html` / `corporate-request.html`). No forms are exposed to general customers.
 - `corporate-request.html` originally submitted via `mailto:` — **this was replaced** in the next round by the Supabase + Vercel Functions backend described below. It now submits via `fetch('/api/corporate-request')`, not mailto.
 - The old on-page rent/loan simulator section on `index.html` was removed — it wasn't part of the redefined customer journey and risked implying guaranteed returns.
 - `assets/wonsam-firstone-ad-slide.pdf` and `assets/wonsam-firstone-analysis.pdf` are **not linked from any page** (no direct PDF links per policy). They are currently orphaned files in the repo — needs a decision: convert to an in-page HTML/image reading section, or remove from the repo entirely.
@@ -276,7 +276,7 @@ Recommended review points (still valid):
 Confirmed before starting work: `git fetch origin` + `git pull origin main` showed the local clone already at `origin/main` HEAD, working tree clean, no uncommitted changes to report. Both baseline commits the user asked to verify (`0f6d476…` disclaimer cleanup, `ab672c2…` CTA link fix) are ancestors of HEAD — confirmed via `git merge-base --is-ancestor`. HEAD was actually one commit ahead of what the handoff prompt assumed (`0c810c0`, the SK Hynix hero-wording fix from the immediately preceding turn), so nothing was missed.
 
 ### Current implementation summary
-- **General customers**: phone-only (`tel:010-3138-1712`), no forms, via `index.html` hero/CTA-split and `consultation.html`.
+- **General customers**: phone-only (`tel:16446873`), no forms, via `index.html` hero/CTA-split and `consultation.html`.
 - **Corporate customers**: `corporate-report.html` (8-section HTML-only read briefing, no PDF) → `corporate-request.html` (company_name/phone/email required, purpose optional) → `POST /api/corporate-request` → Supabase `corporate_requests` table.
 - **Admin review**: `admin.html` (password field, `noindex`) → `GET /api/admin-requests` with `Authorization: Bearer <token>` → server compares against `process.env.ADMIN_TOKEN` via `crypto.timingSafeEqual` → returns the row list only on match.
 - No secrets anywhere in the repo. No `.env` file tracked. No `package.json`/`vercel.json` needed — Vercel auto-detects the two `api/*.js` files as Node serverless functions (confirmed in build logs: `lambdaRuntimeStats: {"nodejs":2}`).
@@ -324,7 +324,7 @@ Three candidate "proposal" PDFs existed outside the repo, in the user's local On
 2. **`원삼센트레빌_기업숙소_제안서_v3_표지최종_수정본.pdf`** (8 pages per PyMuPDF — an earlier file-read tool had reported "142 pages" for this file, which was wrong; PyMuPDF is the authoritative parser here) — this is the one used. Its content and title ("원삼 센트레빌 퍼스트원 · 기업 직원숙소 검토 제안서") match the "기업제안서/기업검토제안서" request exactly, addressed to "총무팀·인사팀·경영지원팀" — this is almost certainly the source the previously-deleted `assets/wonsam-centreville-first-one-company-housing-proposal.pdf` came from.
 3. `원삼_센트레빌_퍼스트원_비전.pdf` (16 pages, "vision" deck) — not used.
 
-Content check before publishing: no third-party PII, no other named companies beyond HUMANE's own already-public contact info (`010-3138-1712`, `yisim817@gmail.com`, business registration `320-60-00456`) and location references (SK Hynix, 동부건설 as builder brand) that are already used elsewhere on the live site. Page 7 is a blank "회신 양식" (response form template) with empty fields, not filled-in customer data.
+Content check before publishing: no third-party PII, no other named companies beyond HUMANE's own already-public contact info (`1644-6873`, `yisim817@gmail.com`, business registration `320-60-00456`) and location references (SK Hynix, 동부건설 as builder brand) that are already used elsewhere on the live site. Page 7 is a blank "회신 양식" (response form template) with empty fields, not filled-in customer data.
 
 ### Policy note the next owner should know
 The proposal's page 6 includes specific pricing figures (평균 분양가 약 2억 2,500만 원, 계약금 10%, 중도금 조건, 청약금 범위) that earlier rounds of this project deliberately kept gated behind "상담 후 개별 안내" (consultation-only). Rendering the actual proposal pages as images necessarily makes that same information visible on the public page now — this is a direct consequence of this round's explicit instruction ("업로드된 기업제안서 원문을 실제로 읽을 수 있게 만든다"), not an oversight. If the account owner wants pricing kept confidential again, the fix is either to drop `page-06.webp` from the viewer or to source a redacted version of that page — flagged in README.md too.
@@ -478,7 +478,7 @@ New reusable classes, all under the existing `--primary`/`--accent`/`--bg-soft`/
 - `.cta-card-grid.is-tri` (3-column variant used only on `corporate-report.html`'s hero)
 
 ### Representative phone number (대표번호) — tracked for next owner
-The current number `010-3138-1712` is temporary; the user said a representative (대표) number will be issued "조만간" (soon). It appears hardcoded in 8 files: `index.html`, `corporate-report.html`, `corporate-request.html`, `consultation.html`, `intelligence-report.html`, `admin.html`, `corporate-interest.html`, `pre-interest.html`. There's no shared template/include system in this static site, so a true single-source-of-truth isn't possible without introducing a build step (out of scope this round). When the real number is issued: grep the whole repo for `010-3138-1712` and replace both the `tel:` href values and the visible text in all 8 files — the `.phone-cta` in `index.html`'s hero panel is the most visually prominent one and has an HTML comment marking it, but it is not the *only* place that needs updating.
+The current number `1644-6873` is temporary; the user said a representative (대표) number will be issued "조만간" (soon). It appears hardcoded in 8 files: `index.html`, `corporate-report.html`, `corporate-request.html`, `consultation.html`, `intelligence-report.html`, `admin.html`, `corporate-interest.html`, `pre-interest.html`. There's no shared template/include system in this static site, so a true single-source-of-truth isn't possible without introducing a build step (out of scope this round). When the real number is issued: grep the whole repo for `1644-6873` and replace both the `tel:` href values and the visible text in all 8 files — the `.phone-cta` in `index.html`'s hero panel is the most visually prominent one and has an HTML comment marking it, but it is not the *only* place that needs updating.
 
 ### Verified this round — real browser rendering
 Used the same `wonsam-firstone` launch.json entry (`npx serve`, primary-working-directory `.claude/launch.json`, absolute path arg) as the previous round.

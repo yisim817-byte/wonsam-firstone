@@ -19,7 +19,7 @@ README.md
 > 사이트 어디에도 `href="#"` 플레이스홀더가 남아있지 않습니다.
 
 - 본 페이지는 사전검토용 참고 안내 페이지이며, 공식 분양 홈페이지가 아니라는 방어적 문구는 두지 않습니다 (하단 참고 문구만 유지).
-- 일반고객: `index.html`/`consultation.html`에서 전화상담(`tel:010-3138-1712`) 중심으로 안내합니다. 폼을 제공하지 않습니다.
+- 일반고객: `index.html`/`consultation.html`에서 전화상담(`tel:16446873`) 중심으로 안내합니다. 폼을 제공하지 않습니다.
 - 기업고객: `corporate-report.html`(읽기 전용 검토 보고서) → `corporate-request.html`(기업명/전화번호/이메일 접수 폼) 흐름으로 안내합니다.
 - 기업 제안서 원본 PDF는 공개 assets에 존재하지 않으며, 어떤 페이지에서도 PDF 파일로 직접 링크되지 않습니다. 제안서 내용은 `corporate-report.html` 안에 페이지별 이미지(웹 최적화 webp)로 변환되어 스크롤 열람 방식으로만 제공됩니다 — 아래 "기업제안서 열람 기능" 섹션 참고.
 - `assets/wonsam-centreville-first-one-company-housing-proposal.pdf`는 삭제된 상태이며 복구하지 않습니다.
@@ -183,7 +183,7 @@ assets/site-source-images/
 - 이 어두운 톤은 이 페이지에만 적용되며, 메인 사이트(`index.html` 등)의 primary 색상(네이비 #1e3a8a)에는 영향을 주지 않습니다.
 - 실제 작동하는 내비게이션(index.html로 복귀, 상담 문의→consultation.html)과 차트 3개(상업용지 희소성, 배후 인구, 공급 타임라인), 동일한 로직의 수익률 시뮬레이터를 포함합니다.
 - **목업에 있던 "Successful Sales & Marketing Roadmap"(VIP 프라이빗 마케팅, B2B 마스터리스 계약, FOMO 전략 등 내부 영업 전략 섹션)은 의도적으로 제외했습니다.** 고객이 직접 보는 페이지에 내부 영업 전략을 노출하는 것은 부적절하다고 판단했기 때문입니다. 필요하면 별도로 내부용 문서로만 관리하는 것을 권장합니다.
-- 목업의 가짜 연락처("16XX-XXXX")는 실제 HUMANE 연락처(010-3138-1712, yisim817@gmail.com, www.humanekorea.co.kr)로 교체했습니다.
+- 목업의 가짜 연락처("16XX-XXXX")는 실제 HUMANE 연락처(1644-6873, yisim817@gmail.com, www.humanekorea.co.kr)로 교체했습니다.
 - 하단에 실제 작동하는 CTA 3개(전화상담문의/기업자료요청/메인으로 돌아가기)를 배치했습니다.
 
 ### corporate-report.html 제안서 뷰어 위치 조정
@@ -238,7 +238,7 @@ assets/site-source-images/
 
 - **히어로 안정화**: `.hero-summary-card`에서 `position: sticky`를 제거했습니다(짧은 히어로 섹션에서 sticky 카드가 붙었다 떨어지며 위아래로 움직이는 것처럼 보이는 원인). 정적 위치(`position` 미지정)로 변경하고 그리드를 `minmax(0,1fr) minmax(360px,520px)` + `align-items:start`로 고정해 렌더링 중 흔들림이 없도록 했습니다.
 - **히어로 하단 4카드 CTA 패널 신설** (`.hero-cta-panel`): 히어로 바로 아래, 인텔리전스 배너 위에 위치. 4개 카드가 명확히 분리되어 보입니다 — ① 사전의향서 접수(네이비 강조 테두리) ② 기업의향서 접수(그린 강조 테두리) ③ 기업제안서 열람 ④ 전화 상담 카드(전화번호 크게 표시 + 가격문의 버튼). 기존 히어로의 5개 버튼이 한 줄에 몰려 있던 문제를 이 카드형 배치로 대체했습니다. 히어로 자체의 버튼은 "사전의향서 접수"/"가격 및 잔여호실 문의" 2개만 남겼습니다.
-- **전화번호 강조 컴포넌트** (`.phone-cta`): 전화번호(010-3138-1712)를 26px 굵은 글씨로 크게 표시하고 `tel:` 링크를 걸었습니다. 바로 아래 "대표번호 개통 후 변경 예정" 안내를 덧붙였습니다. **번호를 바꿔야 할 때 수정할 위치는 `index.html`의 `<a class="phone-number" href="tel:...">` 한 곳**이며, 코드에 그 사실을 알리는 HTML 주석을 남겼습니다. 다만 정적 사이트 특성상(공유 템플릿 엔진 없음) 전화번호 텍스트 자체는 아래 8개 파일에 각각 하드코딩되어 있어, 실제 대표번호가 나오면 이 파일들을 모두 찾아 바꿔야 합니다: `index.html`, `corporate-report.html`, `corporate-request.html`, `consultation.html`, `intelligence-report.html`, `admin.html`, `corporate-interest.html`, `pre-interest.html` (전부 `010-3138-1712` 문자열로 검색 가능).
+- **전화번호 강조 컴포넌트** (`.phone-cta`): 전화번호(1644-6873)를 26px 굵은 글씨로 크게 표시하고 `tel:` 링크를 걸었습니다. 바로 아래 "대표번호 개통 후 변경 예정" 안내를 덧붙였습니다. **번호를 바꿔야 할 때 수정할 위치는 `index.html`의 `<a class="phone-number" href="tel:...">` 한 곳**이며, 코드에 그 사실을 알리는 HTML 주석을 남겼습니다. 다만 정적 사이트 특성상(공유 템플릿 엔진 없음) 전화번호 텍스트 자체는 아래 8개 파일에 각각 하드코딩되어 있어, 실제 대표번호가 나오면 이 파일들을 모두 찾아 바꿔야 합니다: `index.html`, `corporate-report.html`, `corporate-request.html`, `consultation.html`, `intelligence-report.html`, `admin.html`, `corporate-interest.html`, `pre-interest.html` (전부 `1644-6873` 문자열로 검색 가능).
 - **일반/기업 동선 재구성**: 기존 5카드 "어떻게 문의하면 되나요" 섹션을 2개의 큰 카드로 교체했습니다 — "일반 분양 상담"(사전의향서 접수/가격 및 잔여호실 문의/전화 상담) / "기업 검토 상담"(기업제안서 열람/기업의향서 접수/기업자료 요청). 각 카드에 설명 문구를 붙여 두 동선이 뚜렷하게 구분되도록 했습니다.
 - **기업의향서 vs 기업자료요청 역할 구분 강화**: `corporate-report.html` 상단에도 3개 카드(기업제안서 열람/기업의향서 접수/기업자료 요청)를 추가하고, 각각 "숙소 검토 의향만 먼저 남깁니다" vs "세부 제안서 원본·검토자료가 필요할 때 요청 목적과 함께 남깁니다"로 문구를 명확히 분리했습니다.
 - **네비게이션 재정리**: 상단 메뉴를 대시보드/입지수요/수익분석/특화설계/인텔리전스 리포트/기업제안서로 정리하고("분양전략" 항목 제거, "기업제안서" 항목을 새로 추가해 corporate-report.html로 직결), 우측 고정 버튼을 "의향서 접수"(→pre-interest.html) + "상담 예약"(→consultation.html) 2개로 교체했습니다(기존 "기업자료 요청" 버튼은 새 CTA 카드 패널에서 이미 충분히 강조되므로 네비게이션에서는 뺐습니다).
@@ -258,6 +258,6 @@ assets/site-source-images/
 ## 연락처
 
 HUMANE  
-010-3138-1712  
+1644-6873  
 yisim817@gmail.com  
 www.humanekorea.co.kr
