@@ -52,23 +52,22 @@ h1, h2, h3, p {
 
 /* ==========================================================================
    BRAND COLORS
-   Primary is a navy blue matching the NotebookLM-style report/dashboard
-   material (corporate proposal deck, code_artifact mockups) that the client
-   found more suitable than a full 원삼 센트레빌 퍼스트원 현장 안내 orange/green treatment. Orange and
-   green accents are kept only as minor accents —
-   green for section labels/tags, orange used sparingly. No Airbnb red, no
-   flat Notion blue.
+   Warm ivory, charcoal navy, and muted gold aligned with the project overview
+   artwork and brochure-style presentation.
    ========================================================================== */
 
 :root {
-  --humane-navy: #1e3a8a;
-  --humane-navy-active: #16295e;
-  --humane-navy-soft: #dbe4f7;
-  --humane-orange: #fe6301;
-  --humane-orange-active: #d95300;
-  --humane-orange-soft: #ffe1cc;
-  --humane-green: #017c2e;
-  --humane-green-soft: #d7f0dd;
+  --color-bg: #f7f2e9;
+  --color-surface: #fffaf1;
+  --color-surface-soft: #f1e7d6;
+  --color-card: #ffffff;
+  --color-text: #1f2933;
+  --color-muted: #6b6258;
+  --color-primary: #17202a;
+  --color-primary-soft: #263241;
+  --color-accent: #c99a4a;
+  --color-accent-soft: #e4c17a;
+  --color-border: rgba(90, 72, 45, 0.18);
 }
 
 /* ==========================================================================
@@ -76,19 +75,19 @@ h1, h2, h3, p {
    ========================================================================== */
 
 body.theme-airbnb {
-  --bg: #ffffff;
-  --bg-soft: #f9fafb;
-  --bg-strong: #f2f2f2;
-  --ink: #111827;
-  --body-text: #374151;
-  --muted: #6b7280;
-  --muted-soft: #929292;
-  --hairline: #e5e7eb;
-  --hairline-soft: #ebebeb;
-  --primary: var(--humane-navy);
-  --primary-active: var(--humane-navy-active);
-  --primary-soft: var(--humane-navy-soft);
-  --accent: var(--humane-green);
+  --bg: var(--color-bg);
+  --bg-soft: var(--color-surface);
+  --bg-strong: var(--color-surface-soft);
+  --ink: var(--color-text);
+  --body-text: #3f3a34;
+  --muted: var(--color-muted);
+  --muted-soft: #8d8275;
+  --hairline: var(--color-border);
+  --hairline-soft: rgba(90, 72, 45, 0.12);
+  --primary: var(--color-primary);
+  --primary-active: var(--color-accent);
+  --primary-soft: #eadfc9;
+  --accent: var(--color-accent);
   --on-primary: #ffffff;
 
   --radius-btn: 8px;
@@ -97,7 +96,7 @@ body.theme-airbnb {
   --radius-full: 9999px;
   --radius-input: 8px;
 
-  --shadow-1: rgba(0, 0, 0, 0.02) 0 0 0 1px, rgba(0, 0, 0, 0.04) 0 2px 6px 0, rgba(0, 0, 0, 0.1) 0 4px 8px 0;
+  --shadow-1: rgba(31, 41, 51, 0.05) 0 0 0 1px, rgba(31, 41, 51, 0.08) 0 12px 28px;
 }
 
 /* ==========================================================================
@@ -105,19 +104,19 @@ body.theme-airbnb {
    ========================================================================== */
 
 body.theme-notion {
-  --bg: #f9fafb;
-  --bg-soft: #ffffff;
-  --bg-strong: #eceae7;
-  --ink: #111827;
-  --body-text: #374151;
-  --muted: #6b7280;
+  --bg: var(--color-bg);
+  --bg-soft: var(--color-surface);
+  --bg-strong: var(--color-surface-soft);
+  --ink: var(--color-text);
+  --body-text: #3f3a34;
+  --muted: var(--color-muted);
   --muted-soft: #a39e98;
-  --hairline: #e5e7eb;
+  --hairline: var(--color-border);
   --hairline-soft: #ececec;
-  --primary: var(--humane-navy);
-  --primary-active: var(--humane-navy-active);
-  --primary-soft: var(--humane-navy-soft);
-  --accent: var(--humane-green);
+  --primary: var(--color-primary);
+  --primary-active: var(--color-accent);
+  --primary-soft: #eadfc9;
+  --accent: var(--color-accent);
   --on-primary: #ffffff;
 
   --radius-btn: 9999px;
@@ -148,7 +147,7 @@ body.theme-notion {
 }
 
 .theme-airbnb .top-nav {
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 250, 241, 0.94);
   backdrop-filter: blur(14px);
 }
 
@@ -263,24 +262,27 @@ body.theme-notion {
 .btn-primary {
   color: var(--on-primary);
   background: var(--primary);
+  border-color: var(--primary);
 }
 
 .btn-primary:hover {
   background: var(--primary-active);
+  border-color: var(--primary-active);
 }
 
 .btn-secondary {
   color: var(--ink);
   background: var(--bg-soft);
-  border-color: var(--hairline);
+  border-color: var(--accent);
 }
 
 .theme-airbnb .btn-secondary {
-  border-color: var(--ink);
+  border-color: var(--accent);
 }
 
 .btn-secondary:hover {
-  background: var(--bg-strong);
+  color: var(--on-primary);
+  background: var(--accent);
 }
 
 .btn-text {
@@ -682,6 +684,34 @@ body.theme-notion {
   font-size: 13px;
   font-weight: 800;
   line-height: 1.45;
+}
+
+.corporate-image-card {
+  max-width: 960px;
+  margin: 28px auto 0;
+  padding: 20px;
+  background: var(--bg-soft);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+}
+
+.corporate-image-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-height: 460px;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--bg-strong);
+}
+
+.corporate-image-frame img {
+  width: 100%;
+  height: 100%;
+  max-height: 460px;
+  object-fit: contain;
 }
 
 .data-card-grid {
@@ -1173,6 +1203,10 @@ body.theme-notion {
   line-height: 1.35;
 }
 
+.dashboard-facts {
+  max-width: 680px;
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -1332,6 +1366,47 @@ body.theme-notion {
   background: var(--bg-soft);
 }
 
+.location-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.location-summary-card {
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  background: var(--bg);
+  box-shadow: var(--shadow-1);
+}
+
+.location-summary-card img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  background: var(--bg-strong);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.location-summary-card h3 {
+  margin: 18px 18px 8px;
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.location-summary-card p {
+  margin: 0 18px 20px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.section-action {
+  display: flex;
+  margin-top: 24px;
+}
+
 /* ==========================================================================
    AIRBNB — MEDIA / MATERIALS
    ========================================================================== */
@@ -1484,12 +1559,12 @@ body.theme-notion {
 
 .site-footer {
   padding: 44px 0 32px;
-  border-top: 1px solid var(--hairline);
-  background: var(--bg);
+  border-top: 1px solid rgba(228, 193, 122, 0.28);
+  background: var(--primary);
 }
 
 .theme-notion .site-footer {
-  background: var(--bg-soft);
+  background: var(--primary);
 }
 
 .footer-grid {
@@ -1502,7 +1577,7 @@ body.theme-notion {
 .site-footer strong {
   display: block;
   margin-bottom: 10px;
-  color: var(--ink);
+  color: #fffaf1;
   font-size: 18px;
 }
 
@@ -1510,8 +1585,15 @@ body.theme-notion {
 .site-footer a {
   display: block;
   margin-bottom: 4px;
-  color: var(--muted);
+  color: rgba(255, 250, 241, 0.78);
   font-size: 14px;
+}
+
+.site-footer a[href^="tel:"] {
+  margin-top: 6px;
+  color: var(--color-accent-soft);
+  font-size: 22px;
+  font-weight: 800;
 }
 
 .footer-notice {
@@ -2452,7 +2534,8 @@ body.modal-open {
   .info-card-grid,
   .chart-grid,
   .steps-grid,
-  .resource-card-grid {
+  .resource-card-grid,
+  .location-summary-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -2527,14 +2610,25 @@ body.modal-open {
   .info-card-grid,
   .chart-grid,
   .steps-grid,
-  .resource-card-grid {
+  .resource-card-grid,
+  .location-summary-grid {
     grid-template-columns: 1fr;
   }
 
   .resource-card,
   .intel-section,
-  .cta-strip {
+  .cta-strip,
+  .corporate-image-card {
     padding: 20px;
+  }
+
+  .corporate-image-frame {
+    max-height: none;
+  }
+
+  .corporate-image-frame img {
+    height: auto;
+    max-height: none;
   }
 
   .cta-strip {
