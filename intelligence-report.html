@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>인텔리전스 리포트 | 원삼 센트레빌 퍼스트원</title>
-    <meta name="description" content="원삼 센트레빌 퍼스트원 입지 희소성, 배후 수요, 수익률 시뮬레이션을 정리한 참고용 인텔리전스 리포트입니다.">
+    <meta name="description" content="원삼 센트레빌 퍼스트원 입지 희소성, 배후 수요, 산업단지 생활권을 정리한 참고용 인텔리전스 리포트입니다.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -96,7 +96,6 @@
             <div class="hidden md:flex space-x-10 text-sm font-semibold tracking-wide">
                 <a href="#scarcity" class="hover:text-indigo-400 transition-colors">희소성 분석</a>
                 <a href="#demand" class="hover:text-indigo-400 transition-colors">수요 데이터</a>
-                <a href="#finance" class="hover:text-indigo-400 transition-colors">수익 시뮬레이션</a>
                 <a href="corporate-data.html" class="hover:text-indigo-400 transition-colors">기업 검토 자료실</a>
             </div>
             <a href="consultation.html" class="px-6 py-2.5 rounded-full vibrant-gradient text-sm font-bold shadow-lg shadow-indigo-500/20 hover:scale-105 transition-transform">상담 문의</a>
@@ -171,35 +170,6 @@
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-[1.18fr_0.82fr] gap-8 mb-12">
-                    <figure class="source-image-feature">
-                        <img
-                            src="assets/site-source-images/cluster-aerial-e2-location.webp"
-                            alt="용인 반도체클러스터 FAB 배치와 E2-1 상업시설용지 위치 참고 항공 이미지"
-                            loading="lazy"
-                        >
-                        <figcaption>용인 반도체클러스터 E2-1·E2-2 상업시설용지 위치 참고 이미지</figcaption>
-                    </figure>
-                    <div class="grid gap-8">
-                        <figure class="source-image-card">
-                            <img
-                                src="assets/site-source-images/sk-dormitory-e2-site-map.webp"
-                                alt="용인 반도체클러스터 주요 출입 동선과 E2 상업시설용지 위치를 설명한 참고 지도"
-                                loading="lazy"
-                            >
-                            <figcaption>SK기숙사 및 상업시설용지 인접 구조 참고 이미지</figcaption>
-                        </figure>
-                        <figure class="source-image-card">
-                            <img
-                                src="assets/site-source-images/yongin-cluster-wide-map.webp"
-                                alt="용인 주요 반도체 클러스터 현황과 광역 입지를 정리한 참고 지도"
-                                loading="lazy"
-                            >
-                            <figcaption>용인 반도체클러스터 광역 입지 참고 이미지</figcaption>
-                        </figure>
-                    </div>
-                </div>
-
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                     <div class="card-glass p-8">
                         <svg viewBox="0 0 640 340" role="img" aria-label="용인 반도체클러스터 내 원삼 센트레빌 퍼스트원 위치 개략도 (자체 제작 참고용 다이어그램)" style="width:100%;height:auto;display:block;">
@@ -262,14 +232,9 @@
                         <div class="flex flex-wrap gap-3 mt-6">
                             <a href="consultation.html" class="px-6 py-3 rounded-full vibrant-gradient text-sm font-bold">현장 상담 문의</a>
                             <a href="corporate-interest.html" class="px-6 py-3 rounded-full border border-indigo-500/50 text-indigo-400 text-sm font-bold">기업의향서 접수</a>
-                            <a href="corporate-report.html" class="px-6 py-3 rounded-full border border-indigo-500/50 text-indigo-400 text-sm font-bold">기업제안서 열람</a>
                         </div>
                     </div>
                 </div>
-                <p class="text-xs text-center text-gray-500 mt-8">
-                    본 이미지는 공개 웹자료 및 현장 홍보자료를 기반으로 위치 이해를 돕기 위한 참고 이미지입니다.
-                    세부 위치, 공급 조건, 일정은 상담 시 최신 자료 기준으로 확인됩니다.
-                </p>
             </div>
         </section>
 
@@ -403,57 +368,6 @@
             </div>
         </section>
 
-        <section id="finance" class="py-24 px-6 bg-indigo-950/20">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl font-extrabold mb-6">수익률 시뮬레이션 (참고용)</h2>
-                    <p class="text-gray-400 text-lg">대출 비율과 금리를 조정해 참고용 자기자본 수익률을 확인할 수 있습니다. 실제 조건과 다를 수 있으며 수익을 약속하지 않습니다.</p>
-                </div>
-
-                <div class="max-w-4xl mx-auto card-glass p-8 md:p-12 shadow-indigo-500/10 shadow-2xl">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                        <div class="space-y-10">
-                            <div>
-                                <label class="flex justify-between text-sm font-bold mb-4 uppercase tracking-tighter">
-                                    <span>대출 비율 (LTV)</span>
-                                    <span id="ltvDisplay" class="text-indigo-400 text-lg font-black">60%</span>
-                                </label>
-                                <input type="range" id="ltvInput" min="0" max="80" step="10" value="60">
-                            </div>
-                            <div>
-                                <label class="flex justify-between text-sm font-bold mb-4 uppercase tracking-tighter">
-                                    <span>담보 대출 금리 (연)</span>
-                                    <span id="rateDisplay" class="text-indigo-400 text-lg font-black">4.5%</span>
-                                </label>
-                                <input type="range" id="rateInput" min="2" max="7" step="0.1" value="4.5">
-                            </div>
-                            <div class="pt-6 border-t border-gray-800">
-                                <div class="flex justify-between mb-4">
-                                    <span class="text-gray-500 text-sm">실 투자금(자기자본)</span>
-                                    <span id="equityText" class="font-bold text-white">9,000만 원</span>
-                                </div>
-                                <div class="flex justify-between mb-4">
-                                    <span class="text-gray-500 text-sm">연간 이자 비용</span>
-                                    <span id="interestText" class="font-bold text-red-400">608만 원</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-gray-500 text-sm">연간 임대 순수익</span>
-                                    <span id="netIncomeText" class="font-bold text-green-400">772만 원</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="vibrant-gradient rounded-2xl p-8 flex flex-col justify-center items-center text-center shadow-xl">
-                            <span class="text-indigo-100/70 text-sm font-bold mb-4 uppercase tracking-widest">참고 자기자본 수익률</span>
-                            <div id="roeDisplay" class="text-6xl font-black italic tracking-tighter mb-4">8.6%</div>
-                            <p class="text-indigo-100 text-sm leading-relaxed font-medium">
-                                분양가 2억 2,500만 원(참고),<br>월세 115만 원(보증금 500만 원, 인근 시세 참고)<br>기준 참고용 추정치입니다.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section class="py-16 px-6">
             <div class="max-w-4xl mx-auto card-glass p-10">
                 <h2 class="text-2xl font-bold mb-4">유의사항</h2>
@@ -473,49 +387,6 @@
             </div>
         </section>
     </main>
-
-        <section id="business-plan-analysis" class="py-24 px-6 bg-gray-900/40 border-t border-gray-800">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <p class="text-xs font-extrabold tracking-[0.3em] text-amber-300 uppercase mb-4">Business Plan Reference</p>
-                    <h2 class="text-4xl font-extrabold mb-6">사업계획서 기반 현장 리서치</h2>
-                    <p class="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
-                        반도체클러스터, 입지, 산업단지, 상업시설, 기업숙소, 동선을 함께 검토할 수 있도록
-                        사업계획서 이미지를 리포트형 자료로 재구성했습니다.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
-                    <figure class="source-image-feature">
-                        <img src="assets/images/business-plan/industrial-site-layout.webp" width="1200" height="800" loading="lazy" alt="산업단지 배치도와 SITE 위치">
-                        <figcaption>산업단지 배치도: SK하이닉스, 지원시설, E2-1·E2-2 관계 검토</figcaption>
-                    </figure>
-                    <figure class="source-image-feature">
-                        <img src="assets/images/business-plan/fab-e2-location.webp" width="1356" height="768" loading="lazy" alt="FAB와 E2 지원시설용지 위치 관계">
-                        <figcaption>FAB·지원시설 동선: 기업숙소·직원숙소 검토 시 참고 구간</figcaption>
-                    </figure>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="card-glass p-6 border-l-4 border-amber-400">
-                        <h3 class="text-xl font-extrabold mb-3">반도체클러스터</h3>
-                        <p class="text-gray-400 leading-relaxed text-sm">용인 반도체클러스터 일반산업단지와 광역 산업축을 함께 보면 배후 생활권 형성 가능성을 검토할 수 있습니다.</p>
-                    </div>
-                    <div class="card-glass p-6 border-l-4 border-indigo-400">
-                        <h3 class="text-xl font-extrabold mb-3">상업시설·생활 인프라</h3>
-                        <p class="text-gray-400 leading-relaxed text-sm">E2-1·E2-2 지원시설용지는 주요 출입 동선 인접 구간으로 생활 편의 수요 검토에 활용할 수 있습니다.</p>
-                    </div>
-                    <div class="card-glass p-6 border-l-4 border-emerald-400">
-                        <h3 class="text-xl font-extrabold mb-3">기업숙소 동선</h3>
-                        <p class="text-gray-400 leading-relaxed text-sm">직주근접, 장기 체류, 출장 인력 숙소 관점에서 현장과 지원시설의 관계를 확인하는 참고자료입니다.</p>
-                    </div>
-                </div>
-
-                <div class="mt-10 text-center">
-                    <a href="corporate-data.html" class="inline-flex px-7 py-3 rounded-full bg-amber-400 text-gray-950 text-sm font-extrabold hover:bg-amber-300 transition-colors">기업 검토 자료실 보기</a>
-                </div>
-            </div>
-        </section>
 
     <footer class="bg-gray-950 py-16 px-6 border-t border-gray-900">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
@@ -608,47 +479,8 @@
             }
         }
 
-        var ltvInput = document.getElementById('ltvInput');
-        var rateInput = document.getElementById('rateInput');
-        var ltvDisplay = document.getElementById('ltvDisplay');
-        var rateDisplay = document.getElementById('rateDisplay');
-        var equityText = document.getElementById('equityText');
-        var interestText = document.getElementById('interestText');
-        var netIncomeText = document.getElementById('netIncomeText');
-        var roeDisplay = document.getElementById('roeDisplay');
-
-        function calculateFinance() {
-            var price = 225000000;
-            var deposit = 5000000;
-            var monthlyRent = 1150000;
-            var yearlyRevenue = monthlyRent * 12;
-
-            var ltv = parseInt(ltvInput.value, 10) / 100;
-            var rate = parseFloat(rateInput.value) / 100;
-
-            ltvDisplay.textContent = (ltv * 100) + '%';
-            rateDisplay.textContent = (rate * 100).toFixed(1) + '%';
-
-            var loan = price * ltv;
-            var equity = price - deposit - loan;
-            var yearlyInterest = loan * rate;
-            var netIncome = yearlyRevenue - yearlyInterest;
-            var roe = equity > 0 ? (netIncome / equity) * 100 : 0;
-
-            equityText.textContent = Math.round(equity / 10000).toLocaleString() + '만 원';
-            interestText.textContent = Math.round(yearlyInterest / 10000).toLocaleString() + '만 원';
-            netIncomeText.textContent = Math.round(netIncome / 10000).toLocaleString() + '만 원';
-            roeDisplay.textContent = roe.toFixed(1) + '%';
-        }
-
-        if (ltvInput && rateInput) {
-            ltvInput.addEventListener('input', calculateFinance);
-            rateInput.addEventListener('input', calculateFinance);
-        }
-
         window.addEventListener('DOMContentLoaded', function () {
             initCharts();
-            calculateFinance();
         });
     </script>
     <script src="contact.js"></script>
