@@ -740,17 +740,261 @@ body.theme-notion {
   line-height: 1.65;
 }
 
+.plan-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+.plan-split.reverse {
+  grid-template-columns: minmax(320px, 0.92fr) minmax(0, 1.08fr);
+}
+
+.plan-image-card {
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+  box-shadow: var(--shadow-1);
+  cursor: zoom-in;
+}
+
+.plan-image-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.plan-image-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--plan-aspect, auto);
+  object-fit: contain;
+  background: #eef2f7;
+}
+
+.plan-image-card figcaption {
+  padding: 14px 16px;
+  color: var(--body-text);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.business-bullet-card,
+.industry-infographic,
+.cta-strip {
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+  box-shadow: var(--shadow-1);
+}
+
+.business-bullet-card h3 {
+  margin-bottom: 16px;
+  color: var(--ink);
+  font-size: 22px;
+}
+
+.checked-list {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.checked-list li {
+  position: relative;
+  padding-left: 24px;
+  color: var(--body-text);
+  line-height: 1.65;
+}
+
+.checked-list li::before {
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  content: "";
+}
+
+.design-reference-grid,
+.district-card-grid,
+.brand-intent-grid,
+.data-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.design-reference-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.district-card-grid article,
+.brand-intent-grid article,
+.data-card {
+  padding: 22px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  background: var(--bg-soft);
+  box-shadow: var(--shadow-1);
+}
+
+.district-card-grid span,
+.data-card span,
+.brand-intent-grid span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.district-card-grid strong,
+.data-card strong,
+.brand-intent-grid strong {
+  display: block;
+  color: var(--ink);
+  font-size: 19px;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.district-card-grid p,
+.data-card p {
+  margin: 12px 0 0;
+  color: var(--body-text);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.brand-intent-grid article {
+  border-left: 5px solid var(--accent);
+}
+
+.brand-intent-grid span {
+  margin: 10px 0 0;
+}
+
+.legal-note {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.industry-infographic {
+  display: grid;
+  gap: 18px;
+  align-content: center;
+  background:
+    linear-gradient(135deg, rgba(30, 58, 138, 0.08), rgba(245, 158, 11, 0.08)),
+    var(--bg-soft);
+}
+
+.industry-node {
+  padding: 22px;
+  border-radius: var(--radius-card);
+  color: #fff;
+  font-weight: 900;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.industry-node-main {
+  background: var(--primary);
+}
+
+.industry-node-site {
+  background: var(--accent);
+}
+
+.industry-flow {
+  width: 2px;
+  min-height: 42px;
+  margin: 0 auto;
+  background: linear-gradient(var(--primary), var(--accent));
+}
+
+.industry-support-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.industry-support-grid span {
+  padding: 12px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-btn);
+  background: #fff;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.business-data-hero {
+  background:
+    linear-gradient(135deg, rgba(30, 58, 138, 0.08), rgba(245, 158, 11, 0.08)),
+    var(--bg);
+}
+
+.business-data-cta,
+.cta-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.business-data-cta {
+  margin-top: 24px;
+}
+
+.cta-strip {
+  justify-content: space-between;
+}
+
+.cta-strip h2 {
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+
+.cta-strip p {
+  margin: 0;
+  color: var(--body-text);
+}
+
 @media (max-width: 980px) {
   .site-image-showcase,
-  .site-image-showcase.is-compact {
+  .site-image-showcase.is-compact,
+  .plan-split,
+  .plan-split.reverse {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 720px) {
   .site-image-grid,
-  .corporate-image-points {
+  .corporate-image-points,
+  .design-reference-grid,
+  .district-card-grid,
+  .brand-intent-grid,
+  .data-card-grid {
     grid-template-columns: 1fr;
+  }
+
+  .business-data-cta .btn,
+  .location-cta-row .btn {
+    width: 100%;
   }
 }
 
@@ -2522,6 +2766,12 @@ tr:last-child td {
   height: auto;
   display: block;
   border-radius: var(--radius-card);
+  touch-action: pinch-zoom;
+}
+
+.media-modal__content--zoomable {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .media-modal--double .media-modal__content img {

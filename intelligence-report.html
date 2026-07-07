@@ -9,11 +9,20 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+        html {
+            overflow-x: hidden;
+        }
         body {
             font-family: 'Pretendard', sans-serif;
             background-color: #030712;
             color: #f9fafb;
             margin: 0;
+            overflow-x: hidden;
         }
         .chart-container {
             position: relative;
@@ -88,6 +97,7 @@
                 <a href="#scarcity" class="hover:text-indigo-400 transition-colors">희소성 분석</a>
                 <a href="#demand" class="hover:text-indigo-400 transition-colors">수요 데이터</a>
                 <a href="#finance" class="hover:text-indigo-400 transition-colors">수익 시뮬레이션</a>
+                <a href="corporate-data.html" class="hover:text-indigo-400 transition-colors">기업 검토 자료실</a>
             </div>
             <a href="consultation.html" class="px-6 py-2.5 rounded-full vibrant-gradient text-sm font-bold shadow-lg shadow-indigo-500/20 hover:scale-105 transition-transform">상담 문의</a>
         </div>
@@ -349,7 +359,7 @@
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
                     <h2 class="text-4xl font-extrabold mb-6">수익률 시뮬레이션 (참고용)</h2>
-                    <p class="text-gray-400 text-lg">대출 비율과 금리를 조정해 참고용 자기자본 수익률을 확인할 수 있습니다. 실제 조건과 다를 수 있으며 수익을 보장하지 않습니다.</p>
+                    <p class="text-gray-400 text-lg">대출 비율과 금리를 조정해 참고용 자기자본 수익률을 확인할 수 있습니다. 실제 조건과 다를 수 있으며 수익을 약속하지 않습니다.</p>
                 </div>
 
                 <div class="max-w-4xl mx-auto card-glass p-8 md:p-12 shadow-indigo-500/10 shadow-2xl">
@@ -402,7 +412,7 @@
                 <div class="space-y-2 text-sm text-gray-400 leading-relaxed">
                     <p>본 페이지는 공식 분양 자료가 아닌 참고용 인텔리전스 리포트입니다.</p>
                     <p>수록된 수치는 공개 자료를 바탕으로 재구성한 참고 추정치이며, 사업 계획 확정 전 변경될 수 있습니다.</p>
-                    <p>본 페이지는 수익이나 가치 상승을 보장하지 않습니다.</p>
+                            <p>본 페이지는 수익이나 가치 상승을 약속하지 않습니다.</p>
                     <p>세부 조건은 상담 또는 기업자료 요청을 통해 최신 자료 기준으로 확인해 주시기 바랍니다.</p>
                 </div>
                 <div class="flex flex-wrap gap-4 mt-8">
@@ -415,6 +425,49 @@
             </div>
         </section>
     </main>
+
+        <section id="business-plan-analysis" class="py-24 px-6 bg-gray-900/40 border-t border-gray-800">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <p class="text-xs font-extrabold tracking-[0.3em] text-amber-300 uppercase mb-4">Business Plan Reference</p>
+                    <h2 class="text-4xl font-extrabold mb-6">사업계획서 기반 현장 리서치</h2>
+                    <p class="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
+                        반도체클러스터, 입지, 산업단지, 상업시설, 기업숙소, 동선을 함께 검토할 수 있도록
+                        사업계획서 이미지를 리포트형 자료로 재구성했습니다.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                    <figure class="source-image-feature">
+                        <img src="assets/images/business-plan/industrial-site-layout.webp" width="1200" height="800" loading="lazy" alt="산업단지 배치도와 SITE 위치">
+                        <figcaption>산업단지 배치도: SK하이닉스, 지원시설, E2-1·E2-2 관계 검토</figcaption>
+                    </figure>
+                    <figure class="source-image-feature">
+                        <img src="assets/images/business-plan/fab-e2-location.webp" width="1356" height="768" loading="lazy" alt="FAB와 E2 지원시설용지 위치 관계">
+                        <figcaption>FAB·지원시설 동선: 기업숙소·직원숙소 검토 시 참고 구간</figcaption>
+                    </figure>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card-glass p-6 border-l-4 border-amber-400">
+                        <h3 class="text-xl font-extrabold mb-3">반도체클러스터</h3>
+                        <p class="text-gray-400 leading-relaxed text-sm">용인 반도체클러스터 일반산업단지와 광역 산업축을 함께 보면 배후 생활권 형성 가능성을 검토할 수 있습니다.</p>
+                    </div>
+                    <div class="card-glass p-6 border-l-4 border-indigo-400">
+                        <h3 class="text-xl font-extrabold mb-3">상업시설·생활 인프라</h3>
+                        <p class="text-gray-400 leading-relaxed text-sm">E2-1·E2-2 지원시설용지는 주요 출입 동선 인접 구간으로 생활 편의 수요 검토에 활용할 수 있습니다.</p>
+                    </div>
+                    <div class="card-glass p-6 border-l-4 border-emerald-400">
+                        <h3 class="text-xl font-extrabold mb-3">기업숙소 동선</h3>
+                        <p class="text-gray-400 leading-relaxed text-sm">직주근접, 장기 체류, 출장 인력 숙소 관점에서 현장과 지원시설의 관계를 확인하는 참고자료입니다.</p>
+                    </div>
+                </div>
+
+                <div class="mt-10 text-center">
+                    <a href="corporate-data.html" class="inline-flex px-7 py-3 rounded-full bg-amber-400 text-gray-950 text-sm font-extrabold hover:bg-amber-300 transition-colors">기업 검토 자료실 보기</a>
+                </div>
+            </div>
+        </section>
 
     <footer class="bg-gray-950 py-16 px-6 border-t border-gray-900">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
