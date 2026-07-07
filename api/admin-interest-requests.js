@@ -7,17 +7,35 @@ function safeCompare(a, b) {
   return crypto.timingSafeEqual(bufA, bufB);
 }
 
+function readBody(req) {
+  if (!req.body) return {};
+  if (typeof req.body === "string") {
+    try {
+      return JSON.parse(req.body);
+    } catch {
+      return {};
+    }
+  }
+  return req.body;
+}
+
+function isAuthorized(req) {
+  const ADMIN_EMAIL = "yisim817@gmail.com";
+  const ADMIN_TOKEN = process.env.ADMIN_TOKEN;
+  const body = readBody(req);
+  const email = String(body.email || req.headers["x-admin-email"] || "").trim().toLowerCase();
+  const token = String(body.token || "").trim();
+
+  return Boolean(ADMIN_TOKEN && email === ADMIN_EMAIL && token && safeCompare(token, ADMIN_TOKEN));
+}
+
 module.exports = async function handler(req, res) {
-  if (req.method !== "GET") {
-    res.status(405).json({ error: "Method not allowed" });
+  if (req.method !== "POST") {
+    res.status(401).json({ error: "관리자 인증이 필요합니다." });
     return;
   }
 
-  const ADMIN_TOKEN = process.env.ADMIN_TOKEN;
-  const authHeader = req.headers.authorization || "";
-  const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : "";
-
-  if (!ADMIN_TOKEN || !token || !safeCompare(token, ADMIN_TOKEN)) {
+  if (!isAuthorized(req)) {
     res.status(401).json({ error: "관리자 인증이 필요합니다." });
     return;
   }

@@ -27,7 +27,7 @@
           <span class="doc-eyebrow">관리자 전용</span>
           <h1>접수 내역 관리자</h1>
           <p class="doc-hero-lead">
-            관리자 비밀번호를 입력하면 개인 사전의향서, 기업의향서, 기업자료 요청 내역을
+            관리자 이메일과 비밀번호를 입력하면 개인 사전의향서, 기업의향서, 기업자료 요청 내역을
             통합 목록으로 확인할 수 있습니다. 목록은 인증된 관리자에게만 표시됩니다.
           </p>
         </div>
@@ -37,13 +37,17 @@
         <div class="container">
           <form id="admin-login-form" class="form-card admin-login-card">
             <div class="form-field">
+              <label for="admin-email">관리자 이메일</label>
+              <input id="admin-email" type="email" placeholder="관리자 이메일" autocomplete="username" required>
+            </div>
+            <div class="form-field">
               <label for="admin-token">관리자 비밀번호</label>
-              <input id="admin-token" type="password" autocomplete="off" required>
+              <input id="admin-token" type="password" placeholder="관리자 비밀번호" autocomplete="current-password" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block">관리자 확인</button>
             <div id="admin-login-status" class="form-note" role="status" hidden></div>
             <p class="form-note">
-              비밀번호는 서버 환경변수 <code>ADMIN_TOKEN</code>과 비교됩니다. 페이지 코드에는 실제 비밀번호를 저장하지 않습니다.
+              관리자 이메일은 <code>yisim817@gmail.com</code>만 허용되며, 비밀번호는 서버 환경변수 <code>ADMIN_TOKEN</code>과 비교됩니다. 페이지 코드에는 실제 비밀번호를 저장하지 않습니다.
             </p>
           </form>
 
@@ -100,6 +104,7 @@
     <script>
       const loginForm = document.querySelector("#admin-login-form");
       const loginStatus = document.querySelector("#admin-login-status");
+      const emailInput = document.querySelector("#admin-email");
       const tokenInput = document.querySelector("#admin-token");
       const dashboard = document.querySelector("#admin-dashboard");
       const summary = document.querySelector("#admin-summary");
@@ -109,7 +114,8 @@
       const searchInput = document.querySelector("#admin-search");
       const refreshButton = document.querySelector("#admin-refresh");
       const logoutButton = document.querySelector("#admin-logout");
-      const STORAGE_KEY = "wonsam_admin_token";
+      const STORAGE_KEY = "wonsam_admin_credentials";
+      const ADMIN_EMAIL = "yisim817@gmail.com";
       const TYPE_LABELS = {
         pre_interest: "개인 사전의향서",
         personal_interest: "개인 사전의향서",
@@ -118,7 +124,7 @@
       };
 
       let allRows = [];
-      let activeToken = "";
+      let activeCredentials = null;
 
       function showLoginStatus(message, isError) {
         loginStatus.hidden = false;
@@ -159,9 +165,11 @@
         };
       }
 
-      async function fetchAdminJson(url, token) {
+      async function fetchAdminJson(url, credentials) {
         const response = await fetch(url, {
-          headers: { Authorization: `Bearer ${token}` },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(credentials),
         });
 
         if (response.status === 401) {
@@ -175,22 +183,22 @@
         return response.json();
       }
 
-      async function loadAllRows(token) {
-        activeToken = token;
+      async function loadAllRows(credentials) {
+        activeCredentials = credentials;
         refreshButton.disabled = true;
         refreshButton.textContent = "불러오는 중...";
 
         try {
           const [requestResult, interestResult] = await Promise.all([
-            fetchAdminJson("/api/admin-requests", token),
-            fetchAdminJson("/api/admin-interest-requests", token),
+            fetchAdminJson("/api/admin-requests", credentials),
+            fetchAdminJson("/api/admin-interest-requests", credentials),
           ]);
 
           const requests = (requestResult.data || []).map(normalizeCorporateRequest);
           const interests = (interestResult.data || []).map(normalizeInterest);
           allRows = [...requests, ...interests].sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
 
-          sessionStorage.setItem(STORAGE_KEY, token);
+          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(credentials));
           loginForm.hidden = true;
           dashboard.hidden = false;
           showLoginStatus("관리자 인증이 완료되었습니다.", false);
@@ -200,7 +208,7 @@
             sessionStorage.removeItem(STORAGE_KEY);
             loginForm.hidden = false;
             dashboard.hidden = true;
-            showLoginStatus("비밀번호가 올바르지 않습니다.", true);
+            showLoginStatus("관리자 인증에 실패했습니다.", true);
             return;
           }
           showLoginStatus("접수 내역을 불러오지 못했습니다. 환경변수와 Supabase 설정을 확인해 주세요.", true);
@@ -242,21 +250,28 @@
 
       loginForm.addEventListener("submit", (event) => {
         event.preventDefault();
+        const email = emailInput.value.trim().toLowerCase();
         const token = tokenInput.value.trim();
-        if (!token) return;
-        loadAllRows(token);
+        if (!email || !token) return;
+        if (email !== ADMIN_EMAIL) {
+          sessionStorage.removeItem(STORAGE_KEY);
+          showLoginStatus("관리자 인증에 실패했습니다.", true);
+          return;
+        }
+        loadAllRows({ email, token });
       });
 
       refreshButton.addEventListener("click", () => {
-        if (activeToken) loadAllRows(activeToken);
+        if (activeCredentials) loadAllRows(activeCredentials);
       });
 
       logoutButton.addEventListener("click", () => {
         sessionStorage.removeItem(STORAGE_KEY);
-        activeToken = "";
+        activeCredentials = null;
         allRows = [];
         dashboard.hidden = true;
         loginForm.hidden = false;
+        emailInput.value = "";
         tokenInput.value = "";
         showLoginStatus("로그아웃되었습니다.", false);
       });
@@ -264,9 +279,16 @@
       typeFilter.addEventListener("change", renderRows);
       searchInput.addEventListener("input", renderRows);
 
-      const savedToken = sessionStorage.getItem(STORAGE_KEY);
-      if (savedToken) {
-        loadAllRows(savedToken);
+      const savedCredentials = sessionStorage.getItem(STORAGE_KEY);
+      if (savedCredentials) {
+        try {
+          const parsed = JSON.parse(savedCredentials);
+          if (parsed.email === ADMIN_EMAIL && parsed.token) {
+            loadAllRows(parsed);
+          }
+        } catch {
+          sessionStorage.removeItem(STORAGE_KEY);
+        }
       }
     </script>
     <script src="contact.js"></script>

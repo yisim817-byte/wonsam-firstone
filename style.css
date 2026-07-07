@@ -1866,6 +1866,8 @@ tr:last-child td {
 }
 
 .admin-login-card {
+  display: grid;
+  gap: 18px;
   margin-bottom: 32px;
 }
 

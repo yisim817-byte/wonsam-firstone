@@ -67,7 +67,7 @@ README.md
 구조:
 - `corporate-request.html` → `fetch('/api/corporate-request')`로 JSON 전송
 - `api/corporate-request.js` (Vercel Serverless Function) → Supabase `corporate_requests` 테이블에 저장
-- `admin.html` → 관리자 비밀번호 입력 후 `api/admin-requests.js`를 통해 접수 목록 조회
+- `admin.html` → 관리자 이메일(`yisim817@gmail.com`)과 관리자 비밀번호 입력 후 관리자 API를 통해 접수 목록 조회
 - Supabase 프로젝트: `wonsam-firstone` (project ref: `imtkbgdrvwmgvolzscxt`, region: ap-northeast-2), 테이블 `corporate_requests`는 RLS 활성화 + 정책 없음 → anon/publishable 키로는 절대 조회·삽입 불가하며, service_role 키를 쓰는 서버 함수에서만 접근 가능합니다.
 
 ### 배포 전 필수 설정 (Vercel 환경변수)
@@ -84,7 +84,7 @@ Vercel 프로젝트(`wonsam-firstone`) → Settings → Environment Variables에
 
 ### 관리자 확인 방법
 
-`https://wonsam-firstone.co.kr/admin.html` 접속 → `ADMIN_TOKEN`으로 설정한 비밀번호 입력 → 접수일시/기업명/전화번호/이메일/요청목적 목록 확인. 비밀번호는 세션 스토리지에만 저장되며 탭을 닫으면 초기화됩니다. 이 페이지는 `noindex`로 검색엔진 노출을 차단했습니다.
+`https://wonsam-firstone.co.kr/admin.html` 접속 → 관리자 이메일 `yisim817@gmail.com`과 `ADMIN_TOKEN`으로 설정한 비밀번호 입력 → 접수일시/기업명/전화번호/이메일/요청목적 목록 확인. 인증값은 세션 스토리지에만 저장되며 탭을 닫으면 초기화됩니다. 이 페이지는 `noindex`로 검색엔진 노출을 차단했습니다.
 
 ### 정적 사이트 한계 (반드시 인지할 것)
 
@@ -289,10 +289,13 @@ wonsam-firstone.co.kr
 ### 관리자 페이지
 
 - 관리자 경로: `/admin.html`
-- 관리자 페이지는 `ADMIN_TOKEN`을 입력해야 목록을 조회합니다.
-- 서버 API는 `Authorization: Bearer <ADMIN_TOKEN>` 값을 Vercel 환경변수 `ADMIN_TOKEN`과 비교합니다.
+- 관리자 페이지는 관리자 이메일과 관리자 비밀번호를 함께 입력해야 목록을 조회합니다.
+- 관리자 이메일 고정값: `yisim817@gmail.com`
+- 관리자 비밀번호: Vercel 환경변수 `ADMIN_TOKEN` 값
+- 서버 API는 POST body의 `email`이 `yisim817@gmail.com`인지 확인하고, `token`을 Vercel 환경변수 `ADMIN_TOKEN`과 비교합니다.
 - 일반 방문자는 접수 목록을 볼 수 없고, API 직접 호출 시 토큰이 없거나 틀리면 401을 반환합니다.
 - 관리자 화면에서 개인 사전의향서, 기업의향서, 기업자료 요청을 통합 목록으로 조회하고 유형 필터와 검색을 사용할 수 있습니다.
+- 관리자 이메일은 코드에 고정되어도 되지만, `ADMIN_TOKEN`은 절대 코드나 문서에 직접 넣지 않습니다.
 
 ### Vercel 환경변수
 
@@ -307,8 +310,9 @@ wonsam-firstone.co.kr
 - `pre-interest.html`에서 이름/전화번호/이메일 입력 후 접수 성공 메시지 확인
 - `corporate-interest.html`에서 기업명/담당자명/전화번호/이메일 입력 후 접수 성공 메시지 확인
 - `corporate-request.html`에서 기업자료 요청 접수 성공 메시지 확인
-- `/api/admin-requests`와 `/api/admin-interest-requests`가 토큰 없이 401을 반환하는지 확인
-- `/admin.html`에서 올바른 관리자 비밀번호 입력 후 3종 접수 목록이 최신순으로 표시되는지 확인
+- `/api/admin-requests`와 `/api/admin-interest-requests`가 인증값 없이 401을 반환하는지 확인
+- `/admin.html`에서 잘못된 이메일 또는 잘못된 비밀번호 입력 시 "관리자 인증에 실패했습니다."가 표시되는지 확인
+- `/admin.html`에서 `yisim817@gmail.com`과 올바른 `ADMIN_TOKEN` 입력 후 3종 접수 목록이 최신순으로 표시되는지 확인
 - 모바일에서 폼과 관리자 카드 목록이 깨지지 않는지 확인
 
 
