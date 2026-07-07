@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
   const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : "";
 
   if (!ADMIN_TOKEN || !token || !safeCompare(token, ADMIN_TOKEN)) {
-    res.status(401).json({ error: "인증이 필요합니다." });
+    res.status(401).json({ error: "관리자 인증이 필요합니다." });
     return;
   }
 

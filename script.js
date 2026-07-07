@@ -15,57 +15,101 @@ if (navToggle && mobileNav) {
   });
 }
 
+function isValidPhone(value) {
+  return /^[0-9+\-\s().]{8,20}$/.test(value);
+}
+
+function isValidEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function showFormStatus(statusBox, message, isError) {
+  if (!statusBox) return;
+  statusBox.hidden = false;
+  statusBox.textContent = message;
+  statusBox.style.color = isError ? "#b91c1c" : "var(--ink)";
+  statusBox.style.background = isError ? "#fef2f2" : "var(--bg)";
+}
+
+function lockSubmit(button, isLocked, loadingText, defaultText) {
+  if (!button) return;
+  button.disabled = isLocked;
+  button.textContent = isLocked ? loadingText : defaultText;
+}
+
+function getValue(form, name) {
+  return form.elements[name] ? form.elements[name].value.trim() : "";
+}
+
+async function postJson(url, payload) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    let detail = "";
+    try {
+      const body = await response.json();
+      detail = body.error || "";
+    } catch (err) {
+      detail = "";
+    }
+    throw new Error(detail || "request-failed");
+  }
+
+  return response.json().catch(() => ({ ok: true }));
+}
+
 const corporateRequestForm = document.querySelector("#corporate-request-form");
 
 if (corporateRequestForm) {
   const statusBox = corporateRequestForm.querySelector("#corporate-request-status");
   const submitButton = corporateRequestForm.querySelector('button[type="submit"]');
-
-  const showStatus = (message, isError) => {
-    statusBox.hidden = false;
-    statusBox.textContent = message;
-    statusBox.style.color = isError ? "#b91c1c" : "var(--ink)";
-    statusBox.style.background = isError ? "#fef2f2" : "var(--bg)";
-  };
+  const defaultSubmitText = submitButton.textContent;
 
   corporateRequestForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const payload = {
-      company_name: corporateRequestForm.company_name.value.trim(),
-      phone: corporateRequestForm.phone.value.trim(),
-      email: corporateRequestForm.email.value.trim(),
-      purpose: corporateRequestForm.purpose.value,
+      type: "corporate_request",
+      company_name: getValue(corporateRequestForm, "company_name"),
+      contact_name: getValue(corporateRequestForm, "contact_name"),
+      phone: getValue(corporateRequestForm, "phone"),
+      email: getValue(corporateRequestForm, "email"),
+      purpose: getValue(corporateRequestForm, "purpose"),
+      memo: getValue(corporateRequestForm, "memo"),
+      userAgent: navigator.userAgent,
     };
 
     if (!payload.company_name || !payload.phone || !payload.email) {
-      showStatus("기업명, 전화번호, 이메일을 모두 입력해 주세요.", true);
+      showFormStatus(statusBox, "기업명, 전화번호, 이메일을 모두 입력해 주세요.", true);
       return;
     }
 
-    submitButton.disabled = true;
-    submitButton.textContent = "접수 중...";
+    if (!isValidPhone(payload.phone)) {
+      showFormStatus(statusBox, "연락 가능한 전화번호 형식으로 입력해 주세요.", true);
+      return;
+    }
+
+    if (!isValidEmail(payload.email)) {
+      showFormStatus(statusBox, "이메일 형식을 확인해 주세요.", true);
+      return;
+    }
+
+    lockSubmit(submitButton, true, "접수 중...", defaultSubmitText);
 
     try {
-      const response = await fetch("/api/corporate-request", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error("request-failed");
-      }
-
+      await postJson("/api/corporate-request", payload);
       corporateRequestForm.reset();
       corporateRequestForm.parentElement.insertBefore(statusBox, corporateRequestForm);
       corporateRequestForm.hidden = true;
-      showStatus("자료 요청이 접수되었습니다. 담당자가 확인 후 이메일 또는 유선으로 안내드립니다.", false);
+      showFormStatus(statusBox, "기업자료 요청이 정상 접수되었습니다. 담당자가 확인 후 이메일 또는 유선으로 안내드리겠습니다.", false);
     } catch (err) {
-      showStatus("접수 중 문제가 발생했습니다. 잠시 후 다시 시도하거나 이메일로 문의해 주세요.", true);
+      showFormStatus(statusBox, err.message || "접수 중 문제가 발생했습니다. 잠시 후 다시 시도하거나 전화로 문의해 주세요.", true);
     } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = "기업자료 요청하기";
+      lockSubmit(submitButton, false, "", defaultSubmitText);
     }
   });
 }
@@ -75,52 +119,48 @@ const preInterestForm = document.querySelector("#pre-interest-form");
 if (preInterestForm) {
   const statusBox = preInterestForm.querySelector("#pre-interest-status");
   const submitButton = preInterestForm.querySelector('button[type="submit"]');
-
-  const showStatus = (message, isError) => {
-    statusBox.hidden = false;
-    statusBox.textContent = message;
-    statusBox.style.color = isError ? "#b91c1c" : "var(--ink)";
-    statusBox.style.background = isError ? "#fef2f2" : "var(--bg)";
-  };
+  const defaultSubmitText = submitButton.textContent;
 
   preInterestForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const payload = {
-      type: "pre_interest",
-      name: preInterestForm.name.value.trim(),
-      phone: preInterestForm.phone.value.trim(),
-      email: preInterestForm.email.value.trim(),
+      type: "personal_interest",
+      name: getValue(preInterestForm, "name"),
+      phone: getValue(preInterestForm, "phone"),
+      email: getValue(preInterestForm, "email"),
+      interest_type: getValue(preInterestForm, "interest_type"),
+      memo: getValue(preInterestForm, "memo"),
+      userAgent: navigator.userAgent,
     };
 
     if (!payload.name || !payload.phone || !payload.email) {
-      showStatus("이름, 전화번호, 이메일을 모두 입력해 주세요.", true);
+      showFormStatus(statusBox, "이름, 전화번호, 이메일을 모두 입력해 주세요.", true);
       return;
     }
 
-    submitButton.disabled = true;
-    submitButton.textContent = "접수 중...";
+    if (!isValidPhone(payload.phone)) {
+      showFormStatus(statusBox, "연락 가능한 전화번호 형식으로 입력해 주세요.", true);
+      return;
+    }
+
+    if (!isValidEmail(payload.email)) {
+      showFormStatus(statusBox, "이메일 형식을 확인해 주세요.", true);
+      return;
+    }
+
+    lockSubmit(submitButton, true, "접수 중...", defaultSubmitText);
 
     try {
-      const response = await fetch("/api/interest-request", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error("request-failed");
-      }
-
+      await postJson("/api/interest-request", payload);
       preInterestForm.reset();
       preInterestForm.parentElement.insertBefore(statusBox, preInterestForm);
       preInterestForm.hidden = true;
-      showStatus("사전의향서가 접수되었습니다. 담당자가 확인 후 순차적으로 연락드리겠습니다.", false);
+      showFormStatus(statusBox, "사전의향서가 정상 접수되었습니다. 담당자가 확인 후 연락드리겠습니다.", false);
     } catch (err) {
-      showStatus("접수 중 문제가 발생했습니다. 잠시 후 다시 시도하거나 전화로 문의해 주세요.", true);
+      showFormStatus(statusBox, err.message || "접수 중 문제가 발생했습니다. 잠시 후 다시 시도하거나 전화로 문의해 주세요.", true);
     } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = "사전의향서 제출";
+      lockSubmit(submitButton, false, "", defaultSubmitText);
     }
   });
 }
@@ -130,53 +170,49 @@ const corporateInterestForm = document.querySelector("#corporate-interest-form")
 if (corporateInterestForm) {
   const statusBox = corporateInterestForm.querySelector("#corporate-interest-status");
   const submitButton = corporateInterestForm.querySelector('button[type="submit"]');
-
-  const showStatus = (message, isError) => {
-    statusBox.hidden = false;
-    statusBox.textContent = message;
-    statusBox.style.color = isError ? "#b91c1c" : "var(--ink)";
-    statusBox.style.background = isError ? "#fef2f2" : "var(--bg)";
-  };
+  const defaultSubmitText = submitButton.textContent;
 
   corporateInterestForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const payload = {
       type: "corporate_interest",
-      company_name: corporateInterestForm.company_name.value.trim(),
-      contact_name: corporateInterestForm.contact_name.value.trim(),
-      phone: corporateInterestForm.phone.value.trim(),
-      email: corporateInterestForm.email.value.trim(),
+      company_name: getValue(corporateInterestForm, "company_name"),
+      contact_name: getValue(corporateInterestForm, "contact_name"),
+      phone: getValue(corporateInterestForm, "phone"),
+      email: getValue(corporateInterestForm, "email"),
+      purpose: getValue(corporateInterestForm, "purpose"),
+      memo: getValue(corporateInterestForm, "memo"),
+      userAgent: navigator.userAgent,
     };
 
     if (!payload.company_name || !payload.contact_name || !payload.phone || !payload.email) {
-      showStatus("기업명, 담당자명, 전화번호, 이메일을 모두 입력해 주세요.", true);
+      showFormStatus(statusBox, "기업명, 담당자명, 전화번호, 이메일을 모두 입력해 주세요.", true);
       return;
     }
 
-    submitButton.disabled = true;
-    submitButton.textContent = "접수 중...";
+    if (!isValidPhone(payload.phone)) {
+      showFormStatus(statusBox, "연락 가능한 전화번호 형식으로 입력해 주세요.", true);
+      return;
+    }
+
+    if (!isValidEmail(payload.email)) {
+      showFormStatus(statusBox, "이메일 형식을 확인해 주세요.", true);
+      return;
+    }
+
+    lockSubmit(submitButton, true, "접수 중...", defaultSubmitText);
 
     try {
-      const response = await fetch("/api/interest-request", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error("request-failed");
-      }
-
+      await postJson("/api/interest-request", payload);
       corporateInterestForm.reset();
       corporateInterestForm.parentElement.insertBefore(statusBox, corporateInterestForm);
       corporateInterestForm.hidden = true;
-      showStatus("기업의향서가 접수되었습니다. 담당자가 확인 후 순차적으로 연락드리겠습니다.", false);
+      showFormStatus(statusBox, "기업의향서가 정상 접수되었습니다. 담당자가 기업 검토자료 확인 후 연락드리겠습니다.", false);
     } catch (err) {
-      showStatus("접수 중 문제가 발생했습니다. 잠시 후 다시 시도하거나 이메일로 문의해 주세요.", true);
+      showFormStatus(statusBox, err.message || "접수 중 문제가 발생했습니다. 잠시 후 다시 시도하거나 전화로 문의해 주세요.", true);
     } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = "기업의향서 제출";
+      lockSubmit(submitButton, false, "", defaultSubmitText);
     }
   });
 }

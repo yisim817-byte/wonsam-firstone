@@ -275,4 +275,40 @@ assets/site-source-images/
   
 wonsam-firstone.co.kr
 
+## 2026-07-07 의향서 접수 및 관리자 기능 복구
+
+### 접수 기능
+
+- 개인 사전의향서: `pre-interest.html` → `/api/interest-request`
+- 기업의향서: `corporate-interest.html` → `/api/interest-request`
+- 기업자료 요청: `corporate-request.html` → `/api/corporate-request`
+- 제출 중 버튼 비활성화, 필수값 검증, 전화번호/이메일 기본 형식 검증, 성공/실패 안내 문구를 적용했습니다.
+- 새 개인 사전의향서는 `type=personal_interest`, 기업의향서는 `type=corporate_interest`, 기업자료 요청은 `type=corporate_request`로 구분합니다.
+- 기존 데이터 호환을 위해 관리자 화면에서는 과거 `pre_interest`도 개인 사전의향서로 함께 표시합니다.
+
+### 관리자 페이지
+
+- 관리자 경로: `/admin.html`
+- 관리자 페이지는 `ADMIN_TOKEN`을 입력해야 목록을 조회합니다.
+- 서버 API는 `Authorization: Bearer <ADMIN_TOKEN>` 값을 Vercel 환경변수 `ADMIN_TOKEN`과 비교합니다.
+- 일반 방문자는 접수 목록을 볼 수 없고, API 직접 호출 시 토큰이 없거나 틀리면 401을 반환합니다.
+- 관리자 화면에서 개인 사전의향서, 기업의향서, 기업자료 요청을 통합 목록으로 조회하고 유형 필터와 검색을 사용할 수 있습니다.
+
+### Vercel 환경변수
+
+실제 값은 GitHub에 커밋하지 않습니다.
+
+- `ADMIN_TOKEN`
+- `SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY`
+
+### 배포 전 테스트
+
+- `pre-interest.html`에서 이름/전화번호/이메일 입력 후 접수 성공 메시지 확인
+- `corporate-interest.html`에서 기업명/담당자명/전화번호/이메일 입력 후 접수 성공 메시지 확인
+- `corporate-request.html`에서 기업자료 요청 접수 성공 메시지 확인
+- `/api/admin-requests`와 `/api/admin-interest-requests`가 토큰 없이 401을 반환하는지 확인
+- `/admin.html`에서 올바른 관리자 비밀번호 입력 후 3종 접수 목록이 최신순으로 표시되는지 확인
+- 모바일에서 폼과 관리자 카드 목록이 깨지지 않는지 확인
+
 

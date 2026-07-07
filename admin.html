@@ -1,10 +1,10 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
-    <title>기업자료 요청 관리자 확인 | 원삼 센트레빌 퍼스트원</title>
+    <title>접수 내역 관리자 | 원삼 센트레빌 퍼스트원</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body class="theme-notion">
@@ -25,73 +25,62 @@
       <section class="doc-hero">
         <div class="container">
           <span class="doc-eyebrow">관리자 전용</span>
-          <h1>기업자료 요청 관리자 확인</h1>
+          <h1>접수 내역 관리자</h1>
           <p class="doc-hero-lead">
-            관리자 비밀번호를 입력하면 접수된 기업자료 요청 내역을 확인할 수 있습니다.
-            이 페이지는 검색엔진에 노출되지 않으며, 목록은 인증된 관리자에게만 표시됩니다.
+            관리자 비밀번호를 입력하면 개인 사전의향서, 기업의향서, 기업자료 요청 내역을
+            통합 목록으로 확인할 수 있습니다. 목록은 인증된 관리자에게만 표시됩니다.
           </p>
         </div>
       </section>
 
       <section class="section">
         <div class="container">
-          <form id="admin-login-form" class="form-card" style="max-width:420px;">
+          <form id="admin-login-form" class="form-card admin-login-card">
             <div class="form-field">
               <label for="admin-token">관리자 비밀번호</label>
               <input id="admin-token" type="password" autocomplete="off" required>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">확인</button>
+            <button type="submit" class="btn btn-primary btn-block">관리자 확인</button>
             <div id="admin-login-status" class="form-note" role="status" hidden></div>
+            <p class="form-note">
+              비밀번호는 서버 환경변수 <code>ADMIN_TOKEN</code>과 비교됩니다. 페이지 코드에는 실제 비밀번호를 저장하지 않습니다.
+            </p>
           </form>
 
-          <div id="admin-results" class="table-wrap" style="margin-top:32px; display:none;">
-            <table>
-              <thead>
-                <tr>
-                  <th>접수일시</th>
-                  <th>기업명</th>
-                  <th>전화번호</th>
-                  <th>이메일</th>
-                  <th>요청 목적</th>
-                </tr>
-              </thead>
-              <tbody id="admin-results-body"></tbody>
-            </table>
-          </div>
-          <p id="admin-empty" style="display:none; color:var(--muted); margin-top:24px;">
-            접수된 기업자료 요청이 아직 없습니다.
-          </p>
-        </div>
-      </section>
+          <section id="admin-dashboard" class="admin-dashboard" hidden>
+            <div class="admin-toolbar">
+              <div>
+                <h2>통합 접수 목록</h2>
+                <p id="admin-summary">접수 내역을 불러오는 중입니다.</p>
+              </div>
+              <div class="admin-actions">
+                <button id="admin-refresh" class="btn btn-secondary" type="button">새로고침</button>
+                <button id="admin-logout" class="btn btn-secondary" type="button">로그아웃</button>
+              </div>
+            </div>
 
-      <section class="section is-surface">
-        <div class="container">
-          <div class="section-head">
-            <h2>사전의향서 · 기업의향서 접수</h2>
-            <p>일반 사전의향서와 기업의향서 접수 내역입니다. 위 비밀번호로 함께 조회됩니다.</p>
-          </div>
+            <div class="admin-filters" aria-label="접수 내역 필터">
+              <label>
+                유형
+                <select id="admin-type-filter">
+                  <option value="all">전체</option>
+                  <option value="personal_interest">개인 사전의향서</option>
+                  <option value="corporate_interest">기업의향서</option>
+                  <option value="corporate_request">기업자료 요청</option>
+                </select>
+              </label>
+              <label>
+                검색
+                <input id="admin-search" type="search" placeholder="이름, 기업명, 전화번호, 이메일 검색">
+              </label>
+            </div>
 
-          <div id="interest-results" class="table-wrap" style="display:none;">
-            <table>
-              <thead>
-                <tr>
-                  <th>접수일시</th>
-                  <th>구분</th>
-                  <th>이름 / 기업명</th>
-                  <th>담당자명</th>
-                  <th>전화번호</th>
-                  <th>이메일</th>
-                </tr>
-              </thead>
-              <tbody id="interest-results-body"></tbody>
-            </table>
-          </div>
-          <p id="interest-empty" style="display:none; color:var(--muted);">
-            접수된 사전의향서·기업의향서가 아직 없습니다.
-          </p>
-          <p id="interest-error" style="display:none; color:#b91c1c;">
-            사전의향서·기업의향서 내역을 불러오지 못했습니다.
-          </p>
+            <div id="admin-empty" class="notice-box" hidden>
+              <p>접수 내역이 아직 없습니다.</p>
+            </div>
+
+            <div id="admin-list" class="admin-list" aria-live="polite"></div>
+          </section>
         </div>
       </section>
     </main>
@@ -103,7 +92,7 @@
           <a href="tel:16446873">1644-6873</a>
         </div>
         <div class="footer-notice">
-          <p>본 페이지는 기업자료 요청 접수 내역을 확인하기 위한 관리자 전용 페이지입니다.</p>
+          <p>본 페이지는 접수 내역을 확인하기 위한 관리자 전용 페이지입니다.</p>
         </div>
       </div>
     </footer>
@@ -111,17 +100,25 @@
     <script>
       const loginForm = document.querySelector("#admin-login-form");
       const loginStatus = document.querySelector("#admin-login-status");
-      const resultsTable = document.querySelector("#admin-results");
-      const resultsBody = document.querySelector("#admin-results-body");
-      const emptyNotice = document.querySelector("#admin-empty");
       const tokenInput = document.querySelector("#admin-token");
+      const dashboard = document.querySelector("#admin-dashboard");
+      const summary = document.querySelector("#admin-summary");
+      const list = document.querySelector("#admin-list");
+      const emptyNotice = document.querySelector("#admin-empty");
+      const typeFilter = document.querySelector("#admin-type-filter");
+      const searchInput = document.querySelector("#admin-search");
+      const refreshButton = document.querySelector("#admin-refresh");
+      const logoutButton = document.querySelector("#admin-logout");
       const STORAGE_KEY = "wonsam_admin_token";
+      const TYPE_LABELS = {
+        pre_interest: "개인 사전의향서",
+        personal_interest: "개인 사전의향서",
+        corporate_interest: "기업의향서",
+        corporate_request: "기업자료 요청",
+      };
 
-      const interestTable = document.querySelector("#interest-results");
-      const interestBody = document.querySelector("#interest-results-body");
-      const interestEmpty = document.querySelector("#interest-empty");
-      const interestError = document.querySelector("#interest-error");
-      const TYPE_LABELS = { pre_interest: "사전의향서", corporate_interest: "기업의향서" };
+      let allRows = [];
+      let activeToken = "";
 
       function showLoginStatus(message, isError) {
         loginStatus.hidden = false;
@@ -136,121 +133,142 @@
         return div.innerHTML;
       }
 
-      async function loadRequests(token) {
-        const submitButton = loginForm.querySelector('button[type="submit"]');
-        submitButton.disabled = true;
-        submitButton.textContent = "확인 중...";
+      function normalizeInterest(row) {
+        return {
+          category: row.type === "pre_interest" ? "personal_interest" : row.type,
+          created_at: row.created_at,
+          name: row.type === "corporate_interest" ? row.company_name : row.name,
+          contact_name: row.contact_name || "",
+          phone: row.phone || "",
+          email: row.email || "",
+          purpose: row.purpose || row.interest_type || "",
+          memo: row.memo || "",
+        };
+      }
+
+      function normalizeCorporateRequest(row) {
+        return {
+          category: "corporate_request",
+          created_at: row.created_at,
+          name: row.company_name || "",
+          contact_name: row.contact_name || "",
+          phone: row.phone || "",
+          email: row.email || "",
+          purpose: row.purpose || "",
+          memo: row.memo || "",
+        };
+      }
+
+      async function fetchAdminJson(url, token) {
+        const response = await fetch(url, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response.status === 401) {
+          throw new Error("unauthorized");
+        }
+
+        if (!response.ok) {
+          throw new Error("fetch-failed");
+        }
+
+        return response.json();
+      }
+
+      async function loadAllRows(token) {
+        activeToken = token;
+        refreshButton.disabled = true;
+        refreshButton.textContent = "불러오는 중...";
 
         try {
-          const response = await fetch("/api/admin-requests", {
-            headers: { Authorization: `Bearer ${token}` },
-          });
+          const [requestResult, interestResult] = await Promise.all([
+            fetchAdminJson("/api/admin-requests", token),
+            fetchAdminJson("/api/admin-interest-requests", token),
+          ]);
 
-          if (response.status === 401) {
+          const requests = (requestResult.data || []).map(normalizeCorporateRequest);
+          const interests = (interestResult.data || []).map(normalizeInterest);
+          allRows = [...requests, ...interests].sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+
+          sessionStorage.setItem(STORAGE_KEY, token);
+          loginForm.hidden = true;
+          dashboard.hidden = false;
+          showLoginStatus("관리자 인증이 완료되었습니다.", false);
+          renderRows();
+        } catch (err) {
+          if (err.message === "unauthorized") {
             sessionStorage.removeItem(STORAGE_KEY);
+            loginForm.hidden = false;
+            dashboard.hidden = true;
             showLoginStatus("비밀번호가 올바르지 않습니다.", true);
             return;
           }
-
-          if (!response.ok) {
-            throw new Error("fetch-failed");
-          }
-
-          const { data } = await response.json();
-          sessionStorage.setItem(STORAGE_KEY, token);
-          loginForm.hidden = true;
-
-          if (!data || data.length === 0) {
-            emptyNotice.style.display = "block";
-            resultsTable.style.display = "none";
-            return;
-          }
-
-          resultsBody.innerHTML = data
-            .map((row) => {
-              const date = row.created_at ? new Date(row.created_at).toLocaleString("ko-KR") : "-";
-              return `<tr>
-                <td>${escapeHtml(date)}</td>
-                <td>${escapeHtml(row.company_name)}</td>
-                <td>${escapeHtml(row.phone)}</td>
-                <td>${escapeHtml(row.email)}</td>
-                <td>${escapeHtml(row.purpose || "-")}</td>
-              </tr>`;
-            })
-            .join("");
-
-          resultsTable.style.display = "block";
-          emptyNotice.style.display = "none";
-        } catch (err) {
-          showLoginStatus("접수 내역을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.", true);
+          showLoginStatus("접수 내역을 불러오지 못했습니다. 환경변수와 Supabase 설정을 확인해 주세요.", true);
         } finally {
-          submitButton.disabled = false;
-          submitButton.textContent = "확인";
+          refreshButton.disabled = false;
+          refreshButton.textContent = "새로고침";
         }
-
-        loadInterestRequests(token);
       }
 
-      async function loadInterestRequests(token) {
-        try {
-          const response = await fetch("/api/admin-interest-requests", {
-            headers: { Authorization: `Bearer ${token}` },
-          });
+      function renderRows() {
+        const selectedType = typeFilter.value;
+        const keyword = searchInput.value.trim().toLowerCase();
+        const filtered = allRows.filter((row) => {
+          const typeMatched = selectedType === "all" || row.category === selectedType;
+          const text = [row.name, row.contact_name, row.phone, row.email, row.purpose, row.memo].join(" ").toLowerCase();
+          return typeMatched && (!keyword || text.includes(keyword));
+        });
 
-          if (!response.ok) {
-            throw new Error("fetch-failed");
-          }
+        summary.textContent = `전체 ${allRows.length.toLocaleString()}건 / 표시 ${filtered.length.toLocaleString()}건`;
+        emptyNotice.hidden = filtered.length !== 0;
 
-          const { data } = await response.json();
-
-          if (!data || data.length === 0) {
-            interestEmpty.style.display = "block";
-            interestTable.style.display = "none";
-            interestError.style.display = "none";
-            return;
-          }
-
-          interestBody.innerHTML = data
-            .map((row) => {
-              const date = row.created_at ? new Date(row.created_at).toLocaleString("ko-KR") : "-";
-              const typeLabel = TYPE_LABELS[row.type] || row.type;
-              const primaryName = row.type === "corporate_interest" ? row.company_name : row.name;
-              return `<tr>
-                <td>${escapeHtml(date)}</td>
-                <td>${escapeHtml(typeLabel)}</td>
-                <td>${escapeHtml(primaryName)}</td>
-                <td>${escapeHtml(row.contact_name || "-")}</td>
-                <td>${escapeHtml(row.phone)}</td>
-                <td>${escapeHtml(row.email)}</td>
-              </tr>`;
-            })
-            .join("");
-
-          interestTable.style.display = "block";
-          interestEmpty.style.display = "none";
-          interestError.style.display = "none";
-        } catch (err) {
-          interestError.style.display = "block";
-          interestTable.style.display = "none";
-          interestEmpty.style.display = "none";
-        }
+        list.innerHTML = filtered.map((row) => {
+          const date = row.created_at ? new Date(row.created_at).toLocaleString("ko-KR") : "-";
+          return `<article class="admin-result-card">
+            <div class="admin-result-head">
+              <span>${escapeHtml(TYPE_LABELS[row.category] || row.category)}</span>
+              <time>${escapeHtml(date)}</time>
+            </div>
+            <dl>
+              <div><dt>이름 / 기업명</dt><dd>${escapeHtml(row.name || "-")}</dd></div>
+              <div><dt>담당자명</dt><dd>${escapeHtml(row.contact_name || "-")}</dd></div>
+              <div><dt>전화번호</dt><dd>${escapeHtml(row.phone || "-")}</dd></div>
+              <div><dt>이메일</dt><dd>${escapeHtml(row.email || "-")}</dd></div>
+              <div><dt>목적 / 메모</dt><dd>${escapeHtml(row.purpose || row.memo || "-")}</dd></div>
+            </dl>
+          </article>`;
+        }).join("");
       }
 
       loginForm.addEventListener("submit", (event) => {
         event.preventDefault();
         const token = tokenInput.value.trim();
         if (!token) return;
-        loadRequests(token);
+        loadAllRows(token);
       });
+
+      refreshButton.addEventListener("click", () => {
+        if (activeToken) loadAllRows(activeToken);
+      });
+
+      logoutButton.addEventListener("click", () => {
+        sessionStorage.removeItem(STORAGE_KEY);
+        activeToken = "";
+        allRows = [];
+        dashboard.hidden = true;
+        loginForm.hidden = false;
+        tokenInput.value = "";
+        showLoginStatus("로그아웃되었습니다.", false);
+      });
+
+      typeFilter.addEventListener("change", renderRows);
+      searchInput.addEventListener("input", renderRows);
 
       const savedToken = sessionStorage.getItem(STORAGE_KEY);
       if (savedToken) {
-        loadRequests(savedToken);
+        loadAllRows(savedToken);
       }
     </script>
     <script src="contact.js"></script>
   </body>
 </html>
-
-
-

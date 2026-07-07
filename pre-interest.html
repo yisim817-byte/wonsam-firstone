@@ -54,6 +54,24 @@
               <label for="pi-email">이메일</label>
               <input id="pi-email" name="email" type="email" required autocomplete="email">
             </div>
+            <div class="form-field">
+              <label for="pi-interest-type">관심 유형</label>
+              <select id="pi-interest-type" name="interest_type">
+                <option value="">선택해 주세요</option>
+                <option value="분양 상담">분양 상담</option>
+                <option value="잔여호실 문의">잔여호실 문의</option>
+                <option value="방문 상담">방문 상담</option>
+                <option value="기타 문의">기타 문의</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="pi-memo">문의 메모</label>
+              <textarea id="pi-memo" name="memo" rows="4" placeholder="상담 희망 내용이 있으면 남겨주세요."></textarea>
+            </div>
+            <label class="form-check">
+              <input type="checkbox" name="privacy_agree" required>
+              <span>개인정보 수집 및 상담 목적 이용에 동의합니다.</span>
+            </label>
 
             <button type="submit" class="btn btn-primary btn-block">사전의향서 제출</button>
 
@@ -92,6 +110,7 @@
         <div>
           <strong>원삼 센트레빌 퍼스트원 현장 안내</strong>
           <a href="tel:16446873">1644-6873</a>
+          <a class="admin-link" href="admin.html" rel="nofollow">관리자</a>
         </div>
         <div class="footer-notice">
           <p>본 페이지의 정보는 상담 안내용 자료이며, 세부 조건은 상담 시 최신 자료 기준으로 확인됩니다.</p>

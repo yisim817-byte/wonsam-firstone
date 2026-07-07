@@ -1,3 +1,27 @@
+async function insertInterestRecord(url, key, record) {
+  return fetch(`${url}/rest/v1/interest_requests`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      apikey: key,
+      Authorization: `Bearer ${key}`,
+      Prefer: "return=minimal",
+    },
+    body: JSON.stringify([record]),
+  });
+}
+
+function pickBaseRecord(record) {
+  return {
+    type: record.type,
+    phone: record.phone,
+    email: record.email,
+    name: record.name,
+    company_name: record.company_name,
+    contact_name: record.contact_name,
+  };
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });
@@ -5,17 +29,21 @@ module.exports = async function handler(req, res) {
   }
 
   const body = req.body || {};
-  const type = body.type === "corporate_interest" ? "corporate_interest" : body.type === "pre_interest" ? "pre_interest" : "";
+  const type = body.type === "corporate_interest"
+    ? "corporate_interest"
+    : body.type === "personal_interest" || body.type === "pre_interest"
+      ? "personal_interest"
+      : "";
   const phone = typeof body.phone === "string" ? body.phone.trim() : "";
   const email = typeof body.email === "string" ? body.email.trim() : "";
 
   if (!type) {
-    res.status(400).json({ error: "잘못된 요청입니다." });
+    res.status(400).json({ error: "유효하지 않은 접수 유형입니다." });
     return;
   }
 
   if (!phone || !email) {
-    res.status(400).json({ error: "전화번호, 이메일은 필수입니다." });
+    res.status(400).json({ error: "전화번호와 이메일은 필수입니다." });
     return;
   }
 
@@ -26,9 +54,13 @@ module.exports = async function handler(req, res) {
     name: null,
     company_name: null,
     contact_name: null,
+    interest_type: typeof body.interest_type === "string" ? body.interest_type.trim().slice(0, 100) || null : null,
+    purpose: typeof body.purpose === "string" ? body.purpose.trim().slice(0, 100) || null : null,
+    memo: typeof body.memo === "string" ? body.memo.trim().slice(0, 1000) || null : null,
+    user_agent: typeof body.userAgent === "string" ? body.userAgent.slice(0, 300) : null,
   };
 
-  if (type === "pre_interest") {
+  if (type === "personal_interest") {
     const name = typeof body.name === "string" ? body.name.trim() : "";
     if (!name) {
       res.status(400).json({ error: "이름을 입력해 주세요." });
@@ -36,14 +68,14 @@ module.exports = async function handler(req, res) {
     }
     record.name = name.slice(0, 100);
   } else {
-    const company_name = typeof body.company_name === "string" ? body.company_name.trim() : "";
-    const contact_name = typeof body.contact_name === "string" ? body.contact_name.trim() : "";
-    if (!company_name || !contact_name) {
-      res.status(400).json({ error: "기업명, 담당자명을 입력해 주세요." });
+    const companyName = typeof body.company_name === "string" ? body.company_name.trim() : "";
+    const contactName = typeof body.contact_name === "string" ? body.contact_name.trim() : "";
+    if (!companyName || !contactName) {
+      res.status(400).json({ error: "기업명과 담당자명을 입력해 주세요." });
       return;
     }
-    record.company_name = company_name.slice(0, 200);
-    record.contact_name = contact_name.slice(0, 100);
+    record.company_name = companyName.slice(0, 200);
+    record.contact_name = contactName.slice(0, 100);
   }
 
   const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -56,16 +88,13 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const supabaseRes = await fetch(`${SUPABASE_URL}/rest/v1/interest_requests`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        apikey: SERVICE_KEY,
-        Authorization: `Bearer ${SERVICE_KEY}`,
-        Prefer: "return=minimal",
-      },
-      body: JSON.stringify([record]),
-    });
+    let supabaseRes = await insertInterestRecord(SUPABASE_URL, SERVICE_KEY, record);
+
+    if (!supabaseRes.ok && supabaseRes.status === 400) {
+      const detail = await supabaseRes.text();
+      console.warn("Interest insert with extended fields failed; retrying base schema", detail);
+      supabaseRes = await insertInterestRecord(SUPABASE_URL, SERVICE_KEY, pickBaseRecord(record));
+    }
 
     if (!supabaseRes.ok) {
       const detail = await supabaseRes.text();
