@@ -2294,6 +2294,143 @@ body.modal-open {
 }
 
 /* ==========================================================================
+   CORPORATE DATA / INTELLIGENCE REPORT
+   ========================================================================== */
+
+.resource-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.resource-card {
+  display: grid;
+  gap: 10px;
+  min-height: 210px;
+  padding: 24px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  background: var(--bg-soft);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: var(--shadow-1);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.resource-card:hover,
+.resource-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(11, 31, 58, 0.28);
+  box-shadow: var(--shadow-2);
+}
+
+.resource-card span {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.resource-card strong {
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+.resource-card p {
+  margin: 0;
+  color: var(--body-text);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.cta-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 28px;
+  padding: 28px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--ink);
+  color: #fff;
+}
+
+.cta-strip h2 {
+  margin-bottom: 8px;
+  color: #fff;
+  font-size: clamp(22px, 2.4vw, 30px);
+}
+
+.cta-strip p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.business-data-cta,
+.report-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cta-strip .btn-secondary {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.intelligence-stack {
+  display: grid;
+  gap: 24px;
+}
+
+.intel-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+  gap: 28px;
+  align-items: center;
+  padding: 24px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+  box-shadow: var(--shadow-1);
+}
+
+.intel-section h2 {
+  margin: 8px 0 12px;
+  color: var(--ink);
+  font-size: clamp(24px, 2.4vw, 34px);
+  line-height: 1.25;
+}
+
+.intel-section p {
+  margin: 0;
+  color: var(--body-text);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.intel-image-card {
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--bg-strong);
+}
+
+.intel-image-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.report-cta-row {
+  margin-top: 20px;
+}
+
+/* ==========================================================================
    RESPONSIVE
    ========================================================================== */
 
@@ -2314,8 +2451,13 @@ body.modal-open {
   .cta-split,
   .info-card-grid,
   .chart-grid,
-  .steps-grid {
+  .steps-grid,
+  .resource-card-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .intel-section {
+    grid-template-columns: 1fr;
   }
 
   .sim-card {
@@ -2384,8 +2526,25 @@ body.modal-open {
   .cta-split,
   .info-card-grid,
   .chart-grid,
-  .steps-grid {
+  .steps-grid,
+  .resource-card-grid {
     grid-template-columns: 1fr;
+  }
+
+  .resource-card,
+  .intel-section,
+  .cta-strip {
+    padding: 20px;
+  }
+
+  .cta-strip {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .business-data-cta .btn,
+  .report-cta-row .btn {
+    width: 100%;
   }
 
   .search-summary {
