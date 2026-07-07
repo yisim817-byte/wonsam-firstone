@@ -193,6 +193,10 @@ function closeAllModals() {
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden", "true");
   });
+  const htmlModalBody = document.getElementById("htmlInfographicModalBody");
+  if (htmlModalBody) {
+    htmlModalBody.innerHTML = "";
+  }
   document.body.classList.remove("modal-open");
 }
 
@@ -216,3 +220,85 @@ document.addEventListener("keydown", (event) => {
   if (event.key !== "Escape") return;
   closeAllModals();
 });
+
+const htmlInfographicModal = document.getElementById("htmlInfographicModal");
+const htmlInfographicModalBody = document.getElementById("htmlInfographicModalBody");
+
+function openHtmlInfographicModal(card) {
+  if (!htmlInfographicModal || !htmlInfographicModalBody || !card) return;
+  const clone = card.cloneNode(true);
+  clone.removeAttribute("tabindex");
+  clone.removeAttribute("role");
+  clone.removeAttribute("data-zoom-html");
+  clone.classList.add("is-visible");
+  clone.querySelectorAll("[data-count-up]").forEach((item) => {
+    item.textContent = Number(item.dataset.countUp).toLocaleString();
+  });
+  htmlInfographicModalBody.innerHTML = "";
+  htmlInfographicModalBody.appendChild(clone);
+  openModal(htmlInfographicModal);
+}
+
+document.querySelectorAll("[data-zoom-html]").forEach((card) => {
+  card.addEventListener("click", () => openHtmlInfographicModal(card));
+
+  card.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    openHtmlInfographicModal(card);
+  });
+});
+
+const revealItems = document.querySelectorAll(".reveal-up");
+
+if ("IntersectionObserver" in window && revealItems.length) {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.14 });
+
+  revealItems.forEach((item, index) => {
+    item.style.transitionDelay = `${Math.min(index * 70, 280)}ms`;
+    revealObserver.observe(item);
+  });
+} else {
+  revealItems.forEach((item) => item.classList.add("is-visible"));
+}
+
+function animateCountUp(el) {
+  const target = Number(el.dataset.countUp);
+  if (!Number.isFinite(target) || el.dataset.counted === "true") return;
+  el.dataset.counted = "true";
+  const duration = 1100;
+  const start = performance.now();
+
+  function tick(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(target * eased).toLocaleString();
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    }
+  }
+
+  requestAnimationFrame(tick);
+}
+
+const countUpItems = document.querySelectorAll("[data-count-up]");
+
+if ("IntersectionObserver" in window && countUpItems.length) {
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      animateCountUp(entry.target);
+      countObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.5 });
+
+  countUpItems.forEach((item) => countObserver.observe(item));
+} else {
+  countUpItems.forEach(animateCountUp);
+}
