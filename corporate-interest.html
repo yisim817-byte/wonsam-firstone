@@ -42,26 +42,32 @@
 
       <section class="section">
         <div class="container">
-          <form id="corporate-interest-form" class="form-card">
+          <form id="corporate-interest-form" class="form-card" action="https://formsubmit.co/yisim817@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="[원삼 센트레빌] 기업 의향서 접수">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="접수유형" value="기업 의향서">
+            <input type="hidden" name="접수페이지" value="기업 의향서">
+            <input type="hidden" name="홈페이지" value="www.wonsam-firstone.co.kr">
             <div class="form-field">
               <label for="ci-company">기업명</label>
-              <input id="ci-company" name="company_name" type="text" required autocomplete="organization">
+              <input id="ci-company" name="기업명" type="text" required autocomplete="organization">
             </div>
             <div class="form-field">
               <label for="ci-contact">담당자명</label>
-              <input id="ci-contact" name="contact_name" type="text" required autocomplete="name">
+              <input id="ci-contact" name="담당자명" type="text" required autocomplete="name">
             </div>
             <div class="form-field">
               <label for="ci-phone">전화번호</label>
-              <input id="ci-phone" name="phone" type="tel" required autocomplete="tel" placeholder="연락처 입력">
+              <input id="ci-phone" name="전화번호" type="tel" required autocomplete="tel" placeholder="연락처 입력">
             </div>
             <div class="form-field">
               <label for="ci-email">이메일</label>
-              <input id="ci-email" name="email" type="email" required autocomplete="email">
+              <input id="ci-email" name="이메일" type="email" required autocomplete="email">
             </div>
             <div class="form-field">
               <label for="ci-purpose">검토 목적</label>
-              <select id="ci-purpose" name="purpose">
+              <select id="ci-purpose" name="검토목적">
                 <option value="">선택해 주세요</option>
                 <option value="기업숙소 검토">기업숙소 검토</option>
                 <option value="직원숙소 검토">직원숙소 검토</option>
@@ -72,10 +78,10 @@
             </div>
             <div class="form-field">
               <label for="ci-memo">문의 메모</label>
-              <textarea id="ci-memo" name="memo" rows="4" placeholder="필요 객실 수, 검토 일정 등 참고 내용을 남겨주세요."></textarea>
+              <textarea id="ci-memo" name="문의메모" rows="4" placeholder="필요 객실 수, 검토 일정 등 참고 내용을 남겨주세요."></textarea>
             </div>
             <label class="form-check">
-              <input type="checkbox" name="privacy_agree" required>
+              <input type="checkbox" name="개인정보동의" value="동의" required>
               <span>개인정보 수집 및 기업 검토 상담 목적 이용에 동의합니다.</span>
             </label>
 
@@ -85,7 +91,7 @@
 
             <div class="form-note">
               본 기업의향서는 계약 확정 또는 호실 배정을 의미하지 않으며, 기업 검토 상담을
-              위한 사전 접수입니다.
+              위한 사전 접수입니다. 제출 후 FormSubmit 안내 화면이 표시될 수 있습니다.
             </div>
           </form>
 

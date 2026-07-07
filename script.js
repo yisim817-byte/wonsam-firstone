@@ -63,8 +63,9 @@ async function postJson(url, payload) {
 }
 
 const corporateRequestForm = document.querySelector("#corporate-request-form");
+const emailSubmissionMode = true;
 
-if (corporateRequestForm) {
+if (corporateRequestForm && !emailSubmissionMode) {
   const statusBox = corporateRequestForm.querySelector("#corporate-request-status");
   const submitButton = corporateRequestForm.querySelector('button[type="submit"]');
   const defaultSubmitText = submitButton.textContent;
@@ -116,7 +117,7 @@ if (corporateRequestForm) {
 
 const preInterestForm = document.querySelector("#pre-interest-form");
 
-if (preInterestForm) {
+if (preInterestForm && !emailSubmissionMode) {
   const statusBox = preInterestForm.querySelector("#pre-interest-status");
   const submitButton = preInterestForm.querySelector('button[type="submit"]');
   const defaultSubmitText = submitButton.textContent;
@@ -167,7 +168,7 @@ if (preInterestForm) {
 
 const corporateInterestForm = document.querySelector("#corporate-interest-form");
 
-if (corporateInterestForm) {
+if (corporateInterestForm && !emailSubmissionMode) {
   const statusBox = corporateInterestForm.querySelector("#corporate-interest-status");
   const submitButton = corporateInterestForm.querySelector('button[type="submit"]');
   const defaultSubmitText = submitButton.textContent;

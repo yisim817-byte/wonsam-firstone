@@ -1874,6 +1874,9 @@ tr:last-child td {
 .admin-dashboard {
   display: grid;
   gap: 22px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
 }
 
 .admin-toolbar,
@@ -1901,6 +1904,41 @@ tr:last-child td {
 .admin-actions {
   display: flex;
   gap: 10px;
+}
+
+.admin-info-card {
+  max-width: 100%;
+  padding: 22px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+  box-shadow: var(--shadow-1);
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+.admin-info-card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.admin-info-card p,
+.admin-info-card ol {
+  margin: 0;
+  color: var(--muted);
+}
+
+.admin-info-card a,
+.admin-info-card code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.admin-link-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .admin-filters label {
@@ -3211,6 +3249,10 @@ body.modal-open {
 
   .admin-actions .btn {
     flex: 1;
+  }
+
+  .admin-link-grid {
+    grid-template-columns: 1fr;
   }
 
   .admin-result-card dl {

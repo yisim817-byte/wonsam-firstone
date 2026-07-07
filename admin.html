@@ -27,8 +27,8 @@
           <span class="doc-eyebrow">관리자 전용</span>
           <h1>접수 내역 관리자</h1>
           <p class="doc-hero-lead">
-            관리자 이메일과 비밀번호를 입력하면 개인 사전의향서, 기업의향서, 기업자료 요청 내역을
-            통합 목록으로 확인할 수 있습니다. 목록은 인증된 관리자에게만 표시됩니다.
+            현재 의향서 접수는 이메일 접수 방식으로 운영 중입니다. 관리자 확인 후
+            Gmail 접수 관리 방법을 확인할 수 있습니다.
           </p>
         </div>
       </section>
@@ -47,43 +47,54 @@
             <button type="submit" class="btn btn-primary btn-block">관리자 확인</button>
             <div id="admin-login-status" class="form-note" role="status" hidden></div>
             <p class="form-note">
-              관리자 이메일은 <code>yisim817@gmail.com</code>만 허용되며, 비밀번호는 서버 환경변수 <code>ADMIN_TOKEN</code>과 비교됩니다. 페이지 코드에는 실제 비밀번호를 저장하지 않습니다.
+              관리자 이메일은 <code>yisim817@gmail.com</code>만 허용됩니다. 현재 페이지는 이메일 접수 관리 안내만 표시하며, 실제 접수자 개인정보 목록은 노출하지 않습니다.
             </p>
           </form>
 
           <section id="admin-dashboard" class="admin-dashboard" hidden>
             <div class="admin-toolbar">
               <div>
-                <h2>통합 접수 목록</h2>
-                <p id="admin-summary">접수 내역을 불러오는 중입니다.</p>
+                <h2>관리자 접수 관리</h2>
+                <p id="admin-summary">이메일 접수 관리 안내</p>
               </div>
               <div class="admin-actions">
-                <button id="admin-refresh" class="btn btn-secondary" type="button">새로고침</button>
                 <button id="admin-logout" class="btn btn-secondary" type="button">로그아웃</button>
               </div>
             </div>
 
-            <div class="admin-filters" aria-label="접수 내역 필터">
-              <label>
-                유형
-                <select id="admin-type-filter">
-                  <option value="all">전체</option>
-                  <option value="personal_interest">개인 사전의향서</option>
-                  <option value="corporate_interest">기업의향서</option>
-                  <option value="corporate_request">기업자료 요청</option>
-                </select>
-              </label>
-              <label>
-                검색
-                <input id="admin-search" type="search" placeholder="이름, 기업명, 전화번호, 이메일 검색">
-              </label>
+            <div class="admin-info-card">
+              <h3>현재 의향서 접수는 이메일 접수 방식으로 운영 중입니다.</h3>
+              <p>
+                개인 사전의향서, 기업 의향서, 기업자료 요청은
+                <a href="mailto:yisim817@gmail.com">yisim817@gmail.com</a>으로 수신됩니다.
+              </p>
             </div>
 
-            <div id="admin-empty" class="notice-box" hidden>
-              <p>접수 내역이 아직 없습니다.</p>
+            <div class="admin-info-card">
+              <h3>관리 방법</h3>
+              <ol>
+                <li>Gmail에서 <strong>[원삼 센트레빌]</strong> 제목으로 검색</li>
+                <li>개인 사전의향서 / 기업 의향서 / 기업자료 요청 제목별 분류</li>
+                <li>필요 시 Gmail 라벨을 만들어 관리</li>
+              </ol>
             </div>
 
-            <div id="admin-list" class="admin-list" aria-live="polite"></div>
+            <div class="admin-info-card">
+              <h3>DB 조회 보류 안내</h3>
+              <p>
+                Supabase DB 조회 API는 유지되어 있으며, 향후 Vercel 환경변수
+                <code>SUPABASE_URL</code>, <code>SUPABASE_SERVICE_ROLE_KEY</code>,
+                <code>ADMIN_TOKEN</code> 설정 후 재활성화할 수 있습니다. 현재 관리자 페이지에는
+                실제 접수자 개인정보 목록을 노출하지 않습니다.
+              </p>
+            </div>
+
+            <div class="admin-link-grid" aria-label="관리자 빠른 링크">
+              <a class="btn btn-primary" href="https://mail.google.com/" target="_blank" rel="noopener">Gmail 열기</a>
+              <a class="btn btn-secondary" href="pre-interest.html">접수 테스트: 개인 사전의향서</a>
+              <a class="btn btn-secondary" href="corporate-interest.html">접수 테스트: 기업 의향서</a>
+              <a class="btn btn-secondary" href="corporate-request.html">접수 테스트: 기업자료 요청</a>
+            </div>
           </section>
         </div>
       </section>
@@ -107,24 +118,9 @@
       const emailInput = document.querySelector("#admin-email");
       const tokenInput = document.querySelector("#admin-token");
       const dashboard = document.querySelector("#admin-dashboard");
-      const summary = document.querySelector("#admin-summary");
-      const list = document.querySelector("#admin-list");
-      const emptyNotice = document.querySelector("#admin-empty");
-      const typeFilter = document.querySelector("#admin-type-filter");
-      const searchInput = document.querySelector("#admin-search");
-      const refreshButton = document.querySelector("#admin-refresh");
       const logoutButton = document.querySelector("#admin-logout");
       const STORAGE_KEY = "wonsam_admin_credentials";
       const ADMIN_EMAIL = "yisim817@gmail.com";
-      const TYPE_LABELS = {
-        pre_interest: "개인 사전의향서",
-        personal_interest: "개인 사전의향서",
-        corporate_interest: "기업의향서",
-        corporate_request: "기업자료 요청",
-      };
-
-      let allRows = [];
-      let activeCredentials = null;
 
       function showLoginStatus(message, isError) {
         loginStatus.hidden = false;
@@ -133,119 +129,11 @@
         loginStatus.style.background = isError ? "#fef2f2" : "var(--bg)";
       }
 
-      function escapeHtml(value) {
-        const div = document.createElement("div");
-        div.textContent = value == null ? "" : String(value);
-        return div.innerHTML;
-      }
-
-      function normalizeInterest(row) {
-        return {
-          category: row.type === "pre_interest" ? "personal_interest" : row.type,
-          created_at: row.created_at,
-          name: row.type === "corporate_interest" ? row.company_name : row.name,
-          contact_name: row.contact_name || "",
-          phone: row.phone || "",
-          email: row.email || "",
-          purpose: row.purpose || row.interest_type || "",
-          memo: row.memo || "",
-        };
-      }
-
-      function normalizeCorporateRequest(row) {
-        return {
-          category: "corporate_request",
-          created_at: row.created_at,
-          name: row.company_name || "",
-          contact_name: row.contact_name || "",
-          phone: row.phone || "",
-          email: row.email || "",
-          purpose: row.purpose || "",
-          memo: row.memo || "",
-        };
-      }
-
-      async function fetchAdminJson(url, credentials) {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(credentials),
-        });
-
-        if (response.status === 401) {
-          throw new Error("unauthorized");
-        }
-
-        if (!response.ok) {
-          throw new Error("fetch-failed");
-        }
-
-        return response.json();
-      }
-
-      async function loadAllRows(credentials) {
-        activeCredentials = credentials;
-        refreshButton.disabled = true;
-        refreshButton.textContent = "불러오는 중...";
-
-        try {
-          const [requestResult, interestResult] = await Promise.all([
-            fetchAdminJson("/api/admin-requests", credentials),
-            fetchAdminJson("/api/admin-interest-requests", credentials),
-          ]);
-
-          const requests = (requestResult.data || []).map(normalizeCorporateRequest);
-          const interests = (interestResult.data || []).map(normalizeInterest);
-          allRows = [...requests, ...interests].sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
-
-          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(credentials));
-          loginForm.hidden = true;
-          dashboard.hidden = false;
-          showLoginStatus("관리자 인증이 완료되었습니다.", false);
-          renderRows();
-        } catch (err) {
-          if (err.message === "unauthorized") {
-            sessionStorage.removeItem(STORAGE_KEY);
-            loginForm.hidden = false;
-            dashboard.hidden = true;
-            showLoginStatus("관리자 인증에 실패했습니다.", true);
-            return;
-          }
-          showLoginStatus("접수 내역을 불러오지 못했습니다. 환경변수와 Supabase 설정을 확인해 주세요.", true);
-        } finally {
-          refreshButton.disabled = false;
-          refreshButton.textContent = "새로고침";
-        }
-      }
-
-      function renderRows() {
-        const selectedType = typeFilter.value;
-        const keyword = searchInput.value.trim().toLowerCase();
-        const filtered = allRows.filter((row) => {
-          const typeMatched = selectedType === "all" || row.category === selectedType;
-          const text = [row.name, row.contact_name, row.phone, row.email, row.purpose, row.memo].join(" ").toLowerCase();
-          return typeMatched && (!keyword || text.includes(keyword));
-        });
-
-        summary.textContent = `전체 ${allRows.length.toLocaleString()}건 / 표시 ${filtered.length.toLocaleString()}건`;
-        emptyNotice.hidden = filtered.length !== 0;
-
-        list.innerHTML = filtered.map((row) => {
-          const date = row.created_at ? new Date(row.created_at).toLocaleString("ko-KR") : "-";
-          return `<article class="admin-result-card">
-            <div class="admin-result-head">
-              <span>${escapeHtml(TYPE_LABELS[row.category] || row.category)}</span>
-              <time>${escapeHtml(date)}</time>
-            </div>
-            <dl>
-              <div><dt>이름 / 기업명</dt><dd>${escapeHtml(row.name || "-")}</dd></div>
-              <div><dt>담당자명</dt><dd>${escapeHtml(row.contact_name || "-")}</dd></div>
-              <div><dt>전화번호</dt><dd>${escapeHtml(row.phone || "-")}</dd></div>
-              <div><dt>이메일</dt><dd>${escapeHtml(row.email || "-")}</dd></div>
-              <div><dt>목적 / 메모</dt><dd>${escapeHtml(row.purpose || row.memo || "-")}</dd></div>
-            </dl>
-          </article>`;
-        }).join("");
+      function showDashboard(credentials) {
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(credentials));
+        loginForm.hidden = true;
+        dashboard.hidden = false;
+        showLoginStatus("관리자 확인이 완료되었습니다.", false);
       }
 
       loginForm.addEventListener("submit", (event) => {
@@ -258,17 +146,11 @@
           showLoginStatus("관리자 인증에 실패했습니다.", true);
           return;
         }
-        loadAllRows({ email, token });
-      });
-
-      refreshButton.addEventListener("click", () => {
-        if (activeCredentials) loadAllRows(activeCredentials);
+        showDashboard({ email, checked: true });
       });
 
       logoutButton.addEventListener("click", () => {
         sessionStorage.removeItem(STORAGE_KEY);
-        activeCredentials = null;
-        allRows = [];
         dashboard.hidden = true;
         loginForm.hidden = false;
         emailInput.value = "";
@@ -276,15 +158,12 @@
         showLoginStatus("로그아웃되었습니다.", false);
       });
 
-      typeFilter.addEventListener("change", renderRows);
-      searchInput.addEventListener("input", renderRows);
-
       const savedCredentials = sessionStorage.getItem(STORAGE_KEY);
       if (savedCredentials) {
         try {
           const parsed = JSON.parse(savedCredentials);
-          if (parsed.email === ADMIN_EMAIL && parsed.token) {
-            loadAllRows(parsed);
+          if (parsed.email === ADMIN_EMAIL && parsed.checked) {
+            showDashboard(parsed);
           }
         } catch {
           sessionStorage.removeItem(STORAGE_KEY);

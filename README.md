@@ -315,4 +315,29 @@ wonsam-firstone.co.kr
 - `/admin.html`에서 `yisim817@gmail.com`과 올바른 `ADMIN_TOKEN` 입력 후 3종 접수 목록이 최신순으로 표시되는지 확인
 - 모바일에서 폼과 관리자 카드 목록이 깨지지 않는지 확인
 
+## 2026-07-07 긴급 운영 전환: 무환경변수 이메일 접수 모드
+
+현재 운영 모드: **무환경변수 이메일 접수 모드**
+
+- 접수 이메일: `yisim817@gmail.com`
+- 접수 방식: `FormSubmit`을 통해 개인 사전의향서, 기업 의향서, 기업자료 요청이 이메일로 전달됩니다.
+- 개인 사전의향서: `pre-interest.html` → `https://formsubmit.co/yisim817@gmail.com`
+- 기업 의향서: `corporate-interest.html` → `https://formsubmit.co/yisim817@gmail.com`
+- 기업자료 요청: `corporate-request.html` → `https://formsubmit.co/yisim817@gmail.com`
+- 기존 Supabase API 파일은 삭제하지 않았으며, 현재 실사용 폼에서는 호출하지 않습니다.
+- 첫 FormSubmit 사용 시 `yisim817@gmail.com`으로 활성화 확인 메일이 올 수 있습니다. 해당 메일에서 활성화를 완료해야 접수가 정상 전달됩니다.
+
+### 관리자 페이지
+
+- `admin.html`은 DB 목록 조회 화면이 아니라 이메일 접수 관리 안내 페이지로 운영합니다.
+- 관리자 확인 후 Gmail 검색/라벨 관리 방법과 접수 테스트 링크를 보여줍니다.
+- 실제 접수자 개인정보 목록은 관리자 페이지에 노출하지 않습니다.
+
+### 향후 Supabase DB 저장 모드 재활성화
+
+DB 저장 모드로 다시 전환하려면 아래 Vercel 환경변수를 Production에 설정하고, `script.js`의 이메일 접수 모드 비활성화 및 폼 action 복구가 필요합니다.
+
+- `SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `ADMIN_TOKEN`
 
