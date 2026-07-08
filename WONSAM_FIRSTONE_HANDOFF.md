@@ -821,3 +821,60 @@ index.html이 아닌 페이지에서는 앵커 링크(`#top`, `#consultation-typ
 - `preview_console_logs`로 세 페이지 모두 콘솔 에러 0건 확인.
 - `preview_screenshot`은 이 세션에서 영상 hero(`autoplay`/`loop` mp4) 때문으로 추정되는 타임아웃이 발생해 픽셀 스크린샷은 못 찍었지만, 접근성 스냅샷과 콘솔 로그로 렌더링 정확성은 별도 확인했다 — 다음 작업자가 픽셀 검증이 필요하면 영상 hero를 일시 정지한 뒤 재시도할 것.
 - 사용자가 "추후 재작업지시내리겟다"고 명시했으므로 이번 라운드는 위 5개 항목으로 한정했고, 다른 섹션(footer, 사업개요, 상담 유형 안내 등)은 손대지 않았다.
+
+---
+
+## 2026-07-08 (4차) 분양안내 준비중 배너, 기업 검토 자료실 삭제, 입지·설계 PDF 실사진 교체
+
+### PDF 렌더링 방법 (재현용 기록)
+
+이 세션에서 Python이 설치되어 있지 않고(Windows Store 스텁만 존재, `python`/`python3` 실행 시 exit code 49), poppler(`pdftoppm`/`pdftocairo`), ImageMagick(`magick`), Ghostscript(`gs`), mutool 등 PDF 렌더링 CLI도 전혀 없었다. Windows 10/11에 기본 내장된 WinRT `Windows.Data.Pdf.PdfDocument` API를 PowerShell에서 직접 호출해 별도 설치 없이 PDF → PNG 렌더링을 구현했다.
+
+핵심 함정과 해결:
+- `[System.WindowsRuntimeSystemExtensions]::AsTask()`로 `IAsyncOperation<T>`를 감싸는 `Await` 헬퍼는 정상 동작했지만, `PdfPage.RenderToStreamAsync()`가 반환하는 `IAsyncAction`은 PowerShell의 COM 상호운용 계층에서 `[Windows.Foundation.IAsyncAction]`으로 캐스팅이 실패했다(`Cannot convert System.__ComObject`).
+- `.Status` 프로퍼티를 폴링해 완료를 기다리는 방식도 시도했으나, 이 환경에서는 `Status`가 항상 0(Started)만 반환해 신뢰할 수 없었다(실제로는 백그라운드에서 렌더링이 끝나 있었음 — `$stream.Size`로 실측 확인).
+- 최종 해법: `RenderToStreamAsync()`를 호출한 �— 리턴값을 기다리지 않고 — 페이지당 약 0.7~1초 고정 대기(`Start-Sleep`) 후 `$stream.Size`가 0보다 커질 때까지 짧게 추가 대기하고 `Dispose()`. 35페이지 전체를 이 방식으로 안정적으로 렌더링했다(1800px 폭 PNG).
+- 원본 PDF `C:\Users\kl\Desktop\원삼홈페이지광고\사업계획서발췌자료\원삼센트레빌_기업제안서용_핵심페이지_Claude업로드.pdf`는 시스템이 85페이지로 오탐했으나 실제로는 35페이지였다(`doc.PageCount`로 직접 확인) — 기존 메모리에 기록된 "이 프로젝트의 PDF 페이지수 자동판별 도구는 신뢰할 수 없다"는 패턴이 다시 재현된 사례.
+- 함께 첨부된 `원삼센트레빌_기업제안서용_핵심페이지_선별메모.md`의 35행 표(원본 100p 중 선별한 35p 목록)가 추출 PDF의 실제 페이지 순서와 1:1 정확히 일치함을 확인(예: PDF 7페이지=원본 19페이지=광역위치, PDF 19페이지=원본 46페이지=지하1층 도면 등). 이 매핑으로 정확한 페이지를 특정했다.
+- 최종 선택 이미지는 PowerShell + `System.Drawing`(이전 라운드에도 사용한 방식)으로 PNG→JPG 변환했다(Quality 90).
+
+### 상단 메뉴 변경
+
+- **분양안내 추가**: "근린생활시설" 왼쪽에 삽입. 상세페이지가 없으므로 `<a>`가 아닌 `<span class="nav-link-soon" aria-disabled="true">분양안내<em class="nav-soon-badge">준비중</em></span>`로 처리 — `href="#"`나 죽은 링크를 전혀 만들지 않았다. `style.css`에 `.nav-link-soon`(뮤트 컬러, `cursor:default`, `user-select:none`)과 `.nav-soon-badge`(작은 필 배지) 추가. `.mobile-nav .nav-link-soon`에 `display:flex; width:100%; margin-top:0; padding:10px 0`을 별도로 줘서 모바일 nav에서 첫 항목처럼 자연스럽게 보이도록 했다.
+- Node 스크립트(`/tmp/insert_coming_soon.js`)로 `<a href="neighborhood-commerce.html">근린생활시설</a>` 라인을 찾아 그 직전 줄에 동일 들여쓰기로 placeholder를 삽입 — 10개 파일(표준 7→5메뉴 nav를 가진 페이지) × 2곳(데스크톱+모바일) = 20곳 삽입.
+- `admin.html`, `consultation.html`은 원래 "메인으로" 링크 하나만 있는 별도 축소 nav라서 대상에서 제외했다(표준 nav 구조 자체가 없음).
+- **기업 검토 자료실(현장검토자료, `corporate-data.html`) 삭제**: 위 10개 파일에서 `<a href="corporate-data.html">현장검토자료</a>` 20곳(데스크톱+모바일)을 sed로 일괄 삭제. 추가로 `corporate-report.html`의 `.doc-cta-row` 버튼(`기업 상담/기업의향서` 옆에 있던 `현장검토자료` 보조 버튼)과 `intelligence-report.html`의 `.report-cta-row` 버튼(맨 앞의 `현장검토자료` 버튼, 이후 `기업자료 요청`을 `btn-primary`로 승격)도 제거했다.
+- `corporate-data.html` **파일 자체는 삭제하지 않았다** — 지시사항의 "신중히" 원칙에 따라 공개 nav/버튼 연결만 제거했고, 파일은 디스크에 남아 URL을 직접 아는 사람만 접근 가능한 상태다. `title`/`meta`/`og:url` 등 자기 자신을 가리키는 내부 참조는 당연히 그대로 남아 있다(자기 자신이므로 무해).
+- `index.html`의 "상담 유형 안내" 섹션 본문 중 "현장검토자료와 의향서·자료요청을 통해"라는 설명 문구(링크 아님, 순수 텍스트)는 범위 밖이라 손대지 않았다.
+
+### 입지·수요(`intelligence-report.html`) 이미지 교체
+
+- 삭제한 기존 AI 합성 이미지 4장(`assets/images/business-plan/final/`): `fab-dormitory-e21-relation.webp`, `accessibility-main-gateway.webp`, `semiconductor-cluster-status.webp`, `demand-commercial-site.webp`. 삭제 전 실제로 열어서 확인한 결과 항공뷰 배경 위에 "핵심 포인트" 카드, 아이콘, 화살표 등을 합성한 AI 생성 인포그래픽이었음을 육안으로 재확인했다(사용자 표현대로 "잘 안 보이는" 이미지에 해당).
+- 신규 반영 이미지 5장 (`assets/images/business-plan/location/`, 1800×1246 JPG):
+  - `location-regional-wide.jpg` — PDF p.7 = 원본 19p "광역위치"
+  - `location-district-plan.jpg` — PDF p.6 = 원본 18p "지구단위계획"(E2-1·E2-2 상업시설용지 위치도 KEY MAP 포함) → "지역 위치도" 명칭으로 사용
+  - `location-site-detail.jpg` — PDF p.8 = 원본 21p "세부위치"(SITE 표기, 수요/입지/교통/생활 별점표)
+  - `location-access-transit.jpg` — PDF p.9 = 원본 22p "광역교통망"(철도, JTX)
+  - `location-access-highway.jpg` — PDF p.10 = 원본 23p "광역교통망"(세종-포천고속도로, 남용인IC)
+- **"FAB·기숙사·E2-1 관계도"는 반영하지 않았다** — 이 35p 발췌 PDF 안에 해당 내용의 페이지가 없어(E2-1/E2-2 "설계개요" 2페이지는 순수 데이터 표이지 배치 이미지가 아님), 임의로 만들거나 이전 AI 이미지를 재활용하지 않고 정직하게 결측 안내 문구를 넣었다: "※ FAB·기숙사·E2-1 관계도는 현재 확보된 사업계획서 발췌자료에 포함되어 있지 않아 게재하지 않았습니다."
+- 기존 `.intelligence-stack`/`.intel-section` 커스텀 레이아웃을 걷어내고, `design.html`에서 이미 쓰던 `.design-drawing-grid`/`.design-drawing-card`(PC 2열, 태블릿 2열, 모바일 1열, `object-fit:contain`)를 재사용해 새 CSS 없이 반응형을 확보했다. "상업용지 희소성 분석"(05번, 순수 데이터 섹션)은 이미지가 아니므로 그대로 유지하되 별도 `<section>`으로 분리했다(원래 `section-soft` 배경이 두 번 연속되지 않도록 plain `.section`으로 맞춤).
+- 모달 5개(`intelImageModal1`~`5`)를 새 이미지에 맞게 전면 교체했다.
+
+### 설계(`design.html`) 이미지 교체
+
+- 직전 라운드에서 "배치도, 평면도, 입면도, 단면도 등 설계 자료는 준비 중입니다"로 비워뒀던 자리에, 실제 사업계획서 층별 도면 5장을 반영했다: 지하 1층(B1, 원본 46p), 지상 1층(원본 47p), 지상 2층(원본 48p), 지상 3층(원본 49p), 오피스텔 기준층(원본 50p). 파일: `assets/images/business-plan/design/design-floor-{b1,1f,2f,3f,typical}.jpg`.
+- 이 발췌본에는 독립된 배치도(대지 위 건물 배치 개념도), 입면도, 단면도, 세부 주차·동선 전용 도면이 없어 추가하지 않았고, 안내 문구로 결측을 명시했다: "※ 배치도, 입면도, 단면도, 세부 주차·동선 도면은 현재 확보된 사업계획서 발췌자료에 포함되어 있지 않아 게재하지 않았습니다."
+- 조감도(PDF p.3~4)나 사업지 전경(PDF p.2), E2-1/E2-2 설계개요 데이터표(PDF p.15~16)는 설계도면이 아니므로 이 페이지에 넣지 않았다(조감도를 설계도처럼 쓰지 말라는 지시 준수).
+- 세대평면 A~F(PDF p.24 = 원본 51p)는 이미 이전 라운드에 `unit-types.html`에 별도로 반영되어 있어 이번 라운드에서 중복 반영하지 않았다.
+
+### 보호한 기존 기능 (변경하지 않음)
+
+- FormSubmit `action`/hidden 필드, `contact.js`, 대표번호 `1644-6873`/`tel:16446873`, 파일명, 도메인 — 전부 미변경.
+- `admin.html` Gmail 접수 관리 안내, Supabase 보류 구조 — 미변경.
+
+### 검증
+
+- Node 스크립트로 12개 HTML 전체 태그 짝(section/div/article/main/header/footer/nav/span/strong/p/h1~h3/figure) 일치 확인.
+- `grep -rn 'href="#"' *.html` → 0건.
+- `grep -rn "corporate-data.html\|현장검토자료" *.html` → `corporate-data.html` 자기 자신의 title/meta/og 참조와 `index.html`의 순수 설명 텍스트 1건만 남고 그 외 링크/버튼 0건.
+- 브라우저(1440px/390px)로 `intelligence-report.html`, `design.html`, `index.html` 확인: nav 순서(분양안내→근린생활시설→호실타입→입지·수요→설계, 현장검토자료 없음), 이미지 10장 전부 `naturalWidth` 정상 로드, 확대 모달 열림/닫힘 정상, `.design-drawing-grid`가 모바일에서 1열, 가로 오버플로 없음(`scrollWidth === clientWidth`), 콘솔 에러 0건을 각각 확인했다.

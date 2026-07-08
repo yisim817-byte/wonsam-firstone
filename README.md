@@ -400,3 +400,29 @@ DB 저장 모드로 다시 전환하려면 아래 Vercel 환경변수를 Product
 - 사이트 전체 grep으로 `#analysis`, `#strategy`, `#neighborhood-commerce`, `#unit-types`, `locationSummaryModal` 잔여 참조가 없음을 확인했습니다. Node 스크립트로 `index.html`의 태그(`section`/`div`/`article`/`main`/`header`/`footer`/`nav`) 열림/닫힘 개수가 모두 일치함을 확인했습니다.
 - 브라우저(로컬 `npx serve`, 포트 4502)로 `index.html`, `neighborhood-commerce.html`, `unit-types.html` 3개 페이지의 렌더링과 콘솔 에러 없음을 확인했습니다.
 - 사용자가 "추후 재작업지시내리겟다"(추가 지시는 나중에)라고 명시했으므로, 이번 라운드는 위 범위로 한정하고 다른 섹션은 건드리지 않았습니다.
+
+## 2026-07-08 (3차) 상단배너 정리, 기업 검토 자료실 삭제, 입지·설계 실사진 교체
+
+사업계획서 발췌 PDF(`원삼센트레빌_기업제안서용_핵심페이지_Claude업로드.pdf`, 실제 35페이지 — 첨부 시스템이 85페이지로 오탐)를 Windows 내장 WinRT `Windows.Data.Pdf` API(PowerShell)로 페이지별 렌더링해, 사업계획서 원본 화면만 사용해 입지·설계 자료를 교체했습니다. Python/Pillow, poppler, ImageMagick 등 외부 도구는 설치하지 않았습니다.
+
+### 상단 메뉴 변경
+- "근린생활시설" 왼쪽에 **분양안내** 메뉴를 추가했습니다. 상세페이지가 아직 없어 `<a>` 링크가 아닌 `<span class="nav-link-soon">분양안내<em class="nav-soon-badge">준비중</em></span>`로 처리해 `href="#"` 없이 "추후 연결 예정"만 표시합니다.
+- "현장검토자료"(기업 검토 자료실, `corporate-data.html`) 메뉴를 10개 페이지(데스크톱+모바일 nav) 전체에서 삭제했습니다. `corporate-report.html`, `intelligence-report.html`의 `corporate-data.html`행 CTA 버튼도 함께 제거했습니다.
+- `corporate-data.html` 파일 자체는 삭제하지 않았습니다(신중한 삭제 원칙) — 공개 nav/버튼 연결만 제거해 URL을 직접 아는 경우에만 열립니다.
+- `admin.html`, `consultation.html`은 원래도 "메인으로"만 있는 축소 nav라 이번 변경 대상이 아닙니다.
+
+### 입지·수요 (`intelligence-report.html`) 교체
+- 기존 AI 합성 인포그래픽 4장(`fab-dormitory-e21-relation.webp` 등, `assets/images/business-plan/final/`)을 삭제했습니다.
+- PDF에서 렌더링한 실제 사업계획서 페이지 5장을 JPG로 변환해 `assets/images/business-plan/location/`에 저장하고 반영했습니다: 광역 위치도(원본 19p), 지역 위치도/지구단위계획(원본 18p), 세부 위치도(원본 21p), 산업단지 접근성-철도망(원본 22p), 산업단지 접근성-고속도로·IC(원본 23p).
+- 이 PDF 발췌본에는 "FAB·기숙사·E2-1 관계도"에 해당하는 페이지가 없어 임의로 만들지 않았고, 안내 문구로 그 사실을 명시했습니다.
+- "상업용지 희소성 분석"(텍스트/수치 데이터 섹션)은 이미지가 아니므로 그대로 유지했습니다.
+
+### 설계 (`design.html`) 교체
+- 이전 라운드에 "준비 중" 상태였던 자리에, PDF에서 렌더링한 실제 설계도면 5장을 JPG로 변환해 `assets/images/business-plan/design/`에 저장하고 반영했습니다: 지하 1층(B1, 원본 46p), 지상 1층(원본 47p), 지상 2층(원본 48p), 지상 3층(원본 49p), 오피스텔 기준층(원본 50p).
+- 이 PDF 발췌본에는 별도의 배치도·입면도·단면도·세부 주차동선 도면이 없어 임의로 만들지 않았고, 안내 문구로 그 사실을 명시했습니다. 조감도나 프로젝트 개요 이미지를 설계도로 둔갑시키지 않았습니다.
+
+### 공통 처리
+- 두 페이지 모두 기존 `.design-drawing-grid`/`.design-drawing-card` 컴포넌트(PC 2열 → 태블릿 2열 → 모바일 1열, `object-fit: contain`)를 재사용해 새 CSS 없이 반응형을 확보했습니다.
+- 이미지 10장 모두 `zoomable-image image-zoom-trigger` + `media-modal` 패턴으로 클릭 확대를 적용했습니다.
+- FormSubmit, `contact.js`, 대표번호 `1644-6873`/`tel:16446873`은 전혀 변경하지 않았습니다.
+- 12개 파일 전체 태그 짝(section/div/article/span/strong/p/h1~h3/figure) 일치 확인, `href="#"` 0건 확인, 브라우저(1440px/390px)에서 이미지 로드·확대모달·nav 순서·콘솔 에러 없음을 확인했습니다.

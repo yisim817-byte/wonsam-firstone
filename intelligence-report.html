@@ -21,11 +21,11 @@
         </span>
       </a>
       <nav class="nav-links" aria-label="주요 메뉴">
+        <span class="nav-link-soon" aria-disabled="true">분양안내<em class="nav-soon-badge">준비중</em></span>
         <a href="neighborhood-commerce.html">근린생활시설</a>
         <a href="unit-types.html">호실타입</a>
         <a href="intelligence-report.html">입지·수요</a>
         <a href="design.html">설계</a>
-        <a href="corporate-data.html">현장검토자료</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false">
         <span></span>
@@ -35,11 +35,11 @@
     </header>
 
     <nav class="mobile-nav" aria-label="모바일 메뉴">
+      <span class="nav-link-soon" aria-disabled="true">분양안내<em class="nav-soon-badge">준비중</em></span>
       <a href="neighborhood-commerce.html">근린생활시설</a>
       <a href="unit-types.html">호실타입</a>
       <a href="intelligence-report.html">입지·수요</a>
       <a href="design.html">설계</a>
-      <a href="corporate-data.html">현장검토자료</a>
     </nav>
 
     <main>
@@ -54,79 +54,122 @@
       </section>
 
       <section class="section">
-        <div class="container intelligence-stack">
-          <article class="intel-section">
-            <figure class="intel-image-card zoomable-image image-zoom-trigger" data-modal-target="intelImageModal1" role="button" tabindex="0" aria-label="FAB 기숙사 E2-1 관계도 확대 보기">
-              <span class="zoom-badge">🔍 확대보기</span>
-              <img
-                src="assets/images/business-plan/final/fab-dormitory-e21-relation.webp"
-                width="900"
-                height="560"
-                loading="lazy"
-                alt="FAB, 기숙사, E2-1 일반상업지 위치 관계도"
+        <div class="container">
+          <div class="design-drawing-grid">
+            <article class="design-drawing-card">
+              <h3>광역 위치도</h3>
+              <p>용인·이천·동탄·기흥을 잇는 반도체 메가클러스터 안에서 원삼 일반산업단지의 광역 위치를 확인하는 사업계획서 기준 자료입니다.</p>
+              <figure
+                class="zoomable-image image-zoom-trigger"
+                data-modal-target="intelImageModal1"
+                role="button"
+                tabindex="0"
+                aria-label="광역 위치도 확대 보기"
               >
-            </figure>
-            <div>
-              <span class="doc-eyebrow">01</span>
-              <h2>FAB·기숙사·E2-1 관계</h2>
-              <p>FAB, 지원동, 기숙사, E2-1 일반상업지의 위치 관계를 통해 주출입구 인접성과 배후 생활권 형성 가능성을 검토합니다.</p>
-            </div>
-          </article>
+                <span class="zoom-badge">🔍 확대보기</span>
+                <img
+                  src="assets/images/business-plan/location/location-regional-wide.jpg"
+                  width="1800"
+                  height="1246"
+                  loading="lazy"
+                  alt="용인 반도체 메가클러스터 광역 위치도"
+                >
+              </figure>
+            </article>
 
-          <article class="intel-section">
-            <figure class="intel-image-card zoomable-image image-zoom-trigger" data-modal-target="intelImageModal2" role="button" tabindex="0" aria-label="산업단지 접근성 및 메인 게이트웨이 이미지 확대 보기">
-              <span class="zoom-badge">🔍 확대보기</span>
-              <img
-                src="assets/images/business-plan/final/accessibility-main-gateway.webp"
-                width="255"
-                height="470"
-                loading="lazy"
-                alt="산업단지 접근성 및 메인 게이트웨이 참고 이미지"
+            <article class="design-drawing-card">
+              <h3>지역 위치도 (지구단위계획)</h3>
+              <p>용인 반도체클러스터 일반산업단지 지구단위계획과 E2-1·E2-2 상업시설용지 위치를 확인하는 사업계획서 기준 자료입니다.</p>
+              <figure
+                class="zoomable-image image-zoom-trigger"
+                data-modal-target="intelImageModal2"
+                role="button"
+                tabindex="0"
+                aria-label="지역 위치도(지구단위계획) 확대 보기"
               >
-            </figure>
-            <div>
-              <span class="doc-eyebrow">02</span>
-              <h2>전도 조건 및 접근성</h2>
-              <p>주요 진입 동선, 도로 폭, 메인 게이트웨이 관점에서 접근성과 가시성을 검토합니다.</p>
-            </div>
-          </article>
+                <span class="zoom-badge">🔍 확대보기</span>
+                <img
+                  src="assets/images/business-plan/location/location-district-plan.jpg"
+                  width="1800"
+                  height="1246"
+                  loading="lazy"
+                  alt="지구단위계획 및 E2-1·E2-2 상업시설용지 위치도"
+                >
+              </figure>
+            </article>
 
-          <article class="intel-section">
-            <figure class="intel-image-card zoomable-image image-zoom-trigger" data-modal-target="intelImageModal3" role="button" tabindex="0" aria-label="용인 반도체 클러스터 현황 이미지 확대 보기">
-              <span class="zoom-badge">🔍 확대보기</span>
-              <img
-                src="assets/images/business-plan/final/semiconductor-cluster-status.webp"
-                width="262"
-                height="470"
-                loading="lazy"
-                alt="용인 반도체 클러스터와 수도권 산업축 참고 이미지"
+            <article class="design-drawing-card">
+              <h3>세부 위치도</h3>
+              <p>SK하이닉스 용인캠퍼스 정문 앞 입지 조건과 수요·입지·교통·생활 항목별 검토 내용을 정리한 사업계획서 기준 자료입니다.</p>
+              <figure
+                class="zoomable-image image-zoom-trigger"
+                data-modal-target="intelImageModal3"
+                role="button"
+                tabindex="0"
+                aria-label="세부 위치도 확대 보기"
               >
-            </figure>
-            <div>
-              <span class="doc-eyebrow">03</span>
-              <h2>용인 반도체 클러스터 현황</h2>
-              <p>용인·이천·동탄·기흥을 잇는 반도체 산업축 안에서 원삼 일반산업단지의 위치를 검토합니다.</p>
-            </div>
-          </article>
+                <span class="zoom-badge">🔍 확대보기</span>
+                <img
+                  src="assets/images/business-plan/location/location-site-detail.jpg"
+                  width="1800"
+                  height="1246"
+                  loading="lazy"
+                  alt="사업지 세부 위치 및 입지 검토 자료"
+                >
+              </figure>
+            </article>
 
-          <article class="intel-section">
-            <figure class="intel-image-card zoomable-image image-zoom-trigger" data-modal-target="intelImageModal4" role="button" tabindex="0" aria-label="배후수요 및 상업지 입지 이미지 확대 보기">
-              <span class="zoom-badge">🔍 확대보기</span>
-              <img
-                src="assets/images/business-plan/final/demand-commercial-site.webp"
-                width="767"
-                height="471"
-                loading="lazy"
-                alt="배후수요 및 상업지 입지 참고 이미지"
+            <article class="design-drawing-card">
+              <h3>산업단지 접근성 - 철도망</h3>
+              <p>중부권광역급행철도(JTX), 반도체선 등 용인시 철도망 확충 계획을 기준으로 접근성을 검토합니다.</p>
+              <figure
+                class="zoomable-image image-zoom-trigger"
+                data-modal-target="intelImageModal4"
+                role="button"
+                tabindex="0"
+                aria-label="산업단지 접근성 철도망 확대 보기"
               >
-            </figure>
-            <div>
-              <span class="doc-eyebrow">04</span>
-              <h2>배후수요 및 상업지 입지</h2>
-              <p>E2-1 상업지의 주출입구 인접성, 배후 주거·근무 수요, 근린생활시설 검토 가능성을 정리합니다.</p>
-            </div>
-          </article>
+                <span class="zoom-badge">🔍 확대보기</span>
+                <img
+                  src="assets/images/business-plan/location/location-access-transit.jpg"
+                  width="1800"
+                  height="1246"
+                  loading="lazy"
+                  alt="용인 반도체클러스터 광역교통망(철도) 참고 자료"
+                >
+              </figure>
+            </article>
 
+            <article class="design-drawing-card">
+              <h3>산업단지 접근성 - 고속도로·IC</h3>
+              <p>세종-포천고속도로 개통과 남용인IC 접근성을 기준으로 산업단지 진입 동선을 검토합니다.</p>
+              <figure
+                class="zoomable-image image-zoom-trigger"
+                data-modal-target="intelImageModal5"
+                role="button"
+                tabindex="0"
+                aria-label="산업단지 접근성 고속도로 확대 보기"
+              >
+                <span class="zoom-badge">🔍 확대보기</span>
+                <img
+                  src="assets/images/business-plan/location/location-access-highway.jpg"
+                  width="1800"
+                  height="1246"
+                  loading="lazy"
+                  alt="세종-포천고속도로 및 남용인IC 접근성 참고 자료"
+                >
+              </figure>
+            </article>
+          </div>
+
+          <div class="notice-box design-notice">
+            <p>※ FAB·기숙사·E2-1 관계도는 현재 확보된 사업계획서 발췌자료에 포함되어 있지 않아 게재하지 않았습니다. 확정 자료가 확보되는 대로 반영합니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
           <article class="intel-section">
             <div>
               <span class="doc-eyebrow">05</span>
@@ -169,8 +212,7 @@
             <p>※ 본 페이지는 수익이나 가치 상승을 약속하지 않습니다.</p>
           </div>
           <div class="report-cta-row">
-            <a class="btn btn-primary" href="corporate-data.html">현장검토자료</a>
-            <a class="btn btn-secondary" href="corporate-request.html">기업자료 요청</a>
+            <a class="btn btn-primary" href="corporate-request.html">기업자료 요청</a>
             <a class="btn btn-secondary" href="consultation.html">상담 문의</a>
           </div>
         </div>
@@ -191,37 +233,46 @@
 
     <div id="intelImageModal1" class="media-modal" aria-hidden="true">
       <div class="media-modal__backdrop" data-modal-close></div>
-      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="FAB 기숙사 E2-1 관계도 확대 보기">
+      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="광역 위치도 확대 보기">
         <button class="media-modal__close" type="button" data-modal-close>닫기</button>
-        <img src="assets/images/business-plan/final/fab-dormitory-e21-relation.webp" alt="FAB, 기숙사, E2-1 일반상업지 위치 관계도 확대">
-        <p class="media-modal__caption">FAB·기숙사·E2-1 관계</p>
+        <img src="assets/images/business-plan/location/location-regional-wide.jpg" alt="용인 반도체 메가클러스터 광역 위치도 확대">
+        <p class="media-modal__caption">광역 위치도</p>
       </div>
     </div>
 
     <div id="intelImageModal2" class="media-modal" aria-hidden="true">
       <div class="media-modal__backdrop" data-modal-close></div>
-      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="산업단지 접근성 및 메인 게이트웨이 이미지 확대 보기">
+      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="지역 위치도(지구단위계획) 확대 보기">
         <button class="media-modal__close" type="button" data-modal-close>닫기</button>
-        <img src="assets/images/business-plan/final/accessibility-main-gateway.webp" alt="산업단지 접근성 및 메인 게이트웨이 참고 이미지 확대">
-        <p class="media-modal__caption">전도 조건 및 접근성</p>
+        <img src="assets/images/business-plan/location/location-district-plan.jpg" alt="지구단위계획 및 E2-1·E2-2 상업시설용지 위치도 확대">
+        <p class="media-modal__caption">지역 위치도 (지구단위계획)</p>
       </div>
     </div>
 
     <div id="intelImageModal3" class="media-modal" aria-hidden="true">
       <div class="media-modal__backdrop" data-modal-close></div>
-      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="용인 반도체 클러스터 현황 이미지 확대 보기">
+      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="세부 위치도 확대 보기">
         <button class="media-modal__close" type="button" data-modal-close>닫기</button>
-        <img src="assets/images/business-plan/final/semiconductor-cluster-status.webp" alt="용인 반도체 클러스터와 수도권 산업축 참고 이미지 확대">
-        <p class="media-modal__caption">용인 반도체 클러스터 현황</p>
+        <img src="assets/images/business-plan/location/location-site-detail.jpg" alt="사업지 세부 위치 및 입지 검토 자료 확대">
+        <p class="media-modal__caption">세부 위치도</p>
       </div>
     </div>
 
     <div id="intelImageModal4" class="media-modal" aria-hidden="true">
       <div class="media-modal__backdrop" data-modal-close></div>
-      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="배후수요 및 상업지 입지 이미지 확대 보기">
+      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="산업단지 접근성 철도망 확대 보기">
         <button class="media-modal__close" type="button" data-modal-close>닫기</button>
-        <img src="assets/images/business-plan/final/demand-commercial-site.webp" alt="배후수요 및 상업지 입지 참고 이미지 확대">
-        <p class="media-modal__caption">배후수요 및 상업지 입지</p>
+        <img src="assets/images/business-plan/location/location-access-transit.jpg" alt="용인 반도체클러스터 광역교통망(철도) 참고 자료 확대">
+        <p class="media-modal__caption">산업단지 접근성 - 철도망</p>
+      </div>
+    </div>
+
+    <div id="intelImageModal5" class="media-modal" aria-hidden="true">
+      <div class="media-modal__backdrop" data-modal-close></div>
+      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="산업단지 접근성 고속도로 확대 보기">
+        <button class="media-modal__close" type="button" data-modal-close>닫기</button>
+        <img src="assets/images/business-plan/location/location-access-highway.jpg" alt="세종-포천고속도로 및 남용인IC 접근성 참고 자료 확대">
+        <p class="media-modal__caption">산업단지 접근성 - 고속도로·IC</p>
       </div>
     </div>
 
