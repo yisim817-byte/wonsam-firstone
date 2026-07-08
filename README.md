@@ -382,3 +382,21 @@ DB 저장 모드로 다시 전환하려면 아래 Vercel 환경변수를 Product
 - 고객 CTA는 `pre-interest.html`, 기업 CTA는 `corporate-interest.html`로 연결합니다.
 - `index.html` 본문 반복 CTA는 줄였고, 상가·근린생활시설 섹션에는 `상가 상담 문의` 보조 CTA 1개만 남겼습니다.
 - 기업자료 요청은 `corporate-report.html` 또는 기업 전용 페이지 내부 보조 동선으로 유지합니다.
+
+## 2026-07-08 호실타입/근린생활시설 상세페이지 분리, 입지·수요/분양전략 섹션 삭제
+
+메인페이지(`index.html`)의 정보량을 줄이고, "설계" 메뉴에서 이미 적용한 "상단배너 메뉴 → 전용 상세페이지" 패턴을 근린생활시설·호실타입에도 동일하게 적용했습니다.
+
+- **신규 상세페이지 2개 생성**: `neighborhood-commerce.html`(근린생활시설), `unit-types.html`(호실타입). 둘 다 `design.html`과 동일한 표준 헤더/모바일 메뉴/푸터/스크립트 구조를 그대로 사용하며, `theme-airbnb` 테마입니다.
+  - `neighborhood-commerce.html`: `index.html`에 있던 `commerce-metric-grid`(E2-1/E2-2/TOTAL/LAND RATIO 4개 지표)와 `commerce-detail-grid`(배후 체류 수요/업종 검토/검토 유의사항 3개 카드)를 그대로 옮겼습니다.
+  - `unit-types.html`: `index.html`에 있던 `unit-type-grid`(A~F 6개 타입 카드, 전용/공급/계약면적 표)와 하단 고지문을 그대로 옮겼습니다. 실수·면적 수치는 전혀 변경하지 않았습니다.
+- **상단 메뉴 링크 갱신**: 8개 HTML 파일(`index.html`, `corporate-data.html`, `corporate-interest.html`, `corporate-report.html`, `corporate-request.html`, `design.html`, `intelligence-report.html`, `pre-interest.html`) 전체의 데스크톱 네비게이션과 모바일 메뉴에서 "근린생활시설"과 "호실타입" 링크가 `neighborhood-commerce.html`, `unit-types.html`을 직접 가리키도록 통일했습니다(이전에는 `index.html` 내부 앵커였습니다).
+- **`index.html`에서 4개 섹션 제거**:
+  - `#neighborhood-commerce`, `#unit-types` — 위 2개 상세페이지로 이동했으므로 원본은 삭제.
+  - `#analysis`(입지·수요 요약 카드 4개 + 연결 모달 4개) — **삭제만 하고 이동하지 않음**. 사용자 지시에 따른 것이며, 상세페이지 신규 생성 없음.
+  - `#strategy`(분양전략 · 검토 절차 3단계) — **삭제만 하고 이동하지 않음**. 대체 콘텐츠 없음.
+- 삭제 후 `index.html`의 본문 순서는 `hero → 사업개요 → 상담 유형 안내 → 유의사항 → footer`로 단순화되었습니다.
+- 삭제된 4개 섹션이 참조하던 이미지 파일(`assets/images/business-plan/final/*.webp`)은 `intelligence-report.html`에서 동일 이미지를 계속 사용 중이므로 삭제하지 않았습니다.
+- 사이트 전체 grep으로 `#analysis`, `#strategy`, `#neighborhood-commerce`, `#unit-types`, `locationSummaryModal` 잔여 참조가 없음을 확인했습니다. Node 스크립트로 `index.html`의 태그(`section`/`div`/`article`/`main`/`header`/`footer`/`nav`) 열림/닫힘 개수가 모두 일치함을 확인했습니다.
+- 브라우저(로컬 `npx serve`, 포트 4502)로 `index.html`, `neighborhood-commerce.html`, `unit-types.html` 3개 페이지의 렌더링과 콘솔 에러 없음을 확인했습니다.
+- 사용자가 "추후 재작업지시내리겟다"(추가 지시는 나중에)라고 명시했으므로, 이번 라운드는 위 범위로 한정하고 다른 섹션은 건드리지 않았습니다.

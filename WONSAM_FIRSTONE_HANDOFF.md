@@ -791,3 +791,33 @@ index.html이 아닌 페이지에서는 앵커 링크(`#top`, `#consultation-typ
 - `#unit-types` 섹션에서 카드 6장·"656실" 등 실수 배지가 모두 올바르게 렌더링되는지, 표가 카드 밖으로 넘치지 않는지 확인.
 - 전체 리포지토리 grep으로 "기업검토자료", "기업 검토 자료실", "이종석 본부장", `href="#"`, "확정수익", "수익보장", "독점상권" 전부 0건 확인.
 - `git status`로 이번 라운드에서 건드린 파일이 의도한 8개(`index.html`, `corporate-data.html`, `corporate-report.html`, `intelligence-report.html`, `design.html`, `pre-interest.html`, `corporate-interest.html`, `corporate-request.html`, `style.css`) + 병합 커밋뿐임을 확인, `admin.html`/`api/*`는 diff 없음.
+
+---
+
+## 2026-07-08 (2차) 근린생활시설/호실타입 상세페이지 분리, 입지·수요/분양전략 섹션 삭제
+
+### 사용자 지시 원문
+
+> "메인페이지의 호실타입 근린생활시설은 해당 상단배너의 상세페이지로 집어넣고 메인페이지의 입지수요는 삭제한다 하단분양전략검토절차도 삭제한다 추후 재작업지시내리겟다"
+
+즉 (1) 호실타입·근린생활시설은 **이동**(상단 메뉴의 상세페이지로), (2) 입지·수요(`#analysis`)는 **삭제**(이동 아님), (3) 하단 분양전략·검토 절차(`#strategy`)도 **삭제**(이동 아님), (4) 이번 라운드는 이 범위로 한정하고 추가 작업은 하지 않음 — "설계" 메뉴를 이미 상세페이지(`design.html`)로 분리해둔 것과 동일한 패턴을 근린생활시설·호실타입에도 적용하되, 입지·수요와 분양전략은 상세페이지를 만들지 않고 그냥 없앤 것이 이번 라운드의 핵심 차이다.
+
+### 작업 내용
+
+1. **`neighborhood-commerce.html` 신규 생성** — `design.html`과 동일한 표준 헤더(로고/7메뉴 nav-links/`.mobile-nav`)·푸터·스크립트 골격에, `index.html`의 `#neighborhood-commerce` 섹션 본문(`commerce-metric-grid` 4개 지표 + `commerce-detail-grid` 3개 카드)을 그대로 옮겼다. 수치(E2-1/E2-2 각 162호·2,515평/2,552평, 총 324호, 상업용지비율 약 0.75%)는 전혀 가공하지 않았다.
+2. **`unit-types.html` 신규 생성** — 같은 골격에 `index.html`의 `#unit-types` 섹션 본문(A~F 6개 타입 카드, 전용/공급/계약면적 표, 실수 배지)을 옮겼다. 최초 작성 시 표 구조를 임의로 재구성(`<thead>` 추가, `unit-type-count`를 `<h3>` 밖으로 분리)했다가, 원본 `index.html`과 마크업이 달라진 것을 발견하고 원본과 1:1 동일한 구조(`<h3>TYPE <span class="unit-type-count">`, `<p>실사용면적 N평</p>`, `<thead>` 없는 3행 표)로 다시 고쳤다. 실수·면적 수치는 원본 6개 타입(A 656실~F 48실) 전부 그대로다.
+3. **8개 HTML 파일의 nav 링크 갱신** — `index.html`, `corporate-data.html`, `corporate-interest.html`, `corporate-report.html`, `corporate-request.html`, `design.html`, `intelligence-report.html`, `pre-interest.html`에서 "근린생활시설"/"호실타입" 링크를 (이전 라운드에 붙였던 `index.html#neighborhood-commerce`/`index.html#unit-types` 또는 `#neighborhood-commerce`/`#unit-types` 앵커에서) `neighborhood-commerce.html`/`unit-types.html` 직접 링크로 교체했다. 데스크톱 nav-links와 모바일 `.mobile-nav` 양쪽 다 수정.
+4. **`index.html`에서 4개 섹션 삭제**:
+   - `#neighborhood-commerce`, `#unit-types` — 1·2번에서 새 페이지로 옮겼으므로 원본 삭제.
+   - `#analysis`(입지·수요, `location-summary-grid` 카드 4개) — 삭제만 하고 새 상세페이지를 만들지 않았다. 연결된 확대 모달 4개(`locationSummaryModal1`~`4`, 파일 하단에 별도 위치)도 함께 삭제했다(고아 모달 방지).
+   - `#strategy`(분양전략 · 검토 절차 3단계 카드) — 삭제만 하고 대체 콘텐츠 없음.
+5. 삭제 후 `index.html`의 `<main>` 구성은 `hero-video → #overview(사업개요) → #consultation-types(상담 유형 안내) → 유의사항 → </main>`로 축소됐다. `#analysis`/`#neighborhood-commerce`/`#unit-types`/`#strategy`가 참조하던 이미지(`assets/images/business-plan/final/*.webp`)는 `intelligence-report.html`이 동일 파일을 계속 사용 중이므로 그대로 두었다(삭제하지 않음).
+
+### 검증
+
+- Node 스크립트로 `index.html`의 태그 짝(`section`/`div`/`article`/`main`/`header`/`footer`/`nav`) 개수가 모두 open=close임을 확인.
+- 전체 `*.html` grep으로 `#analysis`, `#strategy`, `#neighborhood-commerce`, `#unit-types`, `locationSummaryModal` 참조가 0건임을 확인 — 죽은 링크나 고아 모달 없음.
+- 로컬 정적 서버(`npx serve`, `.claude/launch.json`의 `wonsam-firstone` 항목, 포트 4502)로 `index.html`, `neighborhood-commerce.html`, `unit-types.html` 3개 페이지를 실제 렌더링해 접근성 스냅샷으로 확인: `index.html`은 hero→사업개요→상담 유형 안내→유의사항→footer 순서로만 나오고 삭제 대상 4개 섹션이 전혀 없음, 두 신규 페이지 모두 헤더 7메뉴·본문 카드/표·CTA·footer가 정상 렌더링됨(`neighborhood-commerce.html`은 지표 4개+카드 3개, `unit-types.html`은 A~F 6개 타입 표 전부).
+- `preview_console_logs`로 세 페이지 모두 콘솔 에러 0건 확인.
+- `preview_screenshot`은 이 세션에서 영상 hero(`autoplay`/`loop` mp4) 때문으로 추정되는 타임아웃이 발생해 픽셀 스크린샷은 못 찍었지만, 접근성 스냅샷과 콘솔 로그로 렌더링 정확성은 별도 확인했다 — 다음 작업자가 픽셀 검증이 필요하면 영상 hero를 일시 정지한 뒤 재시도할 것.
+- 사용자가 "추후 재작업지시내리겟다"고 명시했으므로 이번 라운드는 위 5개 항목으로 한정했고, 다른 섹션(footer, 사업개요, 상담 유형 안내 등)은 손대지 않았다.
