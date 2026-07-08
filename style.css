@@ -2741,6 +2741,21 @@ body.modal-open {
   margin-bottom: 12px;
 }
 
+.commercial-plan-figure {
+  margin: 0 0 24px;
+}
+
+.commercial-plan-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 900px;
+  object-fit: contain;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  background: var(--bg-strong);
+}
+
 .unit-type-plan {
   width: 100%;
   height: 240px;
