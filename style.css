@@ -2737,6 +2737,19 @@ body.modal-open {
   gap: 16px;
 }
 
+.unit-type-plan-figure {
+  margin-bottom: 12px;
+}
+
+.unit-type-plan {
+  width: 100%;
+  height: 240px;
+  object-fit: contain;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  background: var(--bg-strong);
+}
+
 .unit-type-grid .commerce-focus-card {
   display: flex;
   flex-direction: column;
