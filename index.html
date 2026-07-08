@@ -11,6 +11,7 @@
     <meta property="og:title" content="원삼 센트레빌 퍼스트원 원삼 반도체 배후 주거상품 검토 안내">
     <meta property="og:description" content="일반고객 전화상담과 기업고객 자료요청을 분리 안내하는 검토 페이지">
     <meta property="og:url" content="https://wonsam-firstone.co.kr">
+    <link rel="icon" href="data:,">
     <link rel="stylesheet" href="style.css">
   </head>
   <body class="theme-airbnb">
@@ -72,10 +73,6 @@
                 <strong>1,374대 계획</strong>
               </article>
             </div>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="#consultation-types">상담 유형 보기</a>
-              <a class="btn btn-secondary" href="corporate-data.html">기업 검토 자료실 보기</a>
-            </div>
           </div>
 
           <div class="hero-side">
@@ -85,12 +82,13 @@
                 <p>원삼 센트레빌 퍼스트원 E2-1 BL의 위치, 규모, 용도, 주차계획을 한눈에 확인할 수 있는 프로젝트 개요입니다.</p>
               </div>
               <figure
-                class="final-image-card image-zoom-trigger"
+                class="final-image-card zoomable-image image-zoom-trigger"
                 data-modal-target="projectOverviewFinalModal"
                 role="button"
                 tabindex="0"
                 aria-label="원삼 센트레빌 퍼스트원 프로젝트 개요 이미지 크게 보기"
               >
+                <span class="zoom-badge">🔍 확대보기</span>
                 <img
                   src="assets/images/business-plan/final/project-overview-final.webp"
                   width="1536"
@@ -144,28 +142,37 @@
 
           <div class="location-summary-grid">
             <article class="location-summary-card">
-              <img src="assets/images/business-plan/final/semiconductor-cluster-status.webp" width="262" height="470" loading="lazy" alt="광역입지 요약 이미지">
+              <figure class="zoomable-image image-zoom-trigger" data-modal-target="locationSummaryModal1" role="button" tabindex="0" aria-label="광역입지 요약 이미지 확대 보기">
+                <span class="zoom-badge">🔍 확대보기</span>
+                <img src="assets/images/business-plan/final/semiconductor-cluster-status.webp" width="262" height="470" loading="lazy" alt="광역입지 요약 이미지">
+              </figure>
               <h3>광역입지</h3>
               <p>용인·이천·동탄·기흥을 잇는 산업축 안에서 입지 관계를 확인합니다.</p>
             </article>
             <article class="location-summary-card">
-              <img src="assets/images/business-plan/final/accessibility-main-gateway.webp" width="255" height="470" loading="lazy" alt="산업단지 접근성 요약 이미지">
+              <figure class="zoomable-image image-zoom-trigger" data-modal-target="locationSummaryModal2" role="button" tabindex="0" aria-label="산업단지 접근성 요약 이미지 확대 보기">
+                <span class="zoom-badge">🔍 확대보기</span>
+                <img src="assets/images/business-plan/final/accessibility-main-gateway.webp" width="255" height="470" loading="lazy" alt="산업단지 접근성 요약 이미지">
+              </figure>
               <h3>산업단지 접근성</h3>
               <p>반도체클러스터 주요 출입 동선과의 연결성을 검토합니다.</p>
             </article>
             <article class="location-summary-card">
-              <img src="assets/images/business-plan/final/fab-dormitory-e21-relation.webp" width="900" height="560" loading="lazy" alt="FAB 기숙사 E2-1 관계 요약 이미지">
+              <figure class="zoomable-image image-zoom-trigger" data-modal-target="locationSummaryModal3" role="button" tabindex="0" aria-label="FAB 기숙사 E2-1 관계 요약 이미지 확대 보기">
+                <span class="zoom-badge">🔍 확대보기</span>
+                <img src="assets/images/business-plan/final/fab-dormitory-e21-relation.webp" width="900" height="560" loading="lazy" alt="FAB 기숙사 E2-1 관계 요약 이미지">
+              </figure>
               <h3>FAB·기숙사·E2-1 관계</h3>
               <p>FAB, 지원동, 기숙사, E2-1의 위치 관계를 간단히 살핍니다.</p>
             </article>
             <article class="location-summary-card">
-              <img src="assets/images/business-plan/final/demand-commercial-site.webp" width="767" height="471" loading="lazy" alt="배후 생활권 요약 이미지">
+              <figure class="zoomable-image image-zoom-trigger" data-modal-target="locationSummaryModal4" role="button" tabindex="0" aria-label="배후 생활권 요약 이미지 확대 보기">
+                <span class="zoom-badge">🔍 확대보기</span>
+                <img src="assets/images/business-plan/final/demand-commercial-site.webp" width="767" height="471" loading="lazy" alt="배후 생활권 요약 이미지">
+              </figure>
               <h3>배후 생활권</h3>
               <p>주거·근무 수요와 근린생활시설 검토 가능성을 정리합니다.</p>
             </article>
-          </div>
-          <div class="section-action">
-            <a class="btn btn-primary" href="intelligence-report.html">입지·수요 리포트 보기</a>
           </div>
         </div>
       </section>
@@ -176,22 +183,22 @@
             <h2>설계</h2>
             <p>사업계획서 기준 건축·설계 자료를 바탕으로 배치, 입면, 평면, 층별 구성을 확인할 수 있습니다.</p>
           </div>
-          <div class="feature-grid">
-            <article>
-              <h3>소형 특화 평면</h3>
-              <p>1인 가구부터 2~3인 가구까지 수용 가능한 평면 구성으로 검토됩니다 (확인 필요).</p>
+          <div class="design-drawing-grid">
+            <article class="design-drawing-card">
+              <h3>건축개요</h3>
+              <p>E2-1 BL의 위치, 규모, 면적, 공급 규모, 주차 계획을 확인하는 사업계획서 기준 자료입니다.</p>
+              <figure class="zoomable-image image-zoom-trigger" data-modal-target="designDrawingModal1" role="button" tabindex="0" aria-label="건축개요 도면 확대 보기">
+                <span class="zoom-badge">🔍 확대보기</span>
+                <img src="assets/images/business-plan/design/business-summary-overview.webp" width="1897" height="1344" loading="lazy" alt="원삼 센트레빌 퍼스트원 건축개요 이미지">
+              </figure>
             </article>
-            <article>
-              <h3>100% 자주식 주차</h3>
-              <p>기계식 주차 없이 1,370대 규모의 자주식 주차 환경으로 검토됩니다 (확인 필요).</p>
-            </article>
-            <article>
-              <h3>수납 특화 설계</h3>
-              <p>대형 팬트리, 드레스룸 등 수납 공간을 강화한 평면으로 검토됩니다 (확인 필요).</p>
-            </article>
-            <article>
-              <h3>단지 내 생활 인프라</h3>
-              <p>지상 1~3층 상업시설과 커뮤니티 시설로 이동 없는 생활권을 검토합니다 (확인 필요).</p>
+            <article class="design-drawing-card">
+              <h3>배치도 · 주차·동선 계획</h3>
+              <p>용인 반도체클러스터 일반산업단지 내 지원시설, 산업시설, 주차·동선 관계를 확인하는 배치 자료입니다.</p>
+              <figure class="zoomable-image image-zoom-trigger" data-modal-target="designDrawingModal2" role="button" tabindex="0" aria-label="배치도 및 주차 동선 계획 확대 보기">
+                <span class="zoom-badge">🔍 확대보기</span>
+                <img src="assets/images/business-plan/design/industrial-site-layout.webp" width="1897" height="1344" loading="lazy" alt="용인 반도체클러스터 일반산업단지 배치도 및 주차 동선 계획 이미지">
+              </figure>
             </article>
           </div>
         </div>
@@ -258,6 +265,60 @@
         <button class="media-modal__close" type="button" data-modal-close>닫기</button>
         <img src="assets/images/business-plan/final/project-overview-final.webp" alt="원삼 센트레빌 퍼스트원 E2-1 BL 프로젝트 개요 확대 이미지">
         <p class="media-modal__caption">원삼 센트레빌 퍼스트원 E2-1 BL 프로젝트 개요</p>
+      </div>
+    </div>
+
+    <div id="locationSummaryModal1" class="media-modal" aria-hidden="true">
+      <div class="media-modal__backdrop" data-modal-close></div>
+      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="광역입지 요약 이미지 확대 보기">
+        <button class="media-modal__close" type="button" data-modal-close>닫기</button>
+        <img src="assets/images/business-plan/final/semiconductor-cluster-status.webp" alt="광역입지 요약 이미지 확대">
+        <p class="media-modal__caption">광역입지</p>
+      </div>
+    </div>
+
+    <div id="locationSummaryModal2" class="media-modal" aria-hidden="true">
+      <div class="media-modal__backdrop" data-modal-close></div>
+      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="산업단지 접근성 요약 이미지 확대 보기">
+        <button class="media-modal__close" type="button" data-modal-close>닫기</button>
+        <img src="assets/images/business-plan/final/accessibility-main-gateway.webp" alt="산업단지 접근성 요약 이미지 확대">
+        <p class="media-modal__caption">산업단지 접근성</p>
+      </div>
+    </div>
+
+    <div id="locationSummaryModal3" class="media-modal" aria-hidden="true">
+      <div class="media-modal__backdrop" data-modal-close></div>
+      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="FAB 기숙사 E2-1 관계 요약 이미지 확대 보기">
+        <button class="media-modal__close" type="button" data-modal-close>닫기</button>
+        <img src="assets/images/business-plan/final/fab-dormitory-e21-relation.webp" alt="FAB 기숙사 E2-1 관계 요약 이미지 확대">
+        <p class="media-modal__caption">FAB·기숙사·E2-1 관계</p>
+      </div>
+    </div>
+
+    <div id="locationSummaryModal4" class="media-modal" aria-hidden="true">
+      <div class="media-modal__backdrop" data-modal-close></div>
+      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="배후 생활권 요약 이미지 확대 보기">
+        <button class="media-modal__close" type="button" data-modal-close>닫기</button>
+        <img src="assets/images/business-plan/final/demand-commercial-site.webp" alt="배후 생활권 요약 이미지 확대">
+        <p class="media-modal__caption">배후 생활권</p>
+      </div>
+    </div>
+
+    <div id="designDrawingModal1" class="media-modal" aria-hidden="true">
+      <div class="media-modal__backdrop" data-modal-close></div>
+      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="건축개요 도면 확대 보기">
+        <button class="media-modal__close" type="button" data-modal-close>닫기</button>
+        <img src="assets/images/business-plan/design/business-summary-overview.webp" alt="원삼 센트레빌 퍼스트원 건축개요 확대">
+        <p class="media-modal__caption">건축개요</p>
+      </div>
+    </div>
+
+    <div id="designDrawingModal2" class="media-modal" aria-hidden="true">
+      <div class="media-modal__backdrop" data-modal-close></div>
+      <div class="media-modal__content media-modal__content--zoomable" role="dialog" aria-modal="true" aria-label="배치도 및 주차 동선 계획 확대 보기">
+        <button class="media-modal__close" type="button" data-modal-close>닫기</button>
+        <img src="assets/images/business-plan/design/industrial-site-layout.webp" alt="용인 반도체클러스터 일반산업단지 배치도 및 주차 동선 계획 확대">
+        <p class="media-modal__caption">배치도 · 주차·동선 계획</p>
       </div>
     </div>
 
