@@ -797,101 +797,15 @@ body.theme-notion {
   background: var(--bg);
 }
 
-.overview-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-  gap: 40px;
-  align-items: start;
-  margin-top: 28px;
+.overview-visual {
+  margin-top: 24px;
 }
 
 .overview-visual img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: var(--radius-lg);
-}
-
-.overview-table {
-  width: 100%;
-  min-width: 0;
-  border-collapse: collapse;
-  table-layout: fixed;
-}
-
-.overview-table th,
-.overview-table td {
-  padding: 13px 4px;
-  border-bottom: 1px solid var(--hairline);
-  text-align: left;
-  font-size: 14px;
-  line-height: 1.6;
-  vertical-align: top;
-  word-break: keep-all;
-  overflow-wrap: break-word;
-}
-
-.overview-table th {
-  width: 34%;
-  color: var(--primary);
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.overview-table td {
-  color: var(--body-text);
-}
-
-.overview-table tr:last-child th,
-.overview-table tr:last-child td {
-  border-bottom: none;
-}
-
-.overview-disclaimer {
-  margin: 14px 0 0;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.overview-stat-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-  margin-top: 36px;
-}
-
-.overview-stat {
-  padding: 22px 18px;
-  border-top: 3px solid var(--accent);
-  border-radius: var(--radius-card);
-  background: var(--bg-soft);
-  text-align: center;
-}
-
-.overview-stat-icon {
-  display: inline-grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  margin-bottom: 10px;
-  border-radius: var(--radius-full);
-  background: var(--primary-soft);
-  font-size: 20px;
-}
-
-.overview-stat strong {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--primary);
-  font-size: 21px;
-  font-weight: 900;
-}
-
-.overview-stat p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.5;
+  border-radius: 6px;
 }
 
 .zoomable-image {
@@ -3032,15 +2946,6 @@ body.modal-open {
     grid-template-columns: 1fr;
   }
 
-  .overview-body {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
-  }
-
-  .overview-stat-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .corporate-commerce-grid,
   .scarcity-data-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3144,8 +3049,7 @@ body.modal-open {
   .resource-card-grid,
   .commerce-metric-grid,
   .location-summary-grid,
-  .design-drawing-grid,
-  .overview-stat-grid {
+  .design-drawing-grid {
     grid-template-columns: 1fr;
   }
 
