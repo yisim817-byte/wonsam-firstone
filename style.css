@@ -2282,6 +2282,14 @@ tr:last-child td {
   width: min(92vw, 680px);
 }
 
+.media-modal__content--max-786 {
+  width: min(90vw, 818px);
+}
+
+.media-modal__content--max-765 {
+  width: min(90vw, 797px);
+}
+
 .media-modal__content img {
   width: 100%;
   height: auto;
