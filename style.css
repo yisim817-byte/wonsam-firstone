@@ -828,17 +828,6 @@ body.theme-notion {
   outline-offset: 3px;
 }
 
-.zoomable-image::after,
-.media-modal__content--zoomable::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='520' height='220'><text x='0' y='70' font-family='sans-serif' font-size='15' fill='rgba(120,120,120,0.34)' transform='rotate(-18 260 110)'>%EA%B0%80%EC%B9%AD%20SK%EC%9B%90%EC%82%BC%20%EC%84%BC%ED%8A%B8%EB%A0%88%EB%B9%8C%20%ED%8D%BC%EC%8A%A4%ED%8A%B8%EC%9B%90%20%C2%B7%20%EA%B3%B5%EC%8B%9D%20%EC%95%88%EB%82%B4%20%EC%82%AC%EC%9D%B4%ED%8A%B8%20%C2%B7%201644-6873</text></svg>");
-  background-repeat: repeat;
-}
-
 .zoom-badge {
   position: absolute;
   top: 12px;
