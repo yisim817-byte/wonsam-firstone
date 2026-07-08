@@ -1,3 +1,7 @@
+document.addEventListener("contextmenu", (e) => e.preventDefault());
+document.addEventListener("dragstart", (e) => e.preventDefault());
+document.addEventListener("copy", (e) => e.preventDefault());
+
 const navToggle = document.querySelector(".nav-toggle");
 const mobileNav = document.querySelector(".mobile-nav");
 
