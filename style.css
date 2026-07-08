@@ -320,7 +320,7 @@ body.theme-notion {
   min-height: calc(100vh - 76px);
   padding: 0;
   overflow: hidden;
-  background: #17202a;
+  background: radial-gradient(circle at center, #243247 0%, #17202a 52%, #101820 100%);
 }
 
 .hero-video__media,
@@ -332,7 +332,9 @@ body.theme-notion {
 .hero-video__media {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  transform: scale(0.86);
 }
 
 .hero-video__overlay {
