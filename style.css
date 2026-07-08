@@ -334,6 +334,8 @@ body.theme-notion {
   height: 100%;
   object-fit: contain;
   object-position: center top;
+  transform: scaleX(1.08);
+  transform-origin: center top;
 }
 
 .hero-video__overlay {
