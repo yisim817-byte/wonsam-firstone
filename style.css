@@ -2733,6 +2733,54 @@ body.modal-open {
   font-weight: 900;
 }
 
+.unit-type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.unit-type-grid .commerce-focus-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.unit-type-grid .table-wrap {
+  min-width: 0;
+}
+
+.unit-type-grid h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+
+.unit-type-count {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.unit-type-grid > .commerce-focus-card > p {
+  margin: 0;
+  color: var(--body-text);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.unit-type-grid table td {
+  font-size: 13px;
+  padding: 10px 14px;
+}
+
+.unit-type-disclaimer {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .corporate-commerce-panel {
   margin-top: 28px;
   padding: 30px;
@@ -2826,7 +2874,8 @@ body.modal-open {
   .resource-card-grid,
   .commerce-metric-grid,
   .location-summary-grid,
-  .design-drawing-grid {
+  .design-drawing-grid,
+  .unit-type-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -2978,7 +3027,8 @@ body.modal-open {
   }
 
   .corporate-commerce-grid,
-  .scarcity-data-grid {
+  .scarcity-data-grid,
+  .unit-type-grid {
     grid-template-columns: 1fr;
   }
 

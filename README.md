@@ -49,6 +49,16 @@ README.md
 - 고객제안서/기업제안서 PDF는 홈페이지 공개용이 아니라 개별 발송용 자료로 보류합니다.
 - 공개 연락처는 대표번호 `1644-6873`만 표시합니다. 이름, 휴대폰 번호 등 개인정보성 연락처는 공개 화면에 올리지 않습니다.
 
+## 상단배너/메뉴 통일 및 호실타입 섹션 (2026-07-08)
+
+- **메뉴명 변경**: 상단 메뉴 "기업 검토 자료실"(및 관련 표현 "기업 검토 리포트")을 **"현장검토자료"**로 전체 사이트에서 통일했습니다. "현장검토자료"는 여전히 `corporate-data.html`을 가리킵니다(파일명은 변경하지 않음).
+- **헤더/네비게이션 통일**: `index.html`의 헤더(로고/네비/모바일 메뉴)를 기준으로 아래 7개 페이지의 상단배너·메뉴·모바일 메뉴를 완전히 동일하게 맞췄습니다 — `corporate-data.html`, `corporate-report.html`, `intelligence-report.html`, `design.html`, `pre-interest.html`, `corporate-interest.html`, `corporate-request.html`. 이전에는 `pre-interest.html`/`corporate-interest.html`/`corporate-request.html`이 각기 다른 `nav-cta` 버튼("전화 상담 문의", "기업제안서 열람", "기업수요 보고서 보기")만 갖고 있어 다른 사이트로 이동한 것처럼 보였는데, 이제 모든 페이지가 동일한 7메뉴 구조를 사용합니다. index.html 외 페이지의 앵커 링크(`#consultation-types` 등)는 `index.html#consultation-types` 형태로 접두어를 붙여 실제로 index.html로 이동 후 스크롤되도록 처리했습니다.
+- **최종 메뉴 순서**: 대시보드 / 상담 유형 / 근린생활시설 / **호실타입(신규)** / 입지·수요 / 설계 / 현장검토자료.
+- **호실타입 섹션 신규 추가**: `index.html`에 `#unit-types` 섹션을 추가해 사업계획서 분양면적표 기준 오피스텔 A~F 타입별 실사용/전용/공급/계약면적과 실수를 카드+표로 정리했습니다. 하단에 "면적 및 평면은 사업계획서 기준 참고자료이며, 인허가 및 모집공고 확정 시 일부 변경될 수 있습니다" 고지문을 넣었습니다. 새 이미지/PDF는 추가하지 않았습니다.
+- **버그 수정**: `.unit-type-grid` 카드 내부 표(`min-width: 560px`)가 flex 자식의 암묵적 `min-width: auto` 때문에 그리드의 `minmax(0, 1fr)`을 무시하고 페이지 전체를 가로로 넘치게 만드는 문제가 있어, `.unit-type-grid .commerce-focus-card`와 `.table-wrap`에 `min-width: 0`을 추가해 표가 카드 내부에서만 가로 스크롤되도록 고쳤습니다.
+- 고객제안서/기업제안서 PDF 열람 섹션은 이번 라운드에서도 추가하지 않았습니다(발송용 자료로 계속 보류). `href="#"`, 다운로드 버튼도 추가하지 않았습니다.
+- 의향서 접수(FormSubmit 이메일 접수), `admin.html`(Gmail 접수 관리 안내), Supabase 보류 구조, 대표번호 `1644-6873`, 이메일 `yisim817@gmail.com`은 이번 라운드에서 변경하지 않았습니다.
+
 ## Vercel 배포 방법
 
 1. 이 폴더 구조 그대로 Git 저장소에 업로드합니다.
