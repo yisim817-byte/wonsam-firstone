@@ -1435,6 +1435,10 @@ body.theme-notion {
   gap: 22px;
 }
 
+.design-drawing-grid--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .design-drawing-card {
   padding: 22px;
   border: 1px solid var(--hairline);
@@ -1464,6 +1468,10 @@ body.theme-notion {
   border: 1px solid var(--hairline);
   border-radius: var(--radius-card);
   background: var(--bg-strong);
+}
+
+.design-notice {
+  margin-top: 24px;
 }
 
 /* ==========================================================================
