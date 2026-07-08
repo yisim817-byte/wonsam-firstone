@@ -334,7 +334,7 @@ body.theme-notion {
   height: 100%;
   object-fit: contain;
   object-position: center top;
-  transform: scaleX(1.08);
+  transform: scaleX(1.28);
   transform-origin: center top;
 }
 
@@ -2889,6 +2889,10 @@ body.modal-open {
     min-height: calc(100vh - 66px);
     padding-top: 88px;
     padding-bottom: 28px;
+  }
+
+  .hero-video__media {
+    transform: none;
   }
 
   .hero-video__cta {
