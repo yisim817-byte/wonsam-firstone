@@ -108,7 +108,7 @@
       let currentPage = 1;
       let scale = 1.2;
       let viewUrl = null;
-      let rendering = false;
+      let currentRenderTask = null;
       let resizeTimer = null;
 
       function getFitScale(page) {
@@ -147,8 +147,10 @@
       }
 
       async function renderPage(pageNumber) {
-        if (!pdfDoc || rendering) return;
-        rendering = true;
+        if (!pdfDoc) return;
+        if (currentRenderTask) {
+          currentRenderTask.cancel();
+        }
         try {
           const page = await pdfDoc.getPage(pageNumber);
           const viewport = page.getViewport({ scale });
@@ -158,15 +160,18 @@
           const context = canvas.getContext("2d");
           canvasWrap.innerHTML = "";
           canvasWrap.appendChild(canvas);
-          await page.render({ canvasContext: context, viewport }).promise;
+          const task = page.render({ canvasContext: context, viewport });
+          currentRenderTask = task;
+          await task.promise;
+          currentRenderTask = null;
           currentPage = pageNumber;
           currentPageLabel.textContent = String(currentPage);
           prevButton.disabled = currentPage <= 1;
           nextButton.disabled = currentPage >= pdfDoc.numPages;
         } catch (err) {
+          currentRenderTask = null;
+          if (err && err.name === "RenderingCancelledException") return;
           setStatus("페이지를 표시하지 못했습니다. 잠시 후 다시 시도해 주세요.", true);
-        } finally {
-          rendering = false;
         }
       }
 
