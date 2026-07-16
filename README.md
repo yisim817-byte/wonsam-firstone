@@ -426,3 +426,91 @@ DB 저장 모드로 다시 전환하려면 아래 Vercel 환경변수를 Product
 - 이미지 10장 모두 `zoomable-image image-zoom-trigger` + `media-modal` 패턴으로 클릭 확대를 적용했습니다.
 - FormSubmit, `contact.js`, 대표번호 `1644-6873`/`tel:16446873`은 전혀 변경하지 않았습니다.
 - 12개 파일 전체 태그 짝(section/div/article/span/strong/p/h1~h3/figure) 일치 확인, `href="#"` 0건 확인, 브라우저(1440px/390px)에서 이미지 로드·확대모달·nav 순서·콘솔 에러 없음을 확인했습니다.
+
+## Supabase 일시중지 대응 + 광고홍보 자료실 (`feature/promotion-readonly-and-supabase-maintenance`)
+
+### Supabase 사용 현황 점검 결과
+
+`wonsam-firstone` Supabase 프로젝트(ref `imtkbgdrvwmgvolzscxt`)가 7일 이상 활동 부족으로 일시중지 안내를 받았습니다. 점검 결과 **현재 이 프로젝트는 실제 운영에서 전혀 사용되지 않고 있었습니다**:
+
+- `pre-interest.html`/`corporate-interest.html`/`corporate-request.html`은 2026-07-07 라운드부터 `https://formsubmit.co/yisim817@gmail.com`으로 직접 제출되는 이메일 접수 방식으로 운영 중이며, `script.js`에는 `/api/*` fetch 호출이 없습니다.
+- `admin.html`도 `/api/admin-requests`/`/api/admin-interest-requests`를 호출하지 않고 Gmail 검색 안내만 표시합니다.
+- `corporate_requests`, `interest_requests` 두 테이블 모두 행(row)이 0개였습니다.
+- 즉 Supabase가 일시중지되어도 현재 라이브 사이트의 어떤 기능도 깨지지 않는 상태였습니다.
+
+**일시중지 조건**: Supabase 무료(Free) 플랜은 프로젝트에 API/DB 요청이 7일 이상 전혀 없으면 자동으로 일시중지(paused) 상태가 됩니다. 삭제가 아니라 일시중지이며, Supabase 대시보드(project → 상단 배너의 "Restore project" 버튼)에서 수동으로 재개할 수 있습니다. 데이터는 유지됩니다.
+
+### 적용한 대응 방식
+
+의미 없는 요청을 반복해 정책을 우회하는 방식 대신, 이번 라운드에 추가하는 **광고홍보 자료실 기능이 같은 Supabase 프로젝트(DB 테이블 + Storage 버킷)를 실제로 다시 사용**하도록 만들어 근본적으로 활동을 발생시켰습니다. 다만 광고홍보 자료실이 실제로 자주 쓰이기 전 공백을 메우기 위해, 가벼운 Health Check도 함께 추가했습니다.
+
+- **API**: `api/health/supabase.js` — `promotion_files` 테이블에서 `select=id&limit=1` 만 조회하는 최소 요청. 개인정보 조회 없음, service_role 키는 서버 함수 내부에서만 사용, 실패 시 502 + 최소 로그(에러 메시지만, 키/개인정보 없음)만 남깁니다.
+- **실행 방식**: Vercel Cron (`vercel.json`의 `crons` 항목, 스케줄 `0 3 * * *` = 매일 1회). GitHub Actions나 별도 서버 없이 기존 Vercel 프로젝트 설정만으로 동작하고, Hobby 플랜에서도 하루 1회 크론은 지원되어 유지보수가 가장 간단합니다.
+- 이 Cron 엔드포인트는 인증 없이 공개되어 있지만 `{ok:true/false}` 외에는 아무것도 반환하지 않아 노출 위험이 없습니다.
+
+### 광고홍보 자료실
+
+관리자가 기업제안서/고객제안서 PDF(또는 PPT/PPTX)를 업로드하면, 외부 사용자는 `promotion.html` → `promotion-viewer.html`에서 온라인 열람만 할 수 있습니다.
+
+**페이지 구성**
+- `promotion.html`: 기업제안서/고객제안서 카드 목록 (제목/설명/게시일/페이지수/게시상태/자료 열람 버튼). `/api/promotion-files`에서 공개(is_published=true) 자료 메타데이터만 불러옵니다.
+- `promotion-viewer.html?id=<uuid>`: PDF.js(cdnjs CDN, v4.7.76) 기반 읽기 전용 뷰어. 페이지 이동/확대·축소/전체화면을 지원하고, 다운로드·인쇄·원본 링크 UI가 없습니다. `Ctrl+S`/`Ctrl+P`를 차단하며, 우클릭/드래그/복사 차단은 이미 `script.js`에 있는 사이트 전역 처리를 그대로 재사용합니다.
+- 상단 메뉴 "광고홍보"를 기존 11개 페이지 전체(분양안내~설계 순서 유지, 맨 끝에 추가)에 붙였습니다.
+
+**데이터/저장 구조**
+- Supabase 테이블 `promotion_files` (RLS 활성화, 정책 없음 — 기존 두 테이블과 동일하게 service_role 키를 쓰는 서버 함수만 접근 가능): `id, category(corporate|customer), title, description, storage_path, original_filename, mime_type, file_size, page_count, version, is_published, display_order, published_at, created_at, updated_at, created_by`.
+- Supabase Storage 버킷 `promotion` (비공개, PDF만 허용, 50MB 제한), 경로 규칙 `corporate/<timestamp>-<파일명>.pdf`, `customer/<timestamp>-<파일명>.pdf`.
+- 외부 공개 API(`/api/promotion-files`)는 `storage_path`를 절대 응답에 포함하지 않습니다. 실제 열람은 `/api/promotion-view-url?id=`이 자료가 `is_published=true`인지 서버에서 재확인한 뒤 **5분짜리 Signed URL**을 그때그때 발급하는 방식이며, Storage 원본 경로가 클라이언트에 직접 노출되지 않습니다.
+- 새 자료를 공개로 게시하면 같은 카테고리의 기존 게시본은 자동으로 `is_published=false`로 전환됩니다(카테고리별 대표 게시본 1개 원칙). 이전 버전은 삭제되지 않고 관리자 화면에서 비공개 상태로 남아 다시 공개 전환하거나 완전히 삭제할 수 있습니다.
+
+**관리자 업로드 (`admin.html` 하단 "광고홍보자료 관리")**
+- 기존 관리자 로그인(이메일 `yisim817@gmail.com` + `ADMIN_TOKEN`)을 그대로 재사용합니다. 다만 새 관리 API들은 매 요청마다 실제 `ADMIN_TOKEN` 값을 서버에서 검증하므로(`crypto.timingSafeEqual`), 로그인 화면에 올바른 비밀번호를 입력해야 업로드·삭제 등이 정상 동작합니다 (기존 관리자 대시보드 진입 자체는 이메일만 확인하는 느슨한 방식이 그대로 남아 있어, 잘못된 비밀번호로도 대시보드 화면 자체는 보이지만 광고홍보자료 관리 기능만 401로 실패합니다 — 기존 다른 섹션의 동작은 전혀 바꾸지 않았습니다).
+- 업로드 시 제목/설명 입력 후 파일(PDF 권장, PPT/PPTX 가능)을 선택하면 됩니다. PDF는 그대로 저장되고, PPT/PPTX는 서버에서 CloudConvert API로 PDF 변환을 시도합니다.
+- 공개/비공개 전환, 삭제, 미리보기(새 창)가 각 자료 카드에 있습니다.
+- 파일 확장자와 실제 파일 시그니처(매직 바이트: `%PDF-`, ZIP, OLE)를 함께 검사해 확장자를 속인 업로드를 차단합니다.
+
+**PPT/PPTX 자동 변환 — CloudConvert 필요 (사용자 확인 후 설정 필요)**
+- Vercel 서버리스 환경에는 LibreOffice 같은 무거운 변환기를 직접 설치할 수 없어, 외부 변환 API인 **CloudConvert**(https://cloudconvert.com)를 서버 함수에서 호출하는 방식으로 구현했습니다.
+- 필요한 신규 Vercel 환경변수: `CLOUDCONVERT_API_KEY` (CloudConvert 가입 후 대시보드에서 API 키 발급, 무료 티어로 하루 약 25분 변환 시간 제공 — 가끔 있는 관리자 업로드에는 충분합니다). 이 키는 서버 함수에서만 쓰이며 클라이언트에 노출되지 않습니다.
+- **이 환경변수를 설정하기 전까지는 PDF 업로드만 가능**하고, PPT/PPTX 업로드 시 "프레젠테이션 원본은 PDF로 변환한 후 업로드해 주십시오"라는 안내 메시지가 뜨며 안전하게 실패합니다(서버 오류가 아니라 명확한 안내).
+- 변환 작업은 최대 60초까지 기다리도록 `vercel.json`에 `maxDuration: 60`을 설정했습니다. Vercel Hobby 플랜의 최대 허용치이며, 그보다 오래 걸리는 매우 큰 파일은 실패할 수 있습니다(그 경우도 PDF로 직접 변환 후 업로드하면 우회됩니다).
+
+**업로드 용량 한계 (알려진 제약)**: 현재 업로드는 파일을 base64로 인코딩해 JSON으로 전송하는 방식이라, Vercel 서버리스 함수의 요청 본문 한도(약 4.5MB)에 걸려 실질적으로 **원본 파일 약 3MB 안팎까지만** 안정적으로 업로드할 수 있습니다. 이번에 등록하는 두 파일(1.4MB, 0.35MB)은 문제없지만, 추후 더 큰 PDF를 올려야 한다면 Supabase Storage에 브라우저가 직접 업로드하는 signed-upload 방식으로 바꾸는 추가 작업이 필요합니다.
+
+### 최초 게시 자료 (사용자가 직접 업로드해야 함)
+
+보안 원칙상(ADMIN_TOKEN은 사용자만 알고 있어야 함) 이 두 파일의 업로드는 **제가 대신 실행할 수 없습니다**. Preview 승인 후 아래 순서로 직접 업로드해 주세요.
+
+1. `admin.html` 접속 → 관리자 이메일/비밀번호 로그인
+2. "광고홍보자료 관리" → 기업제안서 카드의 업로드 폼에 `기업검토자료휴메인10p.pdf`(10페이지) 첨부, 제목 예: "기업제안서" 입력 후 업로드
+3. 같은 화면 고객제안서 카드에 `원삼센트레빌_5P_광고제안서_최종본.pdf`(5페이지) 첨부, 제목 예: "고객제안서" 입력 후 업로드
+4. `promotion.html`에서 카드 2개가 정상 표시되는지, "자료 열람" 클릭 시 뷰어가 정상 작동하는지 확인
+
+### 필수 환경변수 정리 (기존 + 신규)
+
+| 변수명 | 상태 | 비고 |
+|---|---|---|
+| `SUPABASE_URL` | 기존 | 변경 없음 |
+| `SUPABASE_SERVICE_ROLE_KEY` | 기존 | 변경 없음 |
+| `ADMIN_TOKEN` | 기존 | 변경 없음, 광고홍보 관리 API도 동일 값 재사용 |
+| `CLOUDCONVERT_API_KEY` | **신규** | PPT/PPTX 자동 변환에만 필요. 없어도 PDF 업로드는 정상 동작 |
+
+### 장애 발생 시 확인 순서
+
+1. `promotion.html`에서 카드가 안 보이면 → `/api/promotion-files` 응답 상태 확인 (500이면 `SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY` 미설정 가능성)
+2. 뷰어가 안 열리면 → `/api/promotion-view-url?id=...` 응답 확인 (404면 해당 자료가 비공개 상태, 502면 Storage 접근 실패)
+3. 관리자 업로드가 401로 실패하면 → 로그인한 비밀번호가 실제 `ADMIN_TOKEN`과 일치하는지 확인 (대시보드 진입 자체는 이메일만 확인하므로 로그인 성공 여부와 무관하게 따로 확인 필요)
+4. PPT/PPTX 업로드가 503으로 실패하면 → `CLOUDCONVERT_API_KEY` 미설정. PDF로 변환 후 업로드하거나 키를 설정
+5. Supabase 프로젝트 상태가 궁금하면 → `GET /api/health/supabase` 응답 확인, 또는 Supabase 대시보드에서 프로젝트 상태 확인
+
+### Supabase 재개 방법 (일시중지된 경우)
+
+1. https://supabase.com/dashboard 로그인 → `wonsam-firstone` 프로젝트 선택
+2. 상단에 "Project is paused" 배너가 보이면 "Restore project" 클릭
+3. 재개는 보통 1~2분 내 완료되며, 완료 후 `GET /api/health/supabase`로 정상 응답을 재확인
+
+### 무료 플랜 정책 변경 시 확인할 항목
+
+- Supabase 무료 플랜의 프로젝트 개수 제한, 일시중지 정책(비활성 기간), Storage 용량 한도가 변경되었는지 Supabase 공지사항 확인
+- CloudConvert 무료 티어의 월/일 변환 시간 한도가 변경되었는지 확인
+- Vercel Hobby 플랜의 Cron 작업 개수/주기 제한, 서버리스 함수 실행시간 한도가 변경되었는지 확인
