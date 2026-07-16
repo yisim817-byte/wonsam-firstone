@@ -42,6 +42,10 @@
               <div class="promotion-viewer-toolbar-group">
                 <button type="button" id="zoom-out" aria-label="축소">−</button>
                 <button type="button" id="zoom-in" aria-label="확대">+</button>
+                <span class="promotion-viewer-zoom-hint">
+                  <span class="zoom-hint-full">+ 누르면 커집니다 · − 누르면 작아집니다</span>
+                  <span class="zoom-hint-short">+ 확대 · − 축소</span>
+                </span>
                 <button type="button" id="fullscreen-toggle" aria-label="전체 화면">전체화면</button>
               </div>
             </div>
@@ -109,8 +113,12 @@
 
       function getFitScale(page) {
         const baseViewport = page.getViewport({ scale: 1 });
-        const wrapWidth = canvasWrap.clientWidth || Math.min(window.innerWidth - 32, 900);
-        const fit = wrapWidth / baseViewport.width;
+        const wrapPadding = 40; // matches .promotion-viewer-canvas-wrap's 20px top/bottom + left/right padding
+        const availableWidth = (canvasWrap.clientWidth || Math.min(window.innerWidth - 32, 900)) - wrapPadding;
+        const availableHeight = Math.round(window.innerHeight * 0.78) - wrapPadding; // matches CSS max-height: 78vh
+        const widthFit = availableWidth / baseViewport.width;
+        const heightFit = availableHeight / baseViewport.height;
+        const fit = Math.min(widthFit, heightFit);
         return Math.max(0.4, Math.min(fit, 3));
       }
 

@@ -3238,6 +3238,29 @@ body.modal-open {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+
+.promotion-viewer-zoom-hint {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.promotion-viewer-zoom-hint .zoom-hint-short {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .promotion-viewer-zoom-hint .zoom-hint-full {
+    display: none;
+  }
+
+  .promotion-viewer-zoom-hint .zoom-hint-short {
+    display: inline;
+  }
 }
 
 .promotion-viewer-toolbar button {
