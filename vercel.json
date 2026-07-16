@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/admin-promotion-upload.js": {
-      "maxDuration": 60
-    }
-  },
   "crons": [
     {
       "path": "/api/health/supabase",
