@@ -878,3 +878,88 @@ index.html이 아닌 페이지에서는 앵커 링크(`#top`, `#consultation-typ
 - `grep -rn 'href="#"' *.html` → 0건.
 - `grep -rn "corporate-data.html\|현장검토자료" *.html` → `corporate-data.html` 자기 자신의 title/meta/og 참조와 `index.html`의 순수 설명 텍스트 1건만 남고 그 외 링크/버튼 0건.
 - 브라우저(1440px/390px)로 `intelligence-report.html`, `design.html`, `index.html` 확인: nav 순서(분양안내→근린생활시설→호실타입→입지·수요→설계, 현장검토자료 없음), 이미지 10장 전부 `naturalWidth` 정상 로드, 확대 모달 열림/닫힘 정상, `.design-drawing-grid`가 모바일에서 1열, 가로 오버플로 없음(`scrollWidth === clientWidth`), 콘솔 에러 0건을 각각 확인했다.
+
+## Supabase 일시중지 대응 + 광고홍보 자료실 (`feature/promotion-readonly-and-supabase-maintenance`)
+
+### 작업 전 로컬 클론 이슈 (기록용)
+
+이번 라운드 시작 시 사용하던 스크래치패드 클론(`.../scratchpad/wonsam-firstone`)의 `.git/HEAD`, `.git/config`가 유실되어 있었고, 추적 중이던 대용량 바이너리(제안서 webp 12장, 광고 mp4, PDF 2개 등)가 디스크에서 사라져 있었다(Temp 폴더 특성상 정리된 것으로 추정 — git 히스토리 자체는 손상되지 않았고 원격 `51c3997`과 로컬 HEAD가 정확히 일치했다). 위험을 피하기 위해 그 클론은 그대로 두고 `.../scratchpad/wonsam-firstone-fresh`에 새로 클론해서 작업했다. 다음 라운드에서 같은 증상(HEAD/config 파일 없음, 추적 파일 diskless)을 다시 만나면 새로 클론하는 것이 가장 안전하다.
+
+### Supabase 실사용 여부 분석 (핵심 발견)
+
+`corporate_requests`, `interest_requests` 두 테이블 모두 **행(row) 0개**였고, `pre-interest.html`/`corporate-interest.html`/`corporate-request.html`은 2026-07-07 라운드부터 FormSubmit(`https://formsubmit.co/yisim817@gmail.com`)으로 직접 제출되며 `script.js`에 `/api/*` fetch 호출이 전혀 없다. `admin.html`도 두 관리자 조회 API를 호출하지 않고 Gmail 검색 안내만 보여준다. 즉 **Supabase는 이번 라운드 시작 시점에 실제 운영에서 전혀 쓰이지 않고 있었다** — `WONSAM_FIRSTONE_HANDOFF.md`의 "2026-07-07 긴급 운영 전환" 절에 이미 기록되어 있던 의도된 상태였다(이번에 새로 발견한 문제가 아님). Supabase 프로젝트 상태는 점검 시점 기준 `ACTIVE_HEALTHY`였다(아직 실제로 일시중지되지는 않음).
+
+### 적용한 대응
+
+인위적인 Health Check만으로 활동을 만들어 무료 정책을 우회하는 방식은 지양하고, 광고홍보 자료실(아래 참고) 자체가 같은 Supabase 프로젝트를 실사용하도록 설계했다. 다만 배포 전 공백을 메우기 위해 최소한의 Health Check도 함께 추가했다.
+
+- `api/health/supabase.js`: `promotion_files` 테이블에 `select=id&limit=1`만 조회. 인증 없이 공개되어 있으나 `{ok, checkedAt}` 외 아무 정보도 반환하지 않는다.
+- `vercel.json`의 `crons`: `{"path": "/api/health/supabase", "schedule": "0 3 * * *"}` — 매일 1회, Vercel Hobby 플랜에서도 지원되는 최소 빈도.
+- 이 저장소에 `vercel.json`이 생긴 것은 이번이 처음이다(`api/admin-promotion-upload.js`용 `functions.maxDuration: 60` 설정도 함께 포함).
+
+### Supabase 스키마 변경 (Supabase MCP `apply_migration`으로 직접 적용, SQL 파일은 저장소에 커밋하지 않음 — 기존 라운드와 동일한 방식)
+
+- 신규 테이블 `promotion_files`: `id uuid pk default gen_random_uuid()`, `category text check (corporate|customer)`, `title`, `description`, `storage_path`, `original_filename`, `mime_type`, `file_size bigint`, `page_count integer`, `version integer default 1`, `is_published boolean default true`, `display_order integer default 0`, `published_at`, `created_at`, `updated_at`, `created_by`. RLS 활성화, 정책 없음 — 기존 두 테이블과 동일한 잠금 패턴(service_role 키를 쓰는 서버 함수만 접근 가능).
+- 신규 Storage 버킷 `promotion`: `public=false`, `file_size_limit=52428800`(50MB), `allowed_mime_types=['application/pdf']`(스토리지 레벨에서도 PDF만 허용해 이중 방어).
+- `get_advisors(security)` 재확인 결과 새 테이블도 기존 두 테이블과 동일하게 "RLS enabled, no policy" INFO 레벨 알림만 있고 실제 취약점 없음.
+
+### 광고홍보 자료실 아키텍처
+
+**신규 API 파일**
+- `api/_lib/auth.js`: `ADMIN_EMAIL` 상수 + `isAdminAuthorized(req)` — 기존 `api/admin-requests.js`의 `crypto.timingSafeEqual` 패턴을 그대로 추출해 재사용. body 또는 `x-admin-email`/`x-admin-token` 헤더 모두 지원.
+- `api/_lib/supabase.js`: DB REST(`dbSelect/Insert/Update/Delete`)와 Storage REST(`storageUpload/Delete/CreateSignedUrl`) 공용 fetch 래퍼. 기존 `api/*.js`처럼 `@supabase/supabase-js` SDK 없이 순수 `fetch`만 사용 — `package.json`/`npm install` 단계를 도입하지 않아 기존 "무의존성 정적+서버리스" 구조를 그대로 유지했다.
+- `api/_lib/files.js`: 파일명 정규화(`sanitizeFilename`), 확장자·MIME·매직바이트(`%PDF-`/ZIP/OLE) 3중 검증(`validateUpload`), PDF 페이지수 추정(`countPdfPages`, `/Type /Page` 정규식 카운트 — 참고용 수치이며 100% 정확하지 않을 수 있음).
+- `api/_lib/cloudconvert.js`: CloudConvert REST API(잡 생성 → 업로드 → 폴링 → PDF 다운로드)로 PPT/PPTX를 PDF로 변환. `CLOUDCONVERT_API_KEY` 미설정 시 `cloudconvert_not_configured` 에러를 던져 업로드 핸들러가 안전하게 503으로 응답하도록 했다.
+- `api/admin-promotion-upload.js`: 관리자 인증 → 45MB 이하 검증 → 확장자/MIME/매직바이트 검증 → (PPT/PPTX면 CloudConvert 변환) → 페이지수 추정 → Storage 업로드 → 같은 카테고리의 기존 게시본 자동 비공개 전환 → `promotion_files` insert.
+- `api/admin-promotion-manage.js`: 관리자 인증 → `action`(`list`/`update_meta`/`toggle_publish`/`delete`) 분기. `toggle_publish`로 공개 전환 시 같은 카테고리의 다른 공개본을 자동 비공개 처리(카테고리별 대표 1개 원칙). `delete`는 DB 행 삭제 후 Storage 파일도 삭제(동기화).
+- `api/promotion-files.js`: 공개 GET, `is_published=true`만, `storage_path` 등 내부 필드는 응답에서 제외.
+- `api/promotion-view-url.js`: 공개 GET `?id=`, 서버에서 `is_published`를 재확인한 뒤 5분짜리 Signed URL만 발급(영구 공개 URL이나 storage_path를 클라이언트에 노출하지 않음).
+
+**신규 페이지**
+- `promotion.html`: 헤더/푸터는 기존 11페이지와 완전히 동일한 패턴(브랜드/nav/전화번호). 기업제안서·고객제안서 두 섹션, 각 섹션은 `/api/promotion-files` 응답을 클라이언트에서 렌더링. 자료가 없으면 "현재 등록된 자료가 없습니다."
+- `promotion-viewer.html`: 헤더는 `consultation.html`/`admin.html`과 같은 축소형("광고홍보자료 목록"/"메인으로" 2개 링크만) — 뷰어 화면에 집중시키기 위해 전체 11페이지 nav를 그대로 넣지 않았다(11페이지 통일 원칙은 "사이트 메뉴"에 적용한 것이고, 이 페이지는 프로모션 카드에서 링크로 들어오는 유틸리티 페이지라 `admin.html`과 같은 취급을 했다 — 필요하면 다음 라운드에 전체 nav로 통일 가능).
+- PDF.js는 cdnjs CDN(`pdf.js/3.11.174/pdf.min.js` + `pdf.worker.min.js`)로 로드했다. **버그로 발견하고 고친 것**: 처음엔 `4.7.76`을 썼는데 그 버전 자체가 cdnjs에 존재하지 않아(404) `window.pdfjsLib`가 정의되지 않고 뷰어가 "불러오는 중"에서 멈추는 문제가 Preview 배포 라이브 테스트에서 발견됐다. `https://api.cdnjs.com/libraries/pdf.js`로 실제 존재하는 버전을 확인해보니 최신(6.x)부터는 `.mjs`(ES 모듈)만 배포되고, 이 사이트가 쓰는 plain `<script src>` 전역 변수 방식(`pdfjsLib`)이 통하는 마지막 클래식 UMD 빌드는 `3.11.174`였다. 같은 실수를 반복하지 않도록 `promotion-viewer.html`에 `typeof pdfjsLib === "undefined"` 가드를 추가해, CDN 로드가 실패해도 무한 로딩 대신 "뷰어를 불러오지 못했습니다" 에러가 표시되도록 했다. 다운로드/인쇄/새 창 열기 버튼, 원본 URL 노출을 만들지 않았고, `Ctrl+S`/`Ctrl+P`를 페이지 자체 스크립트로 차단했다. 우클릭/드래그/복사 차단은 이미 `script.js`에 있는 사이트 전역 리스너를 그대로 상속받는다(중복 구현하지 않음).
+- 완전한 다운로드 차단은 기술적으로 불가능하다는 사실을 `promotion.html`의 유의사항과 뷰어 하단 고지문에 명시했다(화면 캡처 가능성 인정).
+
+**admin.html 변경**
+- 로그인 성공 시 저장하는 세션 자격정보 객체에 `token` 필드를 추가했다(기존에는 `{email, checked}`만 저장하고 실제 토큰 값은 버렸다 — 이메일만 확인하는 대시보드 진입 게이트 자체의 동작은 전혀 바꾸지 않았고, 새 광고홍보 관리 API를 호출하는 데 필요한 토큰 값을 세션에 함께 들고 있도록 추가했을 뿐이다). 이 결과 **기존 대시보드는 여전히 이메일만 맞으면 열리지만, 새로 추가한 광고홍보자료 관리 기능은 실제 `ADMIN_TOKEN`이 일치해야만 401 없이 동작한다** — 기존 다른 섹션(Gmail 안내, 접수 테스트 링크)의 동작·표시는 전혀 건드리지 않았다.
+- "광고홍보자료 관리" 섹션을 대시보드 하단에 추가: 카테고리별(기업제안서/고객제안서) 현재 게시본 카드 + 업로드 폼 + 이전 버전 목록(공개 전환/삭제 버튼)을 매번 `/api/admin-promotion-manage`(`action:list`)로 서버에서 새로 불러와 렌더링한다.
+
+**메뉴 추가**
+- 기존 11개 콘텐츠 페이지(`index.html`, `corporate-report.html`, `corporate-request.html`, `pre-interest.html`, `corporate-interest.html`, `consultation.html`, `intelligence-report.html`, `design.html`, `neighborhood-commerce.html`, `unit-types.html`, `corporate-data.html`) 전체의 `nav-links`/`mobile-nav` 맨 끝에 `<a href="promotion.html">광고홍보</a>` 한 줄씩만 추가했다(`consultation.html`은 원래 "메인으로" 단일 링크뿐이라 그 옆에 추가). 기존 항목 순서·삭제·헤더 높이·색상·폰트는 전혀 건드리지 않았고, `git diff --stat` 기준 11개 파일 각 1~2줄 추가만 발생했다.
+- `admin.html`은 이 "11개 페이지" 세트에 포함하지 않았다(원래도 "메인으로"만 있는 관리자 전용 축소 nav였고, 지시사항의 "홈페이지 상단 메뉴"는 공개 사이트 메뉴를 의미한다고 판단).
+
+**정책 재확인 필요 사항 (투명하게 공개)**: 현재 `corporate-report.html`에는 "기업제안서와 고객제안서 PDF는 홈페이지 공개 열람용이 아니라 개별 발송용 자료로 보류합니다"라는 문구가 이미 있다(2026-07-07 라운드에 추가됨). 이번 광고홍보 자료실은 이 문구와 반대로 **PDF를 공개 열람 가능하게** 만든다 — 사용자가 이번 라운드에서 명시적으로 요청하고(첨부 파일까지 지정), 여러 확인 질문에도 "네, 그대로 사용"으로 답해 의도를 재확인했으므로 진행했다. `corporate-report.html`의 해당 문구 자체는 이번 라운드에서 수정하지 않았다(문구 수정은 지시 범위 밖) — 필요하면 다음 라운드에 이 문구를 광고홍보 자료실 존재와 일치하도록 다듬는 것을 검토.
+
+### 알려진 제약
+
+- **업로드 용량**: base64 JSON 방식이라 Vercel 함수 요청 본문 한도(~4.5MB)에 걸려 원본 파일 약 3MB 안팎까지만 안정적. 더 큰 파일이 필요하면 signed-upload 직접 업로드 방식으로 바꿔야 한다.
+- **PPT/PPTX 변환 시간**: CloudConvert 폴링을 최대 40초(2초 간격 20회) 대기하고, `vercel.json`에 해당 함수만 `maxDuration: 60`을 지정했다. Hobby 플랜 한도(60초)에 맞춘 값이며, 그보다 오래 걸리면 타임아웃 실패 — 이 경우 PDF로 직접 변환 후 업로드하면 우회된다.
+- **PDF 페이지수**: 정규식 기반 추정치이며 100% 정확하지 않을 수 있다(과거 라운드에서도 자동 PDF 페이지수 감지 도구가 여러 번 틀린 전례가 있어 신뢰도가 제한적이라는 점을 알고 있다).
+- **완전한 다운로드 차단 불가**: 웹 브라우저에 화면으로 제공된 문서는 화면 캡처 등으로 저장 가능성이 남아 있다 — 뷰어와 목록 페이지 고지문에 명시했다.
+
+### 최초 게시 자료 — 사용자 직접 업로드 필요
+
+ADMIN_TOKEN은 사용자만 알고 있어야 하므로, 다음 두 파일의 업로드는 **어시스턴트가 대신 실행하지 않았다**. Preview 승인 후 `admin.html`에서 직접 업로드해야 한다.
+
+- 기업제안서: `기업검토자료휴메인10p.pdf` (10페이지, 원본 경로 `원삼 센트레빌 고객발송자료\기업검토자료휴메인10p.pdf`)
+- 고객제안서: `원삼센트레빌_5P_광고제안서_최종본.pdf` (5페이지, 원본 경로 `고객발송5p\원삼센트레빌_5P_광고제안서_최종본.pdf`)
+
+두 파일 모두 PyMuPDF로 페이지 수를 재확인했다(각각 10페이지, 5페이지 — 자동 감지 도구가 아닌 `fitz.open().page_count` 기준).
+
+### 확인해야 할 신규 환경변수
+
+| 변수 | 필요 여부 | 비고 |
+|---|---|---|
+| `CLOUDCONVERT_API_KEY` | 선택 (PPT/PPTX 변환 시에만 필요) | https://cloudconvert.com 가입 후 발급. 없어도 PDF 업로드는 정상 동작 |
+
+기존 `SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY`/`ADMIN_TOKEN`은 그대로 재사용하며 값도 변경하지 않았다. **다만 Vercel Preview 배포는 대시보드에서 해당 환경변수가 "Preview" 환경에도 적용되도록 설정되어 있어야 값을 읽을 수 있다** — Production 전용으로만 등록되어 있었다면 이번 브랜치의 Preview 배포에서 관련 API가 500을 반환할 수 있다(기존 3개 API도 마찬가지 조건이므로 이번 라운드에서 새로 생긴 제약은 아니다).
+
+### 이번 라운드에서 건드리지 않은 것 (확인됨)
+
+`git diff --stat`로 아래 항목에 변경이 없음을 재확인했다:
+- `api/corporate-request.js`, `api/interest-request.js`, `api/admin-requests.js`, `api/admin-interest-requests.js` (기존 4개 API 원본)
+- `contact.js`, FormSubmit `action`/hidden 필드
+- 대표번호 `1644-6873`/`tel:16446873`
+- 기존 이미지/영상 자산, 기존 섹션 내용
+- 기존 nav 항목 순서(끝에 추가만 함)
