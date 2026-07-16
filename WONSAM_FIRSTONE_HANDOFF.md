@@ -918,7 +918,7 @@ index.html이 아닌 페이지에서는 앵커 링크(`#top`, `#consultation-typ
 **신규 페이지**
 - `promotion.html`: 헤더/푸터는 기존 11페이지와 완전히 동일한 패턴(브랜드/nav/전화번호). 기업제안서·고객제안서 두 섹션, 각 섹션은 `/api/promotion-files` 응답을 클라이언트에서 렌더링. 자료가 없으면 "현재 등록된 자료가 없습니다."
 - `promotion-viewer.html`: 헤더는 `consultation.html`/`admin.html`과 같은 축소형("광고홍보자료 목록"/"메인으로" 2개 링크만) — 뷰어 화면에 집중시키기 위해 전체 11페이지 nav를 그대로 넣지 않았다(11페이지 통일 원칙은 "사이트 메뉴"에 적용한 것이고, 이 페이지는 프로모션 카드에서 링크로 들어오는 유틸리티 페이지라 `admin.html`과 같은 취급을 했다 — 필요하면 다음 라운드에 전체 nav로 통일 가능).
-- PDF.js는 cdnjs CDN(`pdf.js/4.7.76/pdf.min.js` + `pdf.worker.min.js`)로 로드했다. 다운로드/인쇄/새 창 열기 버튼, 원본 URL 노출을 만들지 않았고, `Ctrl+S`/`Ctrl+P`를 페이지 자체 스크립트로 차단했다. 우클릭/드래그/복사 차단은 이미 `script.js`에 있는 사이트 전역 리스너를 그대로 상속받는다(중복 구현하지 않음).
+- PDF.js는 cdnjs CDN(`pdf.js/3.11.174/pdf.min.js` + `pdf.worker.min.js`)로 로드했다. **버그로 발견하고 고친 것**: 처음엔 `4.7.76`을 썼는데 그 버전 자체가 cdnjs에 존재하지 않아(404) `window.pdfjsLib`가 정의되지 않고 뷰어가 "불러오는 중"에서 멈추는 문제가 Preview 배포 라이브 테스트에서 발견됐다. `https://api.cdnjs.com/libraries/pdf.js`로 실제 존재하는 버전을 확인해보니 최신(6.x)부터는 `.mjs`(ES 모듈)만 배포되고, 이 사이트가 쓰는 plain `<script src>` 전역 변수 방식(`pdfjsLib`)이 통하는 마지막 클래식 UMD 빌드는 `3.11.174`였다. 같은 실수를 반복하지 않도록 `promotion-viewer.html`에 `typeof pdfjsLib === "undefined"` 가드를 추가해, CDN 로드가 실패해도 무한 로딩 대신 "뷰어를 불러오지 못했습니다" 에러가 표시되도록 했다. 다운로드/인쇄/새 창 열기 버튼, 원본 URL 노출을 만들지 않았고, `Ctrl+S`/`Ctrl+P`를 페이지 자체 스크립트로 차단했다. 우클릭/드래그/복사 차단은 이미 `script.js`에 있는 사이트 전역 리스너를 그대로 상속받는다(중복 구현하지 않음).
 - 완전한 다운로드 차단은 기술적으로 불가능하다는 사실을 `promotion.html`의 유의사항과 뷰어 하단 고지문에 명시했다(화면 캡처 가능성 인정).
 
 **admin.html 변경**

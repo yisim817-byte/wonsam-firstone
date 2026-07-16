@@ -7,7 +7,7 @@
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="data:,">
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   </head>
   <body class="theme-airbnb">
     <header class="top-nav">
@@ -74,7 +74,16 @@
     <script src="script.js"></script>
     <script src="contact.js"></script>
     <script>
-      pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.worker.min.js";
+      if (typeof pdfjsLib === "undefined") {
+        document.getElementById("canvas-wrap").innerHTML =
+          '<p class="promotion-viewer-status is-error">뷰어를 불러오지 못했습니다. 잠시 후 새로고침해 주세요.</p>';
+        document.querySelectorAll(".promotion-viewer-toolbar button").forEach((btn) => {
+          btn.disabled = true;
+        });
+        throw new Error("pdfjsLib failed to load");
+      }
+
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
       const canvasWrap = document.getElementById("canvas-wrap");
       const viewerTitle = document.getElementById("viewer-title");
