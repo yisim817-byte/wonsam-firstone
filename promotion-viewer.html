@@ -104,9 +104,13 @@
         customer: { url: "/documents/promotion/customer.pdf", title: "고객제안서" },
       };
 
+      const ZOOM_LEVELS = [1, 1.25, 1.5, 1.75, 2]; // 100% / 125% / 150% / 175% / 200%
+      const MAX_PIXEL_RATIO = 2; // cap devicePixelRatio to keep canvas size/perf sane on 3x+ mobile screens
+
       let pdfDoc = null;
       let currentPage = 1;
-      let scale = 1.2;
+      let baseScale = 1; // "100%" reference: PDF page fit to the viewer width/height
+      let zoomIndex = 0; // index into ZOOM_LEVELS
       let viewUrl = null;
       let currentRenderTask = null;
       let resizeTimer = null;
@@ -122,14 +126,23 @@
         return Math.max(0.4, Math.min(fit, 3));
       }
 
-      async function applyFitScale(pageNumber) {
+      async function updateBaseScale(pageNumber) {
         if (!pdfDoc) return;
         try {
           const page = await pdfDoc.getPage(pageNumber || currentPage || 1);
-          scale = getFitScale(page);
+          baseScale = getFitScale(page);
         } catch {
-          /* keep previous scale if page lookup fails */
+          /* keep previous base scale if page lookup fails */
         }
+      }
+
+      function getCurrentScale() {
+        return baseScale * ZOOM_LEVELS[zoomIndex];
+      }
+
+      function updateZoomButtons() {
+        zoomOutButton.disabled = zoomIndex <= 0;
+        zoomInButton.disabled = zoomIndex >= ZOOM_LEVELS.length - 1;
       }
 
       function setStatus(message, isError) {
@@ -153,14 +166,23 @@
         }
         try {
           const page = await pdfDoc.getPage(pageNumber);
+          const scale = getCurrentScale();
+          const pixelRatio = Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO);
           const viewport = page.getViewport({ scale });
           const canvas = document.createElement("canvas");
-          canvas.width = viewport.width;
-          canvas.height = viewport.height;
+          canvas.width = Math.floor(viewport.width * pixelRatio);
+          canvas.height = Math.floor(viewport.height * pixelRatio);
+          canvas.style.width = `${Math.floor(viewport.width)}px`;
+          canvas.style.height = `${Math.floor(viewport.height)}px`;
           const context = canvas.getContext("2d");
           canvasWrap.innerHTML = "";
           canvasWrap.appendChild(canvas);
-          const task = page.render({ canvasContext: context, viewport });
+          const renderContext = {
+            canvasContext: context,
+            viewport,
+            transform: pixelRatio !== 1 ? [pixelRatio, 0, 0, pixelRatio, 0, 0] : null,
+          };
+          const task = page.render(renderContext);
           currentRenderTask = task;
           await task.promise;
           currentRenderTask = null;
@@ -168,6 +190,7 @@
           currentPageLabel.textContent = String(currentPage);
           prevButton.disabled = currentPage <= 1;
           nextButton.disabled = currentPage >= pdfDoc.numPages;
+          updateZoomButtons();
         } catch (err) {
           currentRenderTask = null;
           if (err && err.name === "RenderingCancelledException") return;
@@ -199,7 +222,8 @@
           const loadingTask = pdfjsLib.getDocument(viewUrl);
           pdfDoc = await loadingTask.promise;
           totalPagesLabel.textContent = String(pdfDoc.numPages);
-          await applyFitScale(1);
+          zoomIndex = 0;
+          await updateBaseScale(1);
           setToolbarEnabled(true);
           await renderPage(1);
         } catch (err) {
@@ -215,11 +239,13 @@
         if (pdfDoc && currentPage < pdfDoc.numPages) renderPage(currentPage + 1);
       });
       zoomInButton.addEventListener("click", () => {
-        scale = Math.min(scale + 0.2, 3);
+        if (zoomIndex >= ZOOM_LEVELS.length - 1) return;
+        zoomIndex += 1;
         renderPage(currentPage);
       });
       zoomOutButton.addEventListener("click", () => {
-        scale = Math.max(scale - 0.2, 0.6);
+        if (zoomIndex <= 0) return;
+        zoomIndex -= 1;
         renderPage(currentPage);
       });
       fullscreenButton.addEventListener("click", () => {
@@ -246,7 +272,7 @@
         if (!pdfDoc) return;
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(async () => {
-          await applyFitScale(currentPage);
+          await updateBaseScale(currentPage);
           renderPage(currentPage);
         }, 200);
       });

@@ -3300,8 +3300,7 @@ body.modal-open {
 
 .promotion-viewer-canvas-wrap canvas {
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
-  max-width: 100%;
-  height: auto;
+  display: block;
 }
 
 .promotion-viewer-status {
