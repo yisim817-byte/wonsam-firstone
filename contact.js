@@ -99,26 +99,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  if (document.body && document.body.hasAttribute("data-conversion-page")) {
-    var formType = new URLSearchParams(window.location.search).get("form_type") || "consultation";
-    var storageKey = "conversion:" + formType + ":" + window.location.pathname;
-    var alreadyTracked = false;
-
-    try {
-      alreadyTracked = window.sessionStorage.getItem(storageKey) === "1";
-      if (!alreadyTracked) window.sessionStorage.setItem(storageKey, "1");
-    } catch (error) {
-      alreadyTracked = false;
-    }
-
-    if (!alreadyTracked) {
-      trackEvent("generate_lead", { form_type: formType });
-      if (formType === "corporate_request") {
-        trackEvent("corporate_request", { form_type: formType });
-      }
-    }
-  }
-
   window.wonsamTrack = trackEvent;
 })();
 
