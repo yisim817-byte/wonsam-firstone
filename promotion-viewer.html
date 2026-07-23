@@ -102,6 +102,9 @@
       const STATIC_FILES = {
         corporate: { url: "/documents/promotion/corporate.pdf", title: "기업제안서" },
         customer: { url: "/documents/promotion/customer.pdf", title: "고객제안서" },
+        "field-infographic": { url: "/documents/field-analysis/quantum-jump-infographic.pdf", title: "용인 반도체 메가 클러스터 인포그래픽" },
+        "field-development": { url: "/documents/field-analysis/development-status.pdf", title: "용인 반도체클러스터 개발 현황 보고서" },
+        "field-timelag": { url: "/documents/field-analysis/supply-timelag-report.pdf", title: "산업·주거 공급 시차 분석 보고서" },
       };
 
       const ZOOM_LEVELS = [1, 1.25, 1.5, 1.75, 2]; // 100% / 125% / 150% / 175% / 200%
@@ -201,7 +204,7 @@
       function getRequestedFile() {
         const params = new URLSearchParams(window.location.search);
         const value = params.get("file");
-        if (value !== "corporate" && value !== "customer") return null;
+        if (!Object.prototype.hasOwnProperty.call(STATIC_FILES, value)) return null;
         return value;
       }
 

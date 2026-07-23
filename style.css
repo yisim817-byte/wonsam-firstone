@@ -3350,4 +3350,18 @@ body.modal-open {
   }
 }
 
+/* ==========================================================================
+   FIELD ANALYSIS (신규 현장분석자료 페이지 전용)
+   ========================================================================== */
+
+.field-analysis-video-grid {
+  grid-template-columns: 1fr;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.field-analysis-video-grid video {
+  margin-top: 4px;
+}
+
 
