@@ -1,6 +1,6 @@
 window.SITE_CONTACT = {
-  REPRESENTATIVE_PHONE: "1644-6873",
-  REPRESENTATIVE_TEL: "tel:16446873",
+  REPRESENTATIVE_PHONE: "1833-3872",
+  REPRESENTATIVE_TEL: "tel:18333872",
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     node.textContent = contact.REPRESENTATIVE_PHONE;
   });
 
-  document.querySelectorAll('a[href="tel:16446873"], a[data-contact-phone-link]').forEach(function (link) {
+  document.querySelectorAll('a[href="tel:18333872"], a[data-contact-phone-link]').forEach(function (link) {
     link.setAttribute("href", contact.REPRESENTATIVE_TEL);
   });
 });
