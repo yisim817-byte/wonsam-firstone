@@ -109,6 +109,163 @@
       <section class="section">
         <div class="container">
           <div class="section-head">
+            <h2>용인 반도체클러스터 웹 분석</h2>
+            <p>
+              클러스터 개발 일정, 산업·교통 인프라, 배후 주거 공급과 산업·주거 시차를
+              웹페이지 형식으로 정리한 현장분석자료입니다.
+            </p>
+          </div>
+          <div class="dashboard-facts">
+            <div class="fact-row">
+              <article>
+                <span>총 투자 규모</span>
+                <strong>약 122조 원</strong>
+                <p>SK하이닉스 발표 기준 참고치</p>
+              </article>
+              <article>
+                <span>계획 Fab 구성</span>
+                <strong>4기 Fab</strong>
+                <p>보도 기준 계획 참고치</p>
+              </article>
+              <article>
+                <span>Fab 1 부지조성률</span>
+                <strong>약 78%</strong>
+                <p>2024년 3월 보도 기준 참고치</p>
+              </article>
+              <article>
+                <span>예상 최대 투입인력</span>
+                <strong>약 2.6만 명</strong>
+                <p>2025년 상반기 예상(보도 기준)</p>
+              </article>
+            </div>
+          </div>
+          <div class="chart-card" style="margin-top: 24px;">
+            <h3>Fab 구축 일정 비교 (참고)</h3>
+            <canvas id="fieldWebTimelineChart" role="img" aria-label="당초 계획과 가속화 계획의 Fab 구축 일정 비교 막대그래프"></canvas>
+            <p class="chart-card-note">
+              보도된 일정 변경 내용을 정리한 참고 자료입니다. Fab 1 가동은 당초 계획 대비
+              앞당겨진 것으로 보도되었으며, 전체 클러스터 완공 목표도 단축된 것으로
+              알려져 있습니다. 정확한 일정은 SK하이닉스 공식 발표를 기준으로 확인하시기
+              바랍니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-soft">
+        <div class="container">
+          <div class="section-head">
+            <h2>핵심 인프라 및 교통망 현황</h2>
+            <p>전력·용수 공급망과 광역 교통망 확충 계획을 정리한 참고 자료입니다.</p>
+          </div>
+          <div class="chart-card">
+            <h3>핵심 인프라 조성 현황 (참고)</h3>
+            <canvas id="fieldWebInfraChart" role="img" aria-label="전력망, 공업용수, 생활용수, 부지조성 현황 비교 막대그래프"></canvas>
+            <p class="chart-card-note">
+              전력·용수 공급망과 Fab 1 부지 조성 공정률을 정리한 참고 자료입니다. 수치는
+              보도 및 공개자료 기준이며, 실제 준공 시점은 변경될 수 있습니다.
+            </p>
+          </div>
+          <div class="info-card-grid" style="margin-top: 24px;">
+            <article class="info-card">
+              <h3>세종-포천 고속도로</h3>
+              <p>남용인IC(원삼IC) 신설로 강남·판교 방면 접근성이 개선될 것으로 보도되고 있습니다.</p>
+            </article>
+            <article class="info-card">
+              <h3>지방도 318호선(L-2)</h3>
+              <p>남용인IC와 산업단지를 잇는 도로 확장 사업으로, 준공 시점은 공식 발표 기준으로 확인이 필요합니다.</p>
+            </article>
+            <article class="info-card">
+              <h3>반도체 고속도로(L자형)</h3>
+              <p>화성-남사-원삼-안성을 연결하는 민자 고속도로로 추진 중인 것으로 보도되고 있습니다.</p>
+            </article>
+            <article class="info-card">
+              <h3>경강선 연장 등 철도망</h3>
+              <p>경기광주-남사 연장 등 국가철도망 계획 반영이 추진 중인 것으로 알려져 있습니다.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>반경 5km 배후 주거 분석</h2>
+            <p>산업단지 인접 아파트, 배후 신도시, 오피스텔 등 배후 주거 유형을 정리한 참고 자료입니다.</p>
+          </div>
+          <div class="data-card-grid">
+            <article class="data-card">
+              <span>산업단지 인접 아파트</span>
+              <strong>동일하이빌 파크밸리</strong>
+              <p>산업단지 내 택지 기준 공동주택으로, 공급 규모와 분양 일정은 사업계획서·보도자료 기준입니다.</p>
+            </article>
+            <article class="data-card">
+              <span>배후 신도시</span>
+              <strong>고당지구 도시개발구역</strong>
+              <p>원삼면 중심권역의 민간 주도 도시개발구역으로, 추진 상태는 공개자료 기준 참고치입니다.</p>
+            </article>
+            <article class="data-card">
+              <span>오피스텔 배후수요</span>
+              <strong>원삼 센트레빌 퍼스트원 1,160실</strong>
+              <p>1-2인 가구 및 초기 가동 인력의 배후 임대수요처로 검토되는 오피스텔 단지입니다.</p>
+            </article>
+          </div>
+          <div class="chart-card" style="margin-top: 24px;">
+            <h3>반경 5km 배후 주거 유형 분포 (참고)</h3>
+            <canvas id="fieldWebHousingChart" role="img" aria-label="반경 5km 배후 주거 유형별 분포 원형그래프"></canvas>
+            <p class="chart-card-note">
+              산업단지 인접 아파트, 배후 신도시, 오피스텔(원삼 센트레빌 퍼스트원 1,160실 기준),
+              단독·기타 주거를 유형별로 정리한 참고 자료이며, 실제 공급 물량은 인허가 진행에
+              따라 달라질 수 있습니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-soft">
+        <div class="container">
+          <div class="section-head">
+            <h2>산업·주거 공급 시차 분석</h2>
+            <p>팹 가동을 위한 인력 유입 시점과 신축 주거 입주 시점의 차이를 정리한 자체 분석 또는 추정 자료입니다.</p>
+          </div>
+          <div class="chart-card">
+            <h3>인력 유입 vs 주거 공급 시차 (참고)</h3>
+            <canvas id="fieldWebTimeLagChart" role="img" aria-label="예상 인력 유입과 주거 공급 물량 시차 비교 그래프"></canvas>
+            <p class="chart-card-note">
+              실제 인력 규모와 공급 시점은 사업 진행 상황에 따라 달라질 수 있는 자체 분석
+              또는 추정 자료입니다.
+            </p>
+          </div>
+          <div class="notice-box" style="margin-top: 24px;">
+            <p>
+              <strong>공급 시차 구간(2026~2027 참고)</strong> — 팹 가동 초기 인력 유입 시기와
+              신축 아파트 입주 시점 사이에 간극이 있는 것으로 분석되며, 이 기간 주변
+              오피스텔 등 기존 주거시설의 임대수요 증가 가능성이 있는 것으로 검토됩니다.
+            </p>
+            <p>
+              <strong>공급 안정화 이후(2028년 이후 참고)</strong> — 대단지 입주와 상업시설
+              확충이 맞물리면서 개발 진행에 따른 시장 변화 가능성이 있는 것으로 분석되나,
+              이는 자체 분석 또는 추정이며 실제 결과를 보장하지 않습니다.
+            </p>
+          </div>
+          <div class="notice-box" style="margin-top: 16px;">
+            <p>
+              위 웹 분석은 반경 5km 배후 주거 전체를 대상으로 한 참고 자료이며, 원삼
+              센트레빌 퍼스트원(1,160실 기준)은 이 중 오피스텔 유형 배후수요의 일부로
+              검토됩니다.
+            </p>
+            <p>
+              본 섹션의 수치와 분석은 공개자료·보도자료를 참고해 정리한 자체 분석 또는
+              추정 자료이며, 실제 사업계획·분양조건과 다를 수 있으므로 상담 시 최신 자료
+              기준으로 확인해 주시기 바랍니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
             <h2>첨부자료 열람</h2>
             <p>아래 자료는 온라인 열람 전용으로 제공되며, 원본 PDF 기준 고해상도로 확대해 볼 수 있습니다.</p>
           </div>
@@ -181,6 +338,112 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      (function () {
+        var timelineCtx = document.getElementById('fieldWebTimelineChart');
+        var infraCtx = document.getElementById('fieldWebInfraChart');
+        var housingCtx = document.getElementById('fieldWebHousingChart');
+        var timeLagCtx = document.getElementById('fieldWebTimeLagChart');
+
+        if (window.Chart && timelineCtx) {
+          new Chart(timelineCtx, {
+            type: 'bar',
+            data: {
+              labels: ['Fab 1 가동', 'Fab 2 착공', '전체 클러스터 완공'],
+              datasets: [
+                {
+                  label: '당초 계획(연도)',
+                  data: [2027.4, 2027.1, 2045],
+                  backgroundColor: '#ddcfb0',
+                  borderRadius: 6
+                },
+                {
+                  label: '가속화 계획(연도)',
+                  data: [2027.1, 2026.8, 2033],
+                  backgroundColor: '#c99a4a',
+                  borderRadius: 6
+                }
+              ]
+            },
+            options: {
+              maintainAspectRatio: false,
+              indexAxis: 'y',
+              plugins: { legend: { position: 'bottom' } },
+              scales: { x: { min: 2025, max: 2046, title: { display: true, text: '목표 연도(참고)' } } }
+            }
+          });
+        }
+
+        if (window.Chart && infraCtx) {
+          new Chart(infraCtx, {
+            type: 'bar',
+            data: {
+              labels: ['전력망', '공업용수', '생활용수', '부지조성'],
+              datasets: [{
+                label: '조성 현황(%, 참고)',
+                data: [90, 85, 94, 78],
+                backgroundColor: '#c99a4a',
+                borderRadius: 6
+              }]
+            },
+            options: {
+              maintainAspectRatio: false,
+              plugins: { legend: { display: false } },
+              scales: { y: { beginAtZero: true, max: 100 } }
+            }
+          });
+        }
+
+        if (window.Chart && housingCtx) {
+          new Chart(housingCtx, {
+            type: 'pie',
+            data: {
+              labels: ['산업단지 인접 아파트', '배후 신도시', '오피스텔(1,160실 기준)', '단독 및 기타'],
+              datasets: [{
+                data: [4000, 8000, 1160, 2000],
+                backgroundColor: ['#1f2933', '#c99a4a', '#8a6a3a', '#ddcfb0']
+              }]
+            },
+            options: {
+              maintainAspectRatio: false,
+              plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 16 } } }
+            }
+          });
+        }
+
+        if (window.Chart && timeLagCtx) {
+          new Chart(timeLagCtx, {
+            data: {
+              labels: [2024, 2025, 2026, 2027, 2028, 2029, 2030],
+              datasets: [
+                {
+                  type: 'bar',
+                  label: '주거 공급 물량(천세대, 참고)',
+                  data: [0, 0, 0, 0, 4.5, 12.0, 15.0],
+                  backgroundColor: '#c99a4a',
+                  order: 2
+                },
+                {
+                  type: 'line',
+                  label: '예상 인력 유입(천명, 참고)',
+                  data: [1.4, 2.5, 14.0, 26.0, 22.0, 24.0, 25.0],
+                  borderColor: '#1f2933',
+                  backgroundColor: '#1f2933',
+                  tension: 0.3,
+                  order: 1
+                }
+              ]
+            },
+            options: {
+              maintainAspectRatio: false,
+              plugins: { legend: { position: 'bottom' } },
+              scales: { y: { beginAtZero: true } }
+            }
+          });
+        }
+      })();
+    </script>
     <script src="contact.js"></script>
   </body>
 </html>
