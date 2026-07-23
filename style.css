@@ -399,6 +399,30 @@ body.theme-notion {
   padding-bottom: 56px;
 }
 
+.hero-video__contact-badge {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  z-index: 2;
+  font-size: 2cm;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #f97316;
+  text-decoration: none;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+}
+
+.hero-video__contact-badge:hover,
+.hero-video__contact-badge:focus-visible {
+  text-decoration: underline;
+}
+
+@media (min-width: 641px) and (max-width: 920px) {
+  .hero-video__contact-badge {
+    font-size: 44px;
+  }
+}
+
 .hero-video__cta {
   width: min(760px, 100%);
   display: grid;
@@ -3023,6 +3047,12 @@ body.modal-open {
     min-height: calc(100vh - 66px);
     padding-top: 88px;
     padding-bottom: 28px;
+  }
+
+  .hero-video__contact-badge {
+    left: 16px;
+    bottom: 16px;
+    font-size: 28px;
   }
 
   .hero-video__cta {
