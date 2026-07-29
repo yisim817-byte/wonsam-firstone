@@ -1,0 +1,62 @@
+.humane-trust-section {
+  background: #f6f4f1;
+  padding: 72px 20px 80px;
+}
+
+.humane-trust-inner {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+}
+
+.humane-trust-section h2 {
+  margin: 0;
+  color: #263548;
+  text-align: center;
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.035em;
+}
+
+.humane-trust-accent {
+  display: block;
+  width: 44px;
+  height: 3px;
+  margin: 18px auto 30px;
+  background: #d47a3a;
+}
+
+.humane-trust-list {
+  display: grid;
+  gap: 12px;
+}
+
+.humane-trust-list p {
+  margin: 0;
+  padding: 20px 28px;
+  border-left: 4px solid #d47a3a;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 5px 18px rgba(28, 39, 51, 0.06);
+  color: #56616e;
+  text-align: center;
+  font-size: 0.98rem;
+  line-height: 1.75;
+  word-break: keep-all;
+}
+
+@media (max-width: 640px) {
+  .humane-trust-section {
+    padding: 52px 16px 58px;
+  }
+
+  .humane-trust-accent {
+    margin-bottom: 24px;
+  }
+
+  .humane-trust-list p {
+    padding: 18px;
+    font-size: 0.93rem;
+    line-height: 1.7;
+  }
+}
