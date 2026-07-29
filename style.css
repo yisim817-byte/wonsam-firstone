@@ -1825,6 +1825,82 @@ body.theme-notion {
 }
 
 /* ==========================================================================
+   HUMANE — CORPORATE FOOTER (agency company info, all public pages)
+   ========================================================================== */
+
+.humane-footer {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(228, 193, 122, 0.28);
+}
+
+.humane-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: start;
+}
+
+.humane-footer-brand strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #fffaf1;
+  font-size: 16px;
+}
+
+.humane-footer-corp {
+  text-align: right;
+}
+
+.humane-footer-corp a[href^="mailto:"] {
+  display: inline-block;
+  padding: 6px 0;
+}
+
+.humane-footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 250, 241, 0.14);
+}
+
+.humane-footer-legal p {
+  margin-bottom: 0;
+  font-size: 12px;
+}
+
+.humane-footer-legal-links {
+  display: flex;
+  gap: 16px;
+}
+
+.humane-footer-legal-links a {
+  margin-bottom: 0;
+  display: inline-block;
+  padding: 4px 0;
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .humane-footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .humane-footer-corp {
+    text-align: left;
+  }
+
+  .humane-footer-legal {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ==========================================================================
    AIRBNB — CONSULTATION (simple info cards)
    ========================================================================== */
 
