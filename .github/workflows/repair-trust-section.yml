@@ -117,3 +117,5 @@ jobs:
           git add -A
           git commit -m "fix: restore footer and add trust guidance only" || exit 0
           git push origin HEAD:main
+
+# trigger
