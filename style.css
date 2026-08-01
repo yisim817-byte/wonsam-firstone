@@ -388,18 +388,6 @@ body.theme-notion {
     linear-gradient(90deg, rgba(23, 32, 42, 0.58), rgba(23, 32, 42, 0.14) 52%, rgba(23, 32, 42, 0.44));
 }
 
-.hero-video__text-mask {
-  position: absolute;
-  z-index: 1;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(58, 66, 41, 0.97) 0%,
-    rgba(58, 66, 41, 0.9) 55%,
-    rgba(58, 66, 41, 0) 100%
-  );
-}
-
 .hero-video__content {
   position: relative;
   z-index: 1;
