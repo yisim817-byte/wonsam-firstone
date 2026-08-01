@@ -75,6 +75,7 @@
           aria-hidden="true"
         ></video>
         <div class="hero-video__overlay" aria-hidden="true"></div>
+        <div class="hero-video__text-mask" aria-hidden="true"></div>
         <div class="container hero-video__content">
           <h1 class="visually-hidden">가칭 <span class="brand-sk">SK</span>원삼 센트레빌 퍼스트원</h1>
         </div>
@@ -85,6 +86,55 @@
           aria-label="분양문의 전화 1833-3872"
         >분양문의 <span data-contact-phone>1833-3872</span></a>
       </section>
+      <script>
+        (function () {
+          var video = document.querySelector(".hero-video__media");
+          var mask = document.querySelector(".hero-video__text-mask");
+          if (!video || !mask) return;
+
+          var NATIVE_W = 1920;
+          var NATIVE_H = 1080;
+          // Bounding box (native video pixels) of the baked-in green phone number
+          // text in the source video, with a small safety margin.
+          var TEXT = { x1: 995, x2: 1855, y1: 800, y2: 985 };
+
+          function positionMask() {
+            var rect = video.getBoundingClientRect();
+            var containerW = rect.width;
+            var containerH = rect.height;
+            if (!containerW || !containerH) return;
+
+            var videoAspect = NATIVE_W / NATIVE_H;
+            var containerAspect = containerW / containerH;
+            var scale, cropXNative = 0;
+
+            if (containerAspect > videoAspect) {
+              // Cover matches width; video overflows height and is cropped
+              // from the bottom only (object-position: center top).
+              scale = containerW / NATIVE_W;
+            } else {
+              // Cover matches height; video overflows width and is cropped
+              // equally from both sides (object-position horizontal: center).
+              scale = containerH / NATIVE_H;
+              cropXNative = (NATIVE_W * scale - containerW) / 2 / scale;
+            }
+
+            var x1 = Math.max(0, (TEXT.x1 - cropXNative) * scale);
+            var x2 = (TEXT.x2 - cropXNative) * scale;
+            var y1 = Math.max(0, TEXT.y1 * scale);
+            var y2 = TEXT.y2 * scale;
+
+            mask.style.left = x1 + "px";
+            mask.style.top = y1 + "px";
+            mask.style.width = Math.max(0, x2 - x1) + "px";
+            mask.style.height = Math.max(0, y2 - y1) + "px";
+          }
+
+          positionMask();
+          window.addEventListener("resize", positionMask);
+          video.addEventListener("loadedmetadata", positionMask);
+        })();
+      </script>
 
       <section id="overview" class="section overview-section">
         <div class="container">
