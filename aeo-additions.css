@@ -1,0 +1,105 @@
+/* ==========================================================
+   AEO 추가 요소 전용 스타일 (2026-08-20)
+   기존 style.css / trust-section.css 는 수정하지 않습니다.
+   이 파일만 추가 로드하면 됩니다.
+   기존 디자인 토큰(--color-*, --radius-*)을 그대로 재사용합니다.
+   ========================================================== */
+
+/* --- 사업개요 표 --- */
+.aeo-overview-table { margin-top: 24px; }
+.aeo-overview-table table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.aeo-overview-table caption {
+  caption-side: top; text-align: left; padding: 0 0 10px;
+  color: var(--muted, #6b6258); font-size: 0.85rem; letter-spacing: 0.01em;
+}
+.aeo-overview-table th,
+.aeo-overview-table td {
+  border-bottom: 1px solid var(--hairline, rgba(90,72,45,0.18));
+  padding: 12px 14px; text-align: left; vertical-align: top; line-height: 1.65;
+}
+.aeo-overview-table th {
+  width: 150px; white-space: nowrap;
+  color: var(--color-primary, #17202a); font-weight: 600;
+  background: var(--color-surface-soft, #f1e7d6);
+}
+.aeo-overview-table td { color: var(--body-text, #3f3a34); }
+.aeo-overview-table tr:last-child th,
+.aeo-overview-table tr:last-child td { border-bottom: 0; }
+
+.aeo-note {
+  margin-top: 14px; font-size: 0.9rem; color: var(--muted, #6b6258);
+}
+.aeo-note a { color: var(--color-accent, #c99a4a); text-decoration: underline; }
+
+/* --- FAQ --- */
+.aeo-faq-section .aeo-faq-group {
+  margin: 32px 0 12px; padding-bottom: 8px;
+  font-size: 0.95rem; letter-spacing: 0.06em; text-transform: none;
+  color: var(--color-accent, #c99a4a);
+  border-bottom: 1px solid var(--hairline-soft, rgba(90,72,45,0.12));
+}
+.aeo-faq-section .aeo-faq-group:first-of-type { margin-top: 8px; }
+
+details.aeo-faq {
+  border: 1px solid var(--hairline, rgba(90,72,45,0.18));
+  border-radius: var(--radius-card, 14px);
+  background: var(--color-card, #fff);
+  margin-bottom: 10px; overflow: hidden;
+}
+details.aeo-faq > summary {
+  cursor: pointer; list-style: none; padding: 16px 46px 16px 18px;
+  position: relative; font-weight: 600; line-height: 1.6;
+  color: var(--color-primary, #17202a);
+}
+details.aeo-faq > summary::-webkit-details-marker { display: none; }
+details.aeo-faq > summary::after {
+  content: ""; position: absolute; right: 20px; top: 50%;
+  width: 9px; height: 9px; margin-top: -6px;
+  border-right: 2px solid var(--color-accent, #c99a4a);
+  border-bottom: 2px solid var(--color-accent, #c99a4a);
+  transform: rotate(45deg); transition: transform 0.18s ease;
+}
+details.aeo-faq[open] > summary::after { transform: rotate(-135deg); margin-top: -2px; }
+details.aeo-faq[open] > summary { background: var(--color-surface, #fffaf1); }
+details.aeo-faq > div { padding: 4px 18px 18px; }
+details.aeo-faq p {
+  margin: 0; line-height: 1.85; color: var(--body-text, #3f3a34); font-size: 0.95rem;
+}
+details.aeo-faq a { color: var(--color-accent, #c99a4a); text-decoration: underline; }
+details.aeo-faq:focus-within { border-color: var(--color-accent, #c99a4a); }
+
+/* --- 모바일 (640px 이하: 표를 2줄 블록으로 재배치해 가로스크롤 제거) ---
+   주의: style.css 의 `.table-wrap table { min-width: 560px }` 를 무력화해야
+   모바일에서 가로스크롤이 사라진다. 아래 선택자 특이도로 덮어쓴다. */
+@media (max-width: 640px) {
+  .aeo-overview-table.table-wrap { overflow-x: visible; }
+  .aeo-overview-table.table-wrap table {
+    min-width: 0; width: 100%; display: block;
+  }
+  .aeo-overview-table.table-wrap tbody,
+  .aeo-overview-table.table-wrap tr,
+  .aeo-overview-table.table-wrap th,
+  .aeo-overview-table.table-wrap td { display: block; width: auto; min-width: 0; }
+  .aeo-overview-table.table-wrap tr {
+    border-bottom: 1px solid var(--hairline, rgba(90,72,45,0.18));
+    padding: 10px 0;
+  }
+  .aeo-overview-table.table-wrap tr:last-child { border-bottom: 0; }
+  .aeo-overview-table.table-wrap th {
+    width: auto; white-space: normal; background: transparent;
+    padding: 0 2px 4px; border-bottom: 0;
+    font-size: 0.8rem; letter-spacing: 0.02em;
+    color: var(--color-accent, #c99a4a);
+  }
+  .aeo-overview-table.table-wrap td {
+    padding: 0 2px; border-bottom: 0;
+    font-size: 0.92rem; line-height: 1.7; word-break: keep-all;
+  }
+  .aeo-overview-table caption { font-size: 0.8rem; }
+
+  details.aeo-faq > summary { padding: 14px 40px 14px 14px; font-size: 0.93rem; word-break: keep-all; }
+  details.aeo-faq > summary::after { right: 16px; }
+  details.aeo-faq > div { padding: 2px 14px 16px; }
+  details.aeo-faq p { font-size: 0.9rem; line-height: 1.8; word-break: keep-all; }
+  .aeo-faq-section .aeo-faq-group { margin: 24px 0 10px; font-size: 0.88rem; }
+}
