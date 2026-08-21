@@ -1,0 +1,23 @@
+{
+  "name": "원삼 센트레빌 퍼스트원",
+  "short_name": "원삼 센트레빌",
+  "description": "용인 원삼 센트레빌 퍼스트원 사업·입지·호실타입·상담 안내",
+  "lang": "ko-KR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
