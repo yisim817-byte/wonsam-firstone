@@ -7,7 +7,7 @@
 - Final domain: https://www.wonsam-firstone.co.kr
 - Base domain: https://wonsam-firstone.co.kr
 - Proposal PDF status: removed from public assets, not restored
-- Representative phone number: issued and in use — `1644-6873`
+- Representative phone number: issued and in use — `1833-3872`
 
 ## Files Checked
 
@@ -209,15 +209,15 @@ Do not change the current phone number until the representative phone number is 
 Positions to update after issuance:
 
 - `index.html:257`
-  - Current value: `<a href="tel:16446873">1644-6873</a>`
+  - Current value: `<a href="tel:18333872">1833-3872</a>`
   - Update both the `tel:` value and the visible text.
 
 - `index.html:283`
-  - Current value: `<p>1644-6873</p>`
+  - Current value: `<p>1833-3872</p>`
   - Update the visible footer phone number.
 
 - `README.md:50`
-  - Current value: `1644-6873`
+  - Current value: `1833-3872`
   - Update the documentation contact number.
 
 ## Proposal PDF Access Follow-up (superseded — see status below)
@@ -250,7 +250,7 @@ Recommended review points (still valid):
 
 - `index.html` and `consultation.html` rebuilt in an Airbnb-style visual language (white canvas, Rausch-red CTA, rounded photo/card grid, pill summary bar). Tokens live under `body.theme-airbnb` in `style.css`.
 - `corporate-report.html` and new `corporate-request.html` rebuilt in a Notion-style document/form language (warm canvas-soft background, blue pill CTA, hairline cards, tables). Tokens live under `body.theme-notion` in `style.css`.
-- General-customer flow is phone-only (`tel:16446873` / `consultation.html`); corporate flow is report + request form (`corporate-report.html` / `corporate-request.html`). No forms are exposed to general customers.
+- General-customer flow is phone-only (`tel:18333872` / `consultation.html`); corporate flow is report + request form (`corporate-report.html` / `corporate-request.html`). No forms are exposed to general customers.
 - `corporate-request.html` originally submitted via `mailto:` — **this was replaced** in the next round by the Supabase + Vercel Functions backend described below. It now submits via `fetch('/api/corporate-request')`, not mailto.
 - The old on-page rent/loan simulator section on `index.html` was removed — it wasn't part of the redefined customer journey and risked implying guaranteed returns.
 - `assets/wonsam-firstone-ad-slide.pdf` and `assets/wonsam-firstone-analysis.pdf` are **not linked from any page** (no direct PDF links per policy). They are currently orphaned files in the repo — needs a decision: convert to an in-page HTML/image reading section, or remove from the repo entirely.
@@ -277,7 +277,7 @@ Recommended review points (still valid):
 Confirmed before starting work: `git fetch origin` + `git pull origin main` showed the local clone already at `origin/main` HEAD, working tree clean, no uncommitted changes to report. Both baseline commits the user asked to verify (`0f6d476…` disclaimer cleanup, `ab672c2…` CTA link fix) are ancestors of HEAD — confirmed via `git merge-base --is-ancestor`. HEAD was actually one commit ahead of what the handoff prompt assumed (`0c810c0`, the SK Hynix hero-wording fix from the immediately preceding turn), so nothing was missed.
 
 ### Current implementation summary
-- **General customers**: phone-only (`tel:16446873`), no forms, via `index.html` hero/CTA-split and `consultation.html`.
+- **General customers**: phone-only (`tel:18333872`), no forms, via `index.html` hero/CTA-split and `consultation.html`.
 - **Corporate customers**: `corporate-report.html` (8-section HTML-only read briefing, no PDF) → `corporate-request.html` (company_name/phone/email required, purpose optional) → `POST /api/corporate-request` → Supabase `corporate_requests` table.
 - **Admin review**: `admin.html` (email + password fields, `noindex`) → `POST /api/admin-requests` with body `{ email, token }` → server requires `email === "yisim817@gmail.com"` and compares `token` against `process.env.ADMIN_TOKEN` via `crypto.timingSafeEqual` → returns the row list only on match.
 - No secrets anywhere in the repo. No `.env` file tracked. No `package.json`/`vercel.json` needed — Vercel auto-detects the two `api/*.js` files as Node serverless functions (confirmed in build logs: `lambdaRuntimeStats: {"nodejs":2}`).
@@ -325,7 +325,7 @@ Three candidate "proposal" PDFs existed outside the repo, in the user's local On
 2. **`원삼센트레빌_기업숙소_제안서_v3_표지최종_수정본.pdf`** (8 pages per PyMuPDF — an earlier file-read tool had reported "142 pages" for this file, which was wrong; PyMuPDF is the authoritative parser here) — this is the one used. Its content and title ("원삼 센트레빌 퍼스트원 · 기업 직원숙소 검토 제안서") match the "기업제안서/기업검토제안서" request exactly, addressed to "총무팀·인사팀·경영지원팀" — this is almost certainly the source the previously-deleted `assets/wonsam-centreville-first-one-company-housing-proposal.pdf` came from.
 3. `원삼_센트레빌_퍼스트원_비전.pdf` (16 pages, "vision" deck) — not used.
 
-Content check before publishing: no third-party PII, no other named companies beyond 원삼 센트레빌 퍼스트원 현장 안내 contact info (`1644-6873`) and location references (SK Hynix, 동부건설 as builder brand) that are already used elsewhere on the live site. Page 7 is a blank "회신 양식" (response form template) with empty fields, not filled-in customer data.
+Content check before publishing: no third-party PII, no other named companies beyond 원삼 센트레빌 퍼스트원 현장 안내 contact info (`1833-3872`) and location references (SK Hynix, 동부건설 as builder brand) that are already used elsewhere on the live site. Page 7 is a blank "회신 양식" (response form template) with empty fields, not filled-in customer data.
 
 ### Policy note the next owner should know
 The proposal's page 6 includes specific pricing figures (평균 분양가 약 2억 2,500만 원, 계약금 10%, 중도금 조건, 청약금 범위) that earlier rounds of this project deliberately kept gated behind "상담 후 개별 안내" (consultation-only). Rendering the actual proposal pages as images necessarily makes that same information visible on the public page now — this is a direct consequence of this round's explicit instruction ("업로드된 기업제안서 원문을 실제로 읽을 수 있게 만든다"), not an oversight. If the account owner wants pricing kept confidential again, the fix is either to drop `page-06.webp` from the viewer or to source a redacted version of that page — flagged in README.md too.
@@ -462,7 +462,7 @@ The user checked the live/preview result of the previous round and reported that
 
 ### index.html changes
 - `hero-actions` reduced from 5 buttons to 2 (사전의향서 접수 primary, 가격 및 잔여호실 문의 secondary) — the other 3 links moved into the new panel below instead of competing for space in one row.
-- New `<section class="hero-cta-panel">` directly after the hero, before `.intel-banner`: a 4-card grid (`.cta-card-grid`, defined as a standalone reusable class, 4 cols → 2 cols ≤960px → 1 col ≤560px) containing 사전의향서 접수 / 기업의향서 접수 / 기업제안서 열람 / a `.phone-cta` card (large representative `tel:16446873` link + 가격 및 잔여호실 문의 button). Each card has its own title + one-line description + button — deliberately not just bare links in a sentence.
+- New `<section class="hero-cta-panel">` directly after the hero, before `.intel-banner`: a 4-card grid (`.cta-card-grid`, defined as a standalone reusable class, 4 cols → 2 cols ≤960px → 1 col ≤560px) containing 사전의향서 접수 / 기업의향서 접수 / 기업제안서 열람 / a `.phone-cta` card (large representative `tel:18333872` link + 가격 및 잔여호실 문의 button). Each card has its own title + one-line description + button — deliberately not just bare links in a sentence.
 - `#overview` section's old 5-card `.overview-grid` (일반상담/기업제안서열람/기업의향서접수/기업자료요청/자료열람) was replaced with a 2-card `.audience-cta-grid` (`.audience-card` / `.audience-card.is-corporate`): "일반 분양 상담" (사전의향서 접수 / 가격 및 잔여호실 문의 / 전화 상담) and "기업 검토 상담" (기업제안서 열람 / 기업의향서 접수 / 기업자료 요청), each with a one-paragraph description of what that audience should do first. This directly addresses the "역할 구분이 더 선명해야 한다" instruction.
 - Top nav (`nav-links`) trimmed to 대시보드/입지수요/수익분석/특화설계/인텔리전스 리포트/기업제안서 (dropped "분양전략", added "기업제안서" → `corporate-report.html` directly) — this is a deliberate change from the previous round's nav, which had "분양전략" instead of "기업제안서". `nav-cta` buttons changed from (상담예약, 기업자료요청) to (의향서 접수 → `pre-interest.html`, 상담예약 → `consultation.html`) — 기업자료요청 was dropped from the nav bar specifically because it's now prominent in the new CTA panel/audience cards, and cramming a 4th button into the nav bar risked the "메뉴가 너무 많아진다" mobile-wrap problem the user warned about. Mobile nav mirrors the same set.
 
@@ -479,7 +479,7 @@ New reusable classes, all under the existing `--primary`/`--accent`/`--bg-soft`/
 - `.cta-card-grid.is-tri` (3-column variant used only on `corporate-report.html`'s hero)
 
 ### Representative phone number (대표번호)
-The public representative number is `1644-6873`, and every phone link should use `tel:16446873`. The static site now includes `contact.js` once per HTML page so visible phone text and `tel:` hrefs are normalized from one shared contact object. If the number changes later, update `contact.js` first, then grep the repo for `1644-6873` and `tel:16446873` to catch documentation or static fallback text.
+The public representative number is `1833-3872`, and every phone link should use `tel:18333872`. The static site now includes `contact.js` once per HTML page so visible phone text and `tel:` hrefs are normalized from one shared contact object. If the number changes later, update `contact.js` first, then grep the repo for `1833-3872` and `tel:18333872` to catch documentation or static fallback text.
 
 ### Verified this round — real browser rendering
 Used the same `wonsam-firstone` launch.json entry (`npx serve`, primary-working-directory `.claude/launch.json`, absolute path arg) as the previous round.
@@ -612,7 +612,7 @@ Claude Code에서 외부 이미지 다운로드 권한 차단으로 현장 이�
 
 ### 연락처 기준
 
-- 공개 화면에는 대표번호 `1644-6873`만 표시한다.
+- 공개 화면에는 대표번호 `1833-3872`만 표시한다.
 - 이름, 휴대폰 번호, 이메일 등 개인정보성 연락처는 홈페이지 공개 화면에 올리지 않는다.
 - `contact.js`는 대표번호 보정 용도로만 유지한다.
 
@@ -720,7 +720,7 @@ Claude Code에서 외부 이미지 다운로드 권한 차단으로 현장 이�
 
 - 의향서 운영 모드: FormSubmit 이메일 접수.
 - 관리자 페이지: Gmail 접수 관리 안내.
-- 홈페이지 연락처 기준: 이종석 대표 / 1644-6873 / 010-3138-1712 / yisim817@gmail.com.
+- 홈페이지 연락처 기준: 이종석 대표 / 1833-3872 / 010-3138-1712 / yisim817@gmail.com.
 - Supabase DB 관리자 기능은 보류.
 
 ### CTA 정리
@@ -781,7 +781,7 @@ index.html이 아닌 페이지에서는 앵커 링크(`#top`, `#consultation-typ
 
 - `pre-interest.html`/`corporate-interest.html`/`corporate-request.html`의 FormSubmit `action`, hidden 필드, 폼 필드 구조 — 헤더만 교체했고 `<main>` 내부는 건드리지 않았다. 교체 후 `grep formsubmit.co`로 3개 폼 모두 액션이 남아있음을 재확인했다.
 - `admin.html` — 이번 라운드의 "적용 대상" 목록에 없어 전혀 손대지 않았다(Gmail 접수 관리 안내, `[hidden]` 버그 수정 상태 그대로).
-- `api/*.js`, Supabase 보류 구조, 대표번호 `1644-6873`/`tel:16446873`, 이메일 `yisim817@gmail.com` — 전부 미변경.
+- `api/*.js`, Supabase 보류 구조, 대표번호 `1833-3872`/`tel:18333872`, 이메일 `yisim817@gmail.com` — 전부 미변경.
 - 고객제안서/기업제안서 PDF 열람 섹션은 이번에도 추가하지 않았다(발송용 자료로 계속 보류).
 
 ### 검증 (실제 브라우저)
@@ -869,7 +869,7 @@ index.html이 아닌 페이지에서는 앵커 링크(`#top`, `#consultation-typ
 
 ### 보호한 기존 기능 (변경하지 않음)
 
-- FormSubmit `action`/hidden 필드, `contact.js`, 대표번호 `1644-6873`/`tel:16446873`, 파일명, 도메인 — 전부 미변경.
+- FormSubmit `action`/hidden 필드, `contact.js`, 대표번호 `1833-3872`/`tel:18333872`, 파일명, 도메인 — 전부 미변경.
 - `admin.html` Gmail 접수 관리 안내, Supabase 보류 구조 — 미변경.
 
 ### 검증
@@ -960,6 +960,6 @@ ADMIN_TOKEN은 사용자만 알고 있어야 하므로, 다음 두 파일의 업
 `git diff --stat`로 아래 항목에 변경이 없음을 재확인했다:
 - `api/corporate-request.js`, `api/interest-request.js`, `api/admin-requests.js`, `api/admin-interest-requests.js` (기존 4개 API 원본)
 - `contact.js`, FormSubmit `action`/hidden 필드
-- 대표번호 `1644-6873`/`tel:16446873`
+- 대표번호 `1833-3872`/`tel:18333872`
 - 기존 이미지/영상 자산, 기존 섹션 내용
 - 기존 nav 항목 순서(끝에 추가만 함)
