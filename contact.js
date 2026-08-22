@@ -17,6 +17,23 @@
   gtag("config", GA4_ID);
 })();
 
+/* ---------- Meta Pixel — HUMANE KOREA 통합 픽셀 ----------
+   픽셀 ID: 2876685346018883
+   contact.js는 전 페이지(10개)에 1회씩 포함되므로 여기서 1회만 로드한다.
+   중복 로드 방지 가드 포함. ------------------------------------ */
+(function () {
+  var PIXEL_ID = "2876685346018883";
+  if (!PIXEL_ID || window.__metaPixelLoaded) return;
+  window.__metaPixelLoaded = true;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,"script","https://connect.facebook.net/en_US/fbevents.js");
+  fbq("init", PIXEL_ID);
+  fbq("track", "PageView");
+})();
+
 window.SITE_CONTACT = {
   REPRESENTATIVE_PHONE: "1833-3872",
   REPRESENTATIVE_TEL: "tel:18333872",
