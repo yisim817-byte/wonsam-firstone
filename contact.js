@@ -1,3 +1,22 @@
+/* ---------- Google Analytics 4 (GA4) ----------
+   측정 ID: G-DLHQVSJBM2  (속성: wonsam-firstone.co.kr)
+   contact.js는 전 페이지(10개)에 1회씩 포함되므로 여기서 1회만 로드한다.
+   중복 로드 방지 가드 포함. ------------------------------------ */
+(function () {
+  var GA4_ID = "G-DLHQVSJBM2";
+  if (!GA4_ID || window.__ga4Loaded) return;
+  window.__ga4Loaded = true;
+  var s = document.createElement("script");
+  s.async = true;
+  s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA4_ID;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag("js", new Date());
+  gtag("config", GA4_ID);
+})();
+
 window.SITE_CONTACT = {
   REPRESENTATIVE_PHONE: "1833-3872",
   REPRESENTATIVE_TEL: "tel:18333872",
