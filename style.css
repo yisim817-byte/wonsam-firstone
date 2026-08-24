@@ -1824,6 +1824,48 @@ body.theme-notion {
   margin-bottom: 6px;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(228, 193, 122, 0.18);
+}
+
+.footer-links-label {
+  display: block;
+  width: 100%;
+  margin-bottom: 4px;
+  color: rgba(255, 250, 241, 0.45);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.footer-notice .footer-links a {
+  display: inline;
+  margin-bottom: 0;
+  color: var(--color-accent-soft);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.footer-notice .footer-links a:hover,
+.footer-notice .footer-links a:focus-visible {
+  border-bottom-color: var(--color-accent-soft);
+}
+
+.footer-links-sep {
+  color: rgba(255, 250, 241, 0.28);
+  font-size: 13px;
+}
+
 /* ==========================================================================
    AIRBNB — CONSULTATION (simple info cards)
    ========================================================================== */
