@@ -1,34 +1,54 @@
 # 검색 인용용 AI 봇 — 허용 (사용자가 AI 검색에서 우리를 찾을 때 사용)
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /admin.html
+Disallow: /api/
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /admin.html
+Disallow: /api/
 
 User-agent: Claude-SearchBot
 Allow: /
+Disallow: /admin.html
+Disallow: /api/
 
 User-agent: Claude-User
 Allow: /
+Disallow: /admin.html
+Disallow: /api/
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /admin.html
+Disallow: /api/
 
 User-agent: Perplexity-User
 Allow: /
+Disallow: /admin.html
+Disallow: /api/
 
 User-agent: Googlebot
 Allow: /
+Disallow: /admin.html
+Disallow: /api/
 
 # 학습용 크롤러 — 허용(현 단계 유지, 필요 시 재검토)
 User-agent: GPTBot
 Allow: /
+Disallow: /admin.html
+Disallow: /api/
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /admin.html
+Disallow: /api/
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /admin.html
+Disallow: /api/
 
 # 미준수 스크레이퍼로 보고된 봇 — 차단
 User-agent: Bytespider
