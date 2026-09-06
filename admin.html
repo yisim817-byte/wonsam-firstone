@@ -28,7 +28,7 @@
           <h1>접수 내역 관리자</h1>
           <p class="doc-hero-lead">
             현재 의향서 접수는 이메일 접수 방식으로 운영 중입니다. 관리자 확인 후
-            Gmail 접수 관리 방법을 확인할 수 있습니다.
+            접수 관리 방법을 확인할 수 있습니다.
           </p>
         </div>
       </section>
@@ -47,7 +47,7 @@
             <button type="submit" class="btn btn-primary btn-block">관리자 확인</button>
             <div id="admin-login-status" class="form-note" role="status" hidden></div>
             <p class="form-note">
-              관리자 이메일은 <code>yisim817@gmail.com</code>만 허용됩니다. 현재 페이지는 이메일 접수 관리 안내만 표시하며, 실제 접수자 개인정보 목록은 노출하지 않습니다.
+              관리자 접수는 인증된 운영 계정으로만 처리합니다. 현재 페이지는 접수 관리 안내만 표시하며, 실제 접수자 개인정보 목록은 노출하지 않습니다.
             </p>
           </form>
 
@@ -66,16 +66,16 @@
               <h3>현재 의향서 접수는 이메일 접수 방식으로 운영 중입니다.</h3>
               <p>
                 개인 사전의향서, 기업 의향서, 기업자료 요청은
-                <a href="mailto:yisim817@gmail.com">yisim817@gmail.com</a>으로 수신됩니다.
+                <span>(로그인·인증된 관리자 메일함)</span>으로 수신됩니다.
               </p>
             </div>
 
             <div class="admin-info-card">
               <h3>관리 방법</h3>
               <ol>
-                <li>Gmail에서 <strong>[원삼 센트레빌]</strong> 제목으로 검색</li>
+                <li>메일함에서 <strong>[원삼 센트레빌]</strong> 제목으로 검색</li>
                 <li>개인 사전의향서 / 기업 의향서 / 기업자료 요청 제목별 분류</li>
-                <li>필요 시 Gmail 라벨을 만들어 관리</li>
+                <li>필요 시 메일 라벨/폴더로 분류 관리</li>
               </ol>
             </div>
 
@@ -90,7 +90,7 @@
             </div>
 
             <div class="admin-link-grid" aria-label="관리자 빠른 링크">
-              <a class="btn btn-primary" href="https://mail.google.com/" target="_blank" rel="noopener">Gmail 열기</a>
+              <a class="btn btn-primary" href="https://mail.google.com/" target="_blank" rel="noopener">메일함 열기</a>
               <a class="btn btn-secondary" href="pre-interest.html">접수 테스트: 개인 사전의향서</a>
               <a class="btn btn-secondary" href="corporate-interest.html">접수 테스트: 기업 의향서</a>
               <a class="btn btn-secondary" href="corporate-request.html">접수 테스트: 기업자료 요청</a>
@@ -121,7 +121,7 @@
       const dashboard = document.querySelector("#admin-dashboard");
       const logoutButton = document.querySelector("#admin-logout");
       const STORAGE_KEY = "wonsam_admin_credentials";
-      const ADMIN_EMAIL = "yisim817@gmail.com";
+      const ADMIN_EMAIL = ""; // personal email removed from public HTML
 
       function showLoginStatus(message, isError) {
         loginStatus.hidden = false;
