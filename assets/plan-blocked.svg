@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">도면 자료 비공개</title>
+  <desc id="desc">시행사 요청에 따라 도면 자료는 비공개 처리되었습니다.</desc>
+  <rect width="1200" height="800" fill="#f4f5f7"/>
+  <rect x="80" y="80" width="1040" height="640" rx="28" fill="#ffffff" stroke="#d6d9de" stroke-width="4"/>
+  <g transform="translate(600 300)" fill="none" stroke="#1f2937" stroke-width="24" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="-105" y="-25" width="210" height="170" rx="24"/>
+    <path d="M-65 -25v-55c0-78 130-78 130 0v55"/>
+  </g>
+  <text x="600" y="515" text-anchor="middle" font-family="Arial, sans-serif" font-size="52" font-weight="700" fill="#111827">도면 자료 비공개</text>
+  <text x="600" y="585" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" fill="#4b5563">시행사 요청에 따라 현재 공개하지 않습니다.</text>
+</svg>
