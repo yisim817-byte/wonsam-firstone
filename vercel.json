@@ -2,6 +2,41 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/assets/images/business-plan/unit-types/:path*",
+      "destination": "/assets/plan-blocked.svg",
+      "permanent": false
+    },
+    {
+      "source": "/assets/images/business-plan/design/design-floor-b1.jpg",
+      "destination": "/assets/plan-blocked.svg",
+      "permanent": false
+    },
+    {
+      "source": "/assets/images/business-plan/design/design-floor-1f.jpg",
+      "destination": "/assets/plan-blocked.svg",
+      "permanent": false
+    },
+    {
+      "source": "/assets/images/business-plan/design/design-floor-2f.jpg",
+      "destination": "/assets/plan-blocked.svg",
+      "permanent": false
+    },
+    {
+      "source": "/assets/images/business-plan/design/design-floor-3f.jpg",
+      "destination": "/assets/plan-blocked.svg",
+      "permanent": false
+    },
+    {
+      "source": "/assets/images/business-plan/design/design-floor-typical.jpg",
+      "destination": "/assets/plan-blocked.svg",
+      "permanent": false
+    },
+    {
+      "source": "/assets/images/business-plan/commercial/commercial-floor-guide.jpg",
+      "destination": "/assets/plan-blocked.svg",
+      "permanent": false
+    },
+    {
       "source": "/index.html",
       "destination": "/",
       "permanent": true
