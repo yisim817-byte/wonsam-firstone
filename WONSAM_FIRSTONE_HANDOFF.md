@@ -259,7 +259,7 @@ Recommended review points (still valid):
 ## 원삼 센트레빌 퍼스트원 현장 안내 Brand Colors + Admin Backend (this round)
 
 - Earlier color-token notes have been superseded by the current 현장 안내 중심 palette. Both `theme-airbnb` and `theme-notion` in `style.css` now share this palette (`--primary` = orange for CTAs, `--accent` = green for labels/tags/checkmarks) instead of Airbnb red / Notion blue. No red or blue remains anywhere in `style.css`.
-- Built a real submission backend instead of mailto: new Supabase project `wonsam-firstone` (ref `imtkbgdrvwmgvolzscxt`) with a `corporate_requests` table (RLS enabled, zero policies — only reachable via the service_role key from server-side code). Current admin lookup requires POST body `{ email, token }`, where `email` must be `yisim817@gmail.com` and `token` is compared with `ADMIN_TOKEN` by the server. `admin.html` is a password-gated page (`noindex`) — no secrets live in any HTML/JS shipped to the browser.
+- Built a real submission backend instead of mailto: new Supabase project `wonsam-firstone` (ref `imtkbgdrvwmgvolzscxt`) with a `corporate_requests` table (RLS enabled, zero policies — only reachable via the service_role key from server-side code). Current admin lookup requires POST body `{ email, token }`, where `email` must be `운영담당 메일(비공개)` and `token` is compared with `ADMIN_TOKEN` by the server. `admin.html` is a password-gated page (`noindex`) — no secrets live in any HTML/JS shipped to the browser.
 - **Action required from the user before this works in production:** add `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `ADMIN_TOKEN` to the Vercel project's Environment Variables (see README.md "기업자료 요청 백엔드" section for exact steps). The service_role key must be copied from the Supabase dashboard directly — it was intentionally never printed in chat or committed to the repo.
 - A separate, isolated Supabase project was created specifically for this (rather than reusing the existing "yisim817-byte's Project" that backs the main 원삼 센트레빌 퍼스트원 현장 안내 site's `site_diagnoses`/`accounts` tables), to avoid mixing wonsam-firstone data with unrelated production data.
 - Did not attempt to convert the 142-page proposal PDF (`원삼센트레빌_기업숙소_제안서_v3_표지최종_수정본.pdf`) into HTML content — `pdftoppm`/`poppler` isn't installed so page images couldn't be rendered, and `pdftotext` output was garbled (embedded font/CID issue). `corporate-report.html`'s hand-written sections already serve the "read-only" requirement; if the client wants the actual proposal book's content reproduced page-by-page, that needs a proper PDF text/image extraction pass done separately.
@@ -279,7 +279,7 @@ Confirmed before starting work: `git fetch origin` + `git pull origin main` show
 ### Current implementation summary
 - **General customers**: phone-only (`tel:18333872`), no forms, via `index.html` hero/CTA-split and `consultation.html`.
 - **Corporate customers**: `corporate-report.html` (8-section HTML-only read briefing, no PDF) → `corporate-request.html` (company_name/phone/email required, purpose optional) → `POST /api/corporate-request` → Supabase `corporate_requests` table.
-- **Admin review**: `admin.html` (email + password fields, `noindex`) → `POST /api/admin-requests` with body `{ email, token }` → server requires `email === "yisim817@gmail.com"` and compares `token` against `process.env.ADMIN_TOKEN` via `crypto.timingSafeEqual` → returns the row list only on match.
+- **Admin review**: `admin.html` (email + password fields, `noindex`) → `POST /api/admin-requests` with body `{ email, token }` → server requires `email === "운영담당 메일(비공개)"` and compares `token` against `process.env.ADMIN_TOKEN` via `crypto.timingSafeEqual` → returns the row list only on match.
 - No secrets anywhere in the repo. No `.env` file tracked. No `package.json`/`vercel.json` needed — Vercel auto-detects the two `api/*.js` files as Node serverless functions (confirmed in build logs: `lambdaRuntimeStats: {"nodejs":2}`).
 
 ### Verified this round (live, on www.wonsam-firstone.co.kr)
@@ -422,7 +422,7 @@ The repo actually lives at `C:\Users\kl\Documents\Codex\2026-07-04\wonsam-firsto
 ### New backend (interest forms)
 - Chose **option B**: one shared endpoint, `api/interest-request.js`, discriminating on `body.type` (`pre_interest` | `corporate_interest`) rather than two separate insert endpoints — less duplication, and it writes to one new table instead of two.
 - New Supabase table `interest_requests` in the same `wonsam-firstone` project (ref `imtkbgdrvwmgvolzscxt`) created via the Supabase MCP `apply_migration` tool: `id uuid pk`, `created_at timestamptz default now()`, `type text check (in pre_interest/corporate_interest)`, `name`, `phone` (not null), `email` (not null), `company_name`, `contact_name`. RLS enabled, **zero policies** — same lockdown pattern as `corporate_requests`, reachable only via `SUPABASE_SERVICE_ROLE_KEY` from server code.
-- `api/admin-interest-requests.js` — admin read endpoint, `POST`, requires body `{ email, token }`; `email` must be `yisim817@gmail.com`, and `token` is compared with `ADMIN_TOKEN` via `crypto.timingSafeEqual`.
+- `api/admin-interest-requests.js` — admin read endpoint, `POST`, requires body `{ email, token }`; `email` must be `운영담당 메일(비공개)`, and `token` is compared with `ADMIN_TOKEN` via `crypto.timingSafeEqual`.
 - `api/corporate-request.js` and `api/admin-requests.js` (protected files) — confirmed **zero changes** this round.
 - Same 3 Vercel env vars (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_TOKEN`) cover the new endpoints too — no new env vars needed since they share the same Supabase project and admin token.
 
@@ -640,9 +640,9 @@ Claude Code에서 외부 이미지 다운로드 권한 차단으로 현장 이�
 
 - 관리자 경로: `/admin.html`
 - 프론트에는 실제 비밀번호를 저장하지 않는다.
-- 관리자 이메일 고정값은 `yisim817@gmail.com`이다.
+- 관리자 이메일 고정값은 `운영담당 메일(비공개)`이다.
 - 관리자 화면에서 입력한 이메일과 비밀번호는 API 호출 시 POST body `{ email, token }`으로 전달된다.
-- 서버 API는 `email === "yisim817@gmail.com"`인지 먼저 확인하고, `token`을 Vercel 환경변수 `ADMIN_TOKEN`과 비교한다.
+- 서버 API는 `email === "운영담당 메일(비공개)"`인지 먼저 확인하고, `token`을 Vercel 환경변수 `ADMIN_TOKEN`과 비교한다.
 - 이메일이 다르거나 토큰이 없거나 틀리면 접수 데이터는 반환하지 않고 401을 반환한다.
 - `ADMIN_TOKEN`은 프론트 코드, 문서, GitHub에 직접 넣지 않는다.
 
@@ -659,7 +659,7 @@ Claude Code에서 외부 이미지 다운로드 권한 차단으로 현장 이�
 - 기업자료 요청 접수 성공 메시지 확인
 - 관리자 잘못된 이메일 접근 거부 확인
 - 관리자 잘못된 비밀번호 접근 거부 확인
-- 관리자 이메일 `yisim817@gmail.com` + 올바른 `ADMIN_TOKEN` 입력 후 3종 접수 목록 표시 확인
+- 관리자 이메일 `운영담당 메일(비공개)` + 올바른 `ADMIN_TOKEN` 입력 후 3종 접수 목록 표시 확인
 - 모바일에서 폼과 관리자 목록 카드 깨짐 없음 확인
 
 ---
@@ -669,10 +669,10 @@ Claude Code에서 외부 이미지 다운로드 권한 차단으로 현장 이�
 ### 현재 운영 모드
 
 - 현재는 Supabase 저장/API 기반 운영을 보류하고, **무환경변수 이메일 접수 모드**로 운영한다.
-- 접수 이메일: `yisim817@gmail.com`
+- 접수 이메일: `운영담당 메일(비공개)`
 - 접수 방식: FormSubmit
-- 개인 사전의향서, 기업 의향서, 기업자료 요청은 모두 `https://formsubmit.co/yisim817@gmail.com`으로 HTML form POST 된다.
-- 첫 FormSubmit 사용 시 `yisim817@gmail.com`으로 활성화 확인 메일이 올 수 있으며, 해당 메일에서 활성화해야 정상 수신된다.
+- 개인 사전의향서, 기업 의향서, 기업자료 요청은 모두 `https://formsubmit.co/운영담당 메일(비공개)`으로 HTML form POST 된다.
+- 첫 FormSubmit 사용 시 `운영담당 메일(비공개)`으로 활성화 확인 메일이 올 수 있으며, 해당 메일에서 활성화해야 정상 수신된다.
 
 ### 변경된 페이지
 
@@ -720,7 +720,7 @@ Claude Code에서 외부 이미지 다운로드 권한 차단으로 현장 이�
 
 - 의향서 운영 모드: FormSubmit 이메일 접수.
 - 관리자 페이지: Gmail 접수 관리 안내.
-- 홈페이지 연락처 기준: 이종석 대표 / 1833-3872 / 010-3138-1712 / yisim817@gmail.com.
+- 홈페이지 연락처 기준: 이종석 대표 / 1833-3872 / 운영담당 휴대전화(비공개) / 운영담당 메일(비공개).
 - Supabase DB 관리자 기능은 보류.
 
 ### CTA 정리
@@ -781,7 +781,7 @@ index.html이 아닌 페이지에서는 앵커 링크(`#top`, `#consultation-typ
 
 - `pre-interest.html`/`corporate-interest.html`/`corporate-request.html`의 FormSubmit `action`, hidden 필드, 폼 필드 구조 — 헤더만 교체했고 `<main>` 내부는 건드리지 않았다. 교체 후 `grep formsubmit.co`로 3개 폼 모두 액션이 남아있음을 재확인했다.
 - `admin.html` — 이번 라운드의 "적용 대상" 목록에 없어 전혀 손대지 않았다(Gmail 접수 관리 안내, `[hidden]` 버그 수정 상태 그대로).
-- `api/*.js`, Supabase 보류 구조, 대표번호 `1833-3872`/`tel:18333872`, 이메일 `yisim817@gmail.com` — 전부 미변경.
+- `api/*.js`, Supabase 보류 구조, 대표번호 `1833-3872`/`tel:18333872`, 이메일 `운영담당 메일(비공개)` — 전부 미변경.
 - 고객제안서/기업제안서 PDF 열람 섹션은 이번에도 추가하지 않았다(발송용 자료로 계속 보류).
 
 ### 검증 (실제 브라우저)
@@ -887,7 +887,7 @@ index.html이 아닌 페이지에서는 앵커 링크(`#top`, `#consultation-typ
 
 ### Supabase 실사용 여부 분석 (핵심 발견)
 
-`corporate_requests`, `interest_requests` 두 테이블 모두 **행(row) 0개**였고, `pre-interest.html`/`corporate-interest.html`/`corporate-request.html`은 2026-07-07 라운드부터 FormSubmit(`https://formsubmit.co/yisim817@gmail.com`)으로 직접 제출되며 `script.js`에 `/api/*` fetch 호출이 전혀 없다. `admin.html`도 두 관리자 조회 API를 호출하지 않고 Gmail 검색 안내만 보여준다. 즉 **Supabase는 이번 라운드 시작 시점에 실제 운영에서 전혀 쓰이지 않고 있었다** — `WONSAM_FIRSTONE_HANDOFF.md`의 "2026-07-07 긴급 운영 전환" 절에 이미 기록되어 있던 의도된 상태였다(이번에 새로 발견한 문제가 아님). Supabase 프로젝트 상태는 점검 시점 기준 `ACTIVE_HEALTHY`였다(아직 실제로 일시중지되지는 않음).
+`corporate_requests`, `interest_requests` 두 테이블 모두 **행(row) 0개**였고, `pre-interest.html`/`corporate-interest.html`/`corporate-request.html`은 2026-07-07 라운드부터 FormSubmit(`https://formsubmit.co/운영담당 메일(비공개)`)으로 직접 제출되며 `script.js`에 `/api/*` fetch 호출이 전혀 없다. `admin.html`도 두 관리자 조회 API를 호출하지 않고 Gmail 검색 안내만 보여준다. 즉 **Supabase는 이번 라운드 시작 시점에 실제 운영에서 전혀 쓰이지 않고 있었다** — `WONSAM_FIRSTONE_HANDOFF.md`의 "2026-07-07 긴급 운영 전환" 절에 이미 기록되어 있던 의도된 상태였다(이번에 새로 발견한 문제가 아님). Supabase 프로젝트 상태는 점검 시점 기준 `ACTIVE_HEALTHY`였다(아직 실제로 일시중지되지는 않음).
 
 ### 적용한 대응
 

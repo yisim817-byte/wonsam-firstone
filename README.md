@@ -63,7 +63,7 @@ README.md
 - **호실타입 섹션 신규 추가**: `index.html`에 `#unit-types` 섹션을 추가해 사업계획서 분양면적표 기준 오피스텔 A~F 타입별 실사용/전용/공급/계약면적과 실수를 카드+표로 정리했습니다. 하단에 "면적 및 평면은 사업계획서 기준 참고자료이며, 인허가 및 모집공고 확정 시 일부 변경될 수 있습니다" 고지문을 넣었습니다. 새 이미지/PDF는 추가하지 않았습니다.
 - **버그 수정**: `.unit-type-grid` 카드 내부 표(`min-width: 560px`)가 flex 자식의 암묵적 `min-width: auto` 때문에 그리드의 `minmax(0, 1fr)`을 무시하고 페이지 전체를 가로로 넘치게 만드는 문제가 있어, `.unit-type-grid .commerce-focus-card`와 `.table-wrap`에 `min-width: 0`을 추가해 표가 카드 내부에서만 가로 스크롤되도록 고쳤습니다.
 - 고객제안서/기업제안서 PDF 열람 섹션은 이번 라운드에서도 추가하지 않았습니다(발송용 자료로 계속 보류). `href="#"`, 다운로드 버튼도 추가하지 않았습니다.
-- 의향서 접수(FormSubmit 이메일 접수), `admin.html`(Gmail 접수 관리 안내), Supabase 보류 구조, 대표번호 `1833-3872`, 이메일 `yisim817@gmail.com`은 이번 라운드에서 변경하지 않았습니다.
+- 의향서 접수(FormSubmit 이메일 접수), `admin.html`(Gmail 접수 관리 안내), Supabase 보류 구조, 대표번호 `1833-3872`, 이메일 `운영담당 메일(비공개)`은 이번 라운드에서 변경하지 않았습니다.
 
 ## Vercel 배포 방법
 
@@ -96,7 +96,7 @@ README.md
 구조:
 - `corporate-request.html` → `fetch('/api/corporate-request')`로 JSON 전송
 - `api/corporate-request.js` (Vercel Serverless Function) → Supabase `corporate_requests` 테이블에 저장
-- `admin.html` → 관리자 이메일(`yisim817@gmail.com`)과 관리자 비밀번호 입력 후 관리자 API를 통해 접수 목록 조회
+- `admin.html` → 관리자 이메일(`운영담당 메일(비공개)`)과 관리자 비밀번호 입력 후 관리자 API를 통해 접수 목록 조회
 - Supabase 프로젝트: `wonsam-firstone` (project ref: `imtkbgdrvwmgvolzscxt`, region: ap-northeast-2), 테이블 `corporate_requests`는 RLS 활성화 + 정책 없음 → anon/publishable 키로는 절대 조회·삽입 불가하며, service_role 키를 쓰는 서버 함수에서만 접근 가능합니다.
 
 ### 배포 전 필수 설정 (Vercel 환경변수)
@@ -113,7 +113,7 @@ Vercel 프로젝트(`wonsam-firstone`) → Settings → Environment Variables에
 
 ### 관리자 확인 방법
 
-`https://wonsam-firstone.co.kr/admin.html` 접속 → 관리자 이메일 `yisim817@gmail.com`과 `ADMIN_TOKEN`으로 설정한 비밀번호 입력 → 접수일시/기업명/전화번호/이메일/요청목적 목록 확인. 인증값은 세션 스토리지에만 저장되며 탭을 닫으면 초기화됩니다. 이 페이지는 `noindex`로 검색엔진 노출을 차단했습니다.
+`https://wonsam-firstone.co.kr/admin.html` 접속 → 관리자 이메일 `운영담당 메일(비공개)`과 `ADMIN_TOKEN`으로 설정한 비밀번호 입력 → 접수일시/기업명/전화번호/이메일/요청목적 목록 확인. 인증값은 세션 스토리지에만 저장되며 탭을 닫으면 초기화됩니다. 이 페이지는 `noindex`로 검색엔진 노출을 차단했습니다.
 
 ### 정적 사이트 한계 (반드시 인지할 것)
 
@@ -319,9 +319,9 @@ wonsam-firstone.co.kr
 
 - 관리자 경로: `/admin.html`
 - 관리자 페이지는 관리자 이메일과 관리자 비밀번호를 함께 입력해야 목록을 조회합니다.
-- 관리자 이메일 고정값: `yisim817@gmail.com`
+- 관리자 이메일 고정값: `운영담당 메일(비공개)`
 - 관리자 비밀번호: Vercel 환경변수 `ADMIN_TOKEN` 값
-- 서버 API는 POST body의 `email`이 `yisim817@gmail.com`인지 확인하고, `token`을 Vercel 환경변수 `ADMIN_TOKEN`과 비교합니다.
+- 서버 API는 POST body의 `email`이 `운영담당 메일(비공개)`인지 확인하고, `token`을 Vercel 환경변수 `ADMIN_TOKEN`과 비교합니다.
 - 일반 방문자는 접수 목록을 볼 수 없고, API 직접 호출 시 토큰이 없거나 틀리면 401을 반환합니다.
 - 관리자 화면에서 개인 사전의향서, 기업의향서, 기업자료 요청을 통합 목록으로 조회하고 유형 필터와 검색을 사용할 수 있습니다.
 - 관리자 이메일은 코드에 고정되어도 되지만, `ADMIN_TOKEN`은 절대 코드나 문서에 직접 넣지 않습니다.
@@ -341,20 +341,20 @@ wonsam-firstone.co.kr
 - `corporate-request.html`에서 기업자료 요청 접수 성공 메시지 확인
 - `/api/admin-requests`와 `/api/admin-interest-requests`가 인증값 없이 401을 반환하는지 확인
 - `/admin.html`에서 잘못된 이메일 또는 잘못된 비밀번호 입력 시 "관리자 인증에 실패했습니다."가 표시되는지 확인
-- `/admin.html`에서 `yisim817@gmail.com`과 올바른 `ADMIN_TOKEN` 입력 후 3종 접수 목록이 최신순으로 표시되는지 확인
+- `/admin.html`에서 `운영담당 메일(비공개)`과 올바른 `ADMIN_TOKEN` 입력 후 3종 접수 목록이 최신순으로 표시되는지 확인
 - 모바일에서 폼과 관리자 카드 목록이 깨지지 않는지 확인
 
 ## 2026-07-07 긴급 운영 전환: 무환경변수 이메일 접수 모드
 
 현재 운영 모드: **무환경변수 이메일 접수 모드**
 
-- 접수 이메일: `yisim817@gmail.com`
+- 접수 이메일: `운영담당 메일(비공개)`
 - 접수 방식: `FormSubmit`을 통해 개인 사전의향서, 기업 의향서, 기업자료 요청이 이메일로 전달됩니다.
-- 개인 사전의향서: `pre-interest.html` → `https://formsubmit.co/yisim817@gmail.com`
-- 기업 의향서: `corporate-interest.html` → `https://formsubmit.co/yisim817@gmail.com`
-- 기업자료 요청: `corporate-request.html` → `https://formsubmit.co/yisim817@gmail.com`
+- 개인 사전의향서: `pre-interest.html` → `https://formsubmit.co/운영담당 메일(비공개)`
+- 기업 의향서: `corporate-interest.html` → `https://formsubmit.co/운영담당 메일(비공개)`
+- 기업자료 요청: `corporate-request.html` → `https://formsubmit.co/운영담당 메일(비공개)`
 - 기존 Supabase API 파일은 삭제하지 않았으며, 현재 실사용 폼에서는 호출하지 않습니다.
-- 첫 FormSubmit 사용 시 `yisim817@gmail.com`으로 활성화 확인 메일이 올 수 있습니다. 해당 메일에서 활성화를 완료해야 접수가 정상 전달됩니다.
+- 첫 FormSubmit 사용 시 `운영담당 메일(비공개)`으로 활성화 확인 메일이 올 수 있습니다. 해당 메일에서 활성화를 완료해야 접수가 정상 전달됩니다.
 
 ### 관리자 페이지
 
@@ -379,7 +379,7 @@ DB 저장 모드로 다시 전환하려면 아래 Vercel 환경변수를 Product
 - `corporate-report.html`에는 기업 담당자가 볼 수 있는 근린생활시설 검토 포인트를 추가했습니다.
 - `intelligence-report.html`에는 상업용지 희소성 분석과 근린생활시설 배후수요 검토 섹션을 보강했습니다.
 - 의향서 운영 모드는 FormSubmit 이메일 접수이며, 관리자 페이지는 Gmail 접수 관리 안내 방식입니다.
-- 홈페이지 연락처 기준은 `이종석 대표 / 1833-3872 / 010-3138-1712 / yisim817@gmail.com / www.wonsam-firstone.co.kr`입니다.
+- 홈페이지 연락처 기준은 `이종석 대표 / 1833-3872 / 운영담당 휴대전화(비공개) / 운영담당 메일(비공개) / www.wonsam-firstone.co.kr`입니다.
 - Supabase DB 관리자 기능은 보류 상태입니다.
 
 ### CTA 노출 정리
@@ -439,7 +439,7 @@ DB 저장 모드로 다시 전환하려면 아래 Vercel 환경변수를 Product
 
 `wonsam-firstone` Supabase 프로젝트(ref `imtkbgdrvwmgvolzscxt`)가 7일 이상 활동 부족으로 일시중지 안내를 받았습니다. 점검 결과 **현재 이 프로젝트는 실제 운영에서 전혀 사용되지 않고 있었습니다**:
 
-- `pre-interest.html`/`corporate-interest.html`/`corporate-request.html`은 2026-07-07 라운드부터 `https://formsubmit.co/yisim817@gmail.com`으로 직접 제출되는 이메일 접수 방식으로 운영 중이며, `script.js`에는 `/api/*` fetch 호출이 없습니다.
+- `pre-interest.html`/`corporate-interest.html`/`corporate-request.html`은 2026-07-07 라운드부터 `https://formsubmit.co/운영담당 메일(비공개)`으로 직접 제출되는 이메일 접수 방식으로 운영 중이며, `script.js`에는 `/api/*` fetch 호출이 없습니다.
 - `admin.html`도 `/api/admin-requests`/`/api/admin-interest-requests`를 호출하지 않고 Gmail 검색 안내만 표시합니다.
 - `corporate_requests`, `interest_requests` 두 테이블 모두 행(row)이 0개였습니다.
 - 즉 Supabase가 일시중지되어도 현재 라이브 사이트의 어떤 기능도 깨지지 않는 상태였습니다.
@@ -470,7 +470,7 @@ DB 저장 모드로 다시 전환하려면 아래 Vercel 환경변수를 Product
 - 새 자료를 공개로 게시하면 같은 카테고리의 기존 게시본은 자동으로 `is_published=false`로 전환됩니다(카테고리별 대표 게시본 1개 원칙). 이전 버전은 삭제되지 않고 관리자 화면에서 비공개 상태로 남아 다시 공개 전환하거나 완전히 삭제할 수 있습니다.
 
 **관리자 업로드 (`admin.html` 하단 "광고홍보자료 관리")**
-- 기존 관리자 로그인(이메일 `yisim817@gmail.com` + `ADMIN_TOKEN`)을 그대로 재사용합니다. 다만 새 관리 API들은 매 요청마다 실제 `ADMIN_TOKEN` 값을 서버에서 검증하므로(`crypto.timingSafeEqual`), 로그인 화면에 올바른 비밀번호를 입력해야 업로드·삭제 등이 정상 동작합니다 (기존 관리자 대시보드 진입 자체는 이메일만 확인하는 느슨한 방식이 그대로 남아 있어, 잘못된 비밀번호로도 대시보드 화면 자체는 보이지만 광고홍보자료 관리 기능만 401로 실패합니다 — 기존 다른 섹션의 동작은 전혀 바꾸지 않았습니다).
+- 기존 관리자 로그인(이메일 `운영담당 메일(비공개)` + `ADMIN_TOKEN`)을 그대로 재사용합니다. 다만 새 관리 API들은 매 요청마다 실제 `ADMIN_TOKEN` 값을 서버에서 검증하므로(`crypto.timingSafeEqual`), 로그인 화면에 올바른 비밀번호를 입력해야 업로드·삭제 등이 정상 동작합니다 (기존 관리자 대시보드 진입 자체는 이메일만 확인하는 느슨한 방식이 그대로 남아 있어, 잘못된 비밀번호로도 대시보드 화면 자체는 보이지만 광고홍보자료 관리 기능만 401로 실패합니다 — 기존 다른 섹션의 동작은 전혀 바꾸지 않았습니다).
 - 업로드 시 제목/설명 입력 후 파일(PDF 권장, PPT/PPTX 가능)을 선택하면 됩니다. PDF는 그대로 저장되고, PPT/PPTX는 서버에서 CloudConvert API로 PDF 변환을 시도합니다.
 - 공개/비공개 전환, 삭제, 미리보기(새 창)가 각 자료 카드에 있습니다.
 - 파일 확장자와 실제 파일 시그니처(매직 바이트: `%PDF-`, ZIP, OLE)를 함께 검사해 확장자를 속인 업로드를 차단합니다.
