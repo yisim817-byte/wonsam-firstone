@@ -222,7 +222,7 @@
         viewerTitle.textContent = info.title;
 
         try {
-          const loadingTask = pdfjsLib.getDocument(viewUrl);
+          const loadingTask = pdfjsLib.getDocument({ url: viewUrl, isEvalSupported: false });
           pdfDoc = await loadingTask.promise;
           totalPagesLabel.textContent = String(pdfDoc.numPages);
           zoomIndex = 0;
