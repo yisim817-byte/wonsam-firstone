@@ -37,6 +37,7 @@
   font-size: 0.95rem; letter-spacing: 0.06em; text-transform: none;
   color: var(--color-accent, #c99a4a);
   border-bottom: 1px solid var(--hairline-soft, rgba(90,72,45,0.12));
+  font-weight: 700; line-height: 1.4;
 }
 .aeo-faq-section .aeo-faq-group:first-of-type { margin-top: 8px; }
 
@@ -51,6 +52,7 @@ details.aeo-faq > summary {
   position: relative; font-weight: 600; line-height: 1.6;
   color: var(--color-primary, #17202a);
 }
+details.aeo-faq > summary > h3.aeo-faq-q { display: inline; margin: 0; font: inherit; color: inherit; letter-spacing: inherit; }
 details.aeo-faq > summary::-webkit-details-marker { display: none; }
 details.aeo-faq > summary::after {
   content: ""; position: absolute; right: 20px; top: 50%;
