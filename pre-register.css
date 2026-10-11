@@ -835,3 +835,107 @@
     animation: none;
   }
 }
+
+/* ---------- 홈 히어로: 대표번호 옆 사전고객등록 버튼 ---------- */
+.prereg-hero-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 8px 16px 8px 10px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f6dd9e 0%, #e2bd6a 55%, #c99a4a 100%);
+  color: #14110b !important;
+  font-family: inherit;
+  line-height: 1.2;
+  text-align: left;
+  text-decoration: none !important;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 0 rgba(240, 211, 151, 0.7);
+  animation: prereg-hero-pulse 2.4s ease-out infinite;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.prereg-hero-cta:hover,
+.prereg-hero-cta:focus-visible {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+.prereg-hero-cta:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+.prereg-hero-cta__chip {
+  flex: none;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: #14110b;
+  color: #f6dd9e;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+.prereg-hero-cta__text {
+  display: flex;
+  flex-direction: column;
+}
+.prereg-hero-cta__text small {
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.8;
+}
+.prereg-hero-cta__text strong {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+.prereg-hero-cta__go {
+  margin-left: auto;
+  padding-left: 12px;
+  border-left: 1px solid rgba(20, 17, 11, 0.25);
+  font-size: 14px;
+  font-weight: 900;
+}
+.prereg-hero-cta__go::after {
+  content: " \203A";
+}
+@keyframes prereg-hero-pulse {
+  0% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 0 rgba(240, 211, 151, 0.65); }
+  70% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 14px rgba(240, 211, 151, 0); }
+  100% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 0 rgba(240, 211, 151, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prereg-hero-cta { animation: none; }
+}
+
+/* firstone: 영상 히어로 좌하단 "분양문의 1833-3872" 와 한 줄 */
+.prereg-hero-row {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 24px;
+}
+.prereg-hero-row .hero-video__contact-badge {
+  position: static;
+}
+.prereg-hero-row .prereg-hero-cta {
+  min-height: 64px;
+}
+@media (max-width: 640px) {
+  .prereg-hero-row {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .prereg-hero-row .prereg-hero-cta {
+    min-height: 58px;
+  }
+}
