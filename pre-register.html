@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>사전고객등록 이벤트 | 가칭 SK원삼 센트레빌 퍼스트원</title>
-  <meta name="description" content="가칭 SK원삼 센트레빌 퍼스트원 사전고객등록 안내. 등록 고객에게 분양일정을 순차 안내하며, 사전고객등록 후 계약 시 백화점상품권 30만원을 증정합니다(세부 조건 상담 시 안내). 개인·법인 모두 등록할 수 있습니다." />
+  <meta name="description" content="가칭 SK원삼 센트레빌 퍼스트원 사전고객등록 안내. 등록 고객에게 분양일정을 순차 안내하며, 사전고객등록 후 계약 시 백화점상품권 30만원을 계약 후 7일 이내 지급합니다. 개인·법인 모두 등록할 수 있습니다." />
   <link rel="canonical" href="https://www.wonsam-firstone.co.kr/pre-register.html" />
   <meta name="robots" content="index, follow" />
   <meta property="og:type" content="website" />
@@ -48,7 +48,7 @@
         <p class="prereg-hero__gift">
           <span>사전고객등록 후 계약 시</span>
           <strong>백화점상품권 30만원 증정</strong>
-          <small>등록만으로는 지급되지 않으며, 지급 조건·시기는 분양 상담 시 안내됩니다.</small>
+          <small>분양계약 체결 후 7일 이내 지급 · 등록만으로는 지급되지 않습니다.</small>
         </p>
       </div>
     </section>
@@ -66,7 +66,7 @@
           <li class="prereg-benefit">
             <span class="prereg-benefit__no">02</span>
             <h3>백화점상품권 30만원</h3>
-            <p>사전고객등록 후 분양계약을 체결하시면 백화점상품권 30만원을 증정합니다.</p>
+            <p>사전고객등록 후 분양계약을 체결하시면 계약일로부터 7일 이내 백화점상품권 30만원을 지급합니다.</p>
           </li>
           <li class="prereg-benefit">
             <span class="prereg-benefit__no">03</span>
@@ -84,9 +84,9 @@
           <p class="prereg-section__lead">견본주택 공개 전 단계라 타입·호실은 받지 않고 연락처만 등록합니다.</p>
           <ol class="prereg-steps">
             <li><strong>개인 또는 법인 선택 후 정보 입력</strong><span>개인: 이름·생년월일·휴대폰번호 / 법인: 회사명·담당자 이름·전화번호</span></li>
-            <li><strong>등록완료 메시지 수신</strong><span>접수번호와 함께 등록완료 안내를 보내드립니다.</span></li>
+            <li><strong>등록 완료 확인</strong><span>화면에 접수번호가 표시됩니다. 계약 시 등록 확인에 쓰이니 보관해 주세요.</span></li>
             <li><strong>분양일정 안내</strong><span>견본주택 공개·분양 일정이 확정되면 순차 안내드립니다.</span></li>
-            <li><strong>상담·계약 시 이벤트 적용</strong><span>사전고객등록 내역을 확인한 뒤 상품권 지급 조건을 안내드립니다.</span></li>
+            <li><strong>계약 후 7일 이내 상품권 지급</strong><span>사전고객등록 내역을 확인한 뒤 계약일로부터 7일 이내 지급합니다.</span></li>
           </ol>
           <p class="prereg-aside-note">
             타입·호실 선택과 분양 조건은 견본주택 공개 후 상담으로 안내됩니다.
@@ -97,7 +97,7 @@
         <div class="prereg-card">
           <h2 id="prereg-form-title">사전고객 등록</h2>
 
-          <form id="prereg-form" novalidate>
+          <form id="prereg-form" data-source="wonsam-firstone.co.kr" novalidate>
             <fieldset class="prereg-segment">
               <legend>등록 구분</legend>
               <label><input type="radio" name="type" value="personal" checked /><span>개인</span></label>
@@ -137,7 +137,7 @@
               <label class="prereg-field">
                 <span class="prereg-field__label">담당자 전화번호 <b aria-hidden="true">*</b></span>
                 <input name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="13" placeholder="010-0000-0000" required />
-                <span class="prereg-field__hint">휴대폰번호를 입력하시면 등록완료 메시지를 받으실 수 있습니다.</span>
+                <span class="prereg-field__hint">유선·휴대폰 모두 가능합니다.</span>
                 <span class="prereg-field-error" aria-live="polite"></span>
               </label>
             </div>
@@ -156,9 +156,9 @@
                   <summary>내용 보기</summary>
                   <table>
                     <tr><th scope="row">수집 항목</th><td>개인: 이름, 생년월일, 휴대폰번호<br />법인: 회사명, 담당자 이름, 담당자 전화번호</td></tr>
-                    <tr><th scope="row">이용 목적</th><td>사전고객 등록 확인, 등록완료 안내, 분양일정 안내, 계약 시 이벤트 대상 확인</td></tr>
+                    <tr><th scope="row">이용 목적</th><td>사전고객 등록 확인, 분양일정 안내, 계약 시 이벤트 대상 확인</td></tr>
                     <tr><th scope="row">보유 기간</th><td>분양 일정 안내 및 이벤트 종료 시까지. 동의 철회 시 지체 없이 파기합니다.</td></tr>
-                    <tr><th scope="row">처리 위탁</th><td>접수 전달: Resend(이메일), 카카오(카카오톡) / 등록완료 메시지: SOLAPI(문자·알림톡)</td></tr>
+                    <tr><th scope="row">처리 위탁</th><td>운영 담당자에게 접수 내용 전달: FormSubmit(이메일 전달), 카카오(운영자 카카오톡 알림 사용 시)</td></tr>
                   </table>
                   <p>동의를 거부할 수 있으며, 거부 시 사전고객 등록이 제한됩니다. <a href="privacy.html">개인정보처리방침</a></p>
                 </details>
@@ -184,8 +184,8 @@
             <div class="prereg-done__icon" aria-hidden="true">&#10003;</div>
             <h3>사전고객등록이 완료되었습니다</h3>
             <span class="prereg-done__receipt">접수번호 <span data-prereg-receipt></span></span>
-            <p data-prereg-notice></p>
-            <p>분양 일정이 확정되면 순차 안내드리겠습니다.</p>
+            <p>접수번호를 보관해 주세요. 계약 시 사전고객등록 확인에 사용됩니다.</p>
+            <p>분양 일정이 확정되면 등록하신 연락처로 순차 안내드리겠습니다.</p>
             <div class="prereg-done__actions">
               <a class="prereg-btn" href="/">홈으로</a>
               <a class="prereg-btn prereg-btn--solid" href="tel:18333872">분양문의 1833-3872</a>
@@ -200,8 +200,8 @@
         <h2 id="prereg-terms-title">이벤트 유의사항</h2>
         <ul class="prereg-terms">
           <li>사전고객등록은 청약 또는 분양계약 신청이 아니며, <strong>등록만으로 상품권이 지급되지 않습니다.</strong></li>
-          <li>백화점상품권 30만원은 사전고객등록 후 분양계약을 체결한 고객에게 증정되며, 계약 전 등록 내역이 확인되어야 합니다.</li>
-          <li>지급 대상·시기·방법 등 세부 조건은 분양 상담 시 안내되며, 사업 주체 사정에 따라 이벤트 내용이 변경되거나 조기 종료될 수 있습니다.</li>
+          <li>백화점상품권 30만원은 사전고객등록 후 분양계약을 체결한 고객에게 <strong>계약 체결일로부터 7일 이내</strong> 지급되며, 계약 전 등록 내역이 확인되어야 합니다.</li>
+          <li>지급 방법 등 세부 기준은 분양 상담 시 안내되며, 사업 주체 사정에 따라 이벤트 내용이 변경되거나 조기 종료될 수 있습니다.</li>
           <li>관련 법령에 따라 제세공과금이 발생하는 경우 별도로 안내드립니다.</li>
           <li>분양가, 공급 조건, 일정 등은 확정 전 자료이며 입주자 모집공고와 분양계약서 기준으로 최종 확인해 주시기 바랍니다.</li>
           <li>분양일정 안내 수신은 분양문의 1833-3872로 언제든 철회할 수 있습니다.</li>

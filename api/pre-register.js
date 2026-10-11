@@ -1,8 +1,9 @@
-// 사전고객등록 접수 (Vercel Function)
-// - 운영자 알림: 이메일(Resend) + 카카오톡 "나에게 보내기"(Kakao REST API)
-// - 고객 등록완료 메시지: SOLAPI 알림톡(템플릿 설정 시) 또는 문자(SMS/LMS)
-// 별도 DB가 없으므로 운영자 알림 채널 중 1개 이상이 수신되어야 접수 성공으로 응답한다.
-// 비밀값·수신처는 모두 Vercel 환경변수에만 둔다. 설정 방법은 PRE_REGISTER_SETUP.md 참고.
+// 사전고객등록 운영자 추가 알림 (Vercel Function)
+// 접수 원본은 브라우저가 FormSubmit 으로 운영자 이메일에 보낸다(pre-register.js).
+// 이 함수는 그 뒤에 호출되며, 설정된 경우에만 운영자에게 추가 알림을 보낸다.
+// - 카카오톡 "나에게 보내기"(KAKAO_REST_API_KEY, KAKAO_REFRESH_TOKEN)
+// - 이메일(Resend: RESEND_API_KEY, PREREG_EMAIL_TO)
+// 고객 발신은 보류 중이다. 설정 방법은 PRE_REGISTER_SETUP.md 참고.
 const crypto = require("crypto");
 
 const SITE = {
@@ -227,71 +228,6 @@ async function sendOwnerKakao(entry, receipt, at) {
   }
 }
 
-function solapiAuth(apiKey, apiSecret) {
-  const date = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
-  const salt = crypto.randomBytes(16).toString("hex");
-  const signature = crypto.createHmac("sha256", apiSecret).update(date + salt).digest("hex");
-  return `HMAC-SHA256 apiKey=${apiKey}, date=${date}, salt=${salt}, signature=${signature}`;
-}
-
-function customerText(entry, receipt) {
-  return [
-    `[${SITE.label}] 사전고객등록 완료`,
-    "",
-    `${displayName(entry)}님, 사전고객등록이 완료되었습니다.`,
-    `접수번호: ${receipt}`,
-    "",
-    "분양 일정이 확정되면 등록하신 연락처로 순차 안내드리겠습니다.",
-    "백화점상품권 이벤트의 지급 조건은 분양 상담 시 안내드립니다.",
-    "",
-    `문의 ${SITE.phone}`,
-  ].join("\n");
-}
-
-async function sendCustomerMessage(entry, receipt) {
-  const apiKey = process.env.SOLAPI_API_KEY?.trim();
-  const apiSecret = process.env.SOLAPI_API_SECRET?.trim();
-  const sender = digits(process.env.SOLAPI_SENDER || "");
-  if (!apiKey || !apiSecret || !sender) return { status: "not_configured" };
-  if (!/^01[016789]\d{7,8}$/.test(entry.phone)) return { status: "skipped", detail: "landline" };
-
-  const pfId = process.env.SOLAPI_PFID?.trim();
-  const templateId = process.env.SOLAPI_TEMPLATE_ID?.trim();
-  const message = { to: entry.phone, from: sender };
-  if (pfId && templateId) {
-    // 알림톡: 승인된 템플릿 변수만 채운다. 실패 시 SOLAPI 가 문자로 대체 발송한다.
-    message.type = "ATA";
-    message.kakaoOptions = {
-      pfId,
-      templateId,
-      disableSms: false,
-      variables: {
-        "#{고객명}": displayName(entry),
-        "#{현장명}": SITE.label,
-        "#{접수번호}": receipt,
-        "#{대표번호}": SITE.phone,
-      },
-    };
-  } else {
-    message.text = customerText(entry, receipt);
-    message.subject = `[${SITE.label}] 사전고객등록 완료`.slice(0, 40);
-  }
-  try {
-    const res = await fetch("https://api.solapi.com/messages/v4/send-many/detail", {
-      method: "POST",
-      headers: { authorization: solapiAuth(apiKey, apiSecret), "content-type": "application/json" },
-      body: JSON.stringify({ messages: [message] }),
-      signal: AbortSignal.timeout(8000),
-    });
-    if (!res.ok) return { status: "failed", detail: `solapi http ${res.status}` };
-    const body = await res.json().catch(() => null);
-    if (body?.failedMessageList?.length) return { status: "failed", detail: "solapi rejected" };
-    return { status: "sent" };
-  } catch {
-    return { status: "failed", detail: "solapi network" };
-  }
-}
-
 module.exports = async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
   if (req.method !== "POST") {
@@ -315,7 +251,7 @@ module.exports = async function handler(req, res) {
 
   // 자동 등록 차단: 숨김 필드가 채워졌거나 화면 진입 후 2초 안에 제출되면 저장·발송 없이 종료한다.
   if (clean(body.website, 100) || Number(body.elapsed) < 2000) {
-    res.status(200).json({ ok: true, receiptNo: receiptNo(), customerNotice: "skipped" });
+    res.status(200).json({ ok: true, receiptNo: receiptNo(), skipped: true });
     return;
   }
 
@@ -326,24 +262,10 @@ module.exports = async function handler(req, res) {
   }
 
   const { entry } = parsed;
-  const receipt = receiptNo();
+  const receipt = /^PR\d{6}-[0-9A-F]{6}$/.test(body.receiptNo) ? body.receiptNo : receiptNo();
   const at = kstStamp();
 
   const [email, kakao] = await Promise.all([sendOwnerEmail(entry, receipt, at), sendOwnerKakao(entry, receipt, at)]);
-  const delivered = email.status === "sent" || kakao.status === "sent";
   console.log("pre-register owner", JSON.stringify({ receipt, type: entry.type, email, kakao }));
-
-  if (!delivered) {
-    const configured = email.status !== "not_configured" || kakao.status !== "not_configured";
-    res.status(configured ? 502 : 503).json({
-      ok: false,
-      error: `지금은 온라인 등록을 처리하지 못했습니다. 분양문의 ${SITE.phone}로 연락 주시면 바로 등록해 드립니다.`,
-    });
-    return;
-  }
-
-  const customer = await sendCustomerMessage(entry, receipt);
-  console.log("pre-register customer", JSON.stringify({ receipt, customer }));
-
-  res.status(200).json({ ok: true, receiptNo: receipt, customerNotice: customer.status });
+  res.status(200).json({ ok: true, receiptNo: receipt, email: email.status, kakao: kakao.status });
 };

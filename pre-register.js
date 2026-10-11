@@ -1,6 +1,9 @@
-/* 사전고객등록 폼: 개인/법인 전환, 입력 검증, /api/pre-register 전송 */
+/* 사전고객등록 폼: 개인/법인 전환, 입력 검증, 운영자 이메일 접수(FormSubmit) */
 (function () {
   "use strict";
+
+  // 접수 원본: 운영자 이메일. 환경변수 없이 동작하며, 사이트별 첫 접수 때 FormSubmit 활성화 메일을 1회 승인해야 한다.
+  var OWNER_ENDPOINT = "https://formsubmit.co/ajax/yisim817@gmail.com";
 
   var form = document.getElementById("prereg-form");
   if (!form) return;
@@ -167,23 +170,38 @@
       return;
     }
 
-    var payload = {
-      type: type,
-      phone: onlyDigits(value("phone")),
-      consentPrivacy: checked("consentPrivacy"),
-      consentNotice: checked("consentNotice"),
-      website: (form.querySelector('[name="website"]') || {}).value || "",
-      elapsed: Date.now() - openedAt,
-      page: window.location.pathname,
-      referrer: document.referrer ? document.referrer.slice(0, 300) : "",
-      utm: utmString(),
+    var source = form.getAttribute("data-source") || window.location.hostname;
+    var receipt = makeReceipt();
+    var phone = onlyDigits(value("phone"));
+    var mail = {
+      _subject: "[사전고객등록·" + source + "] " + (type === "corporate" ? "법인 · " + value("company") + " " + value("manager") : "개인 · " + value("name")) + " (" + receipt + ")",
+      _template: "table",
+      _captcha: "false",
+      접수번호: receipt,
+      접수시각: kstStamp(),
+      사이트: source,
+      구분: type === "corporate" ? "법인" : "개인",
     };
     if (type === "personal") {
-      payload.name = value("name");
-      payload.birth = onlyDigits(value("birth"));
+      var birth = onlyDigits(value("birth"));
+      mail.이름 = value("name");
+      mail.생년월일 = birth.slice(0, 4) + "-" + birth.slice(4, 6) + "-" + birth.slice(6, 8);
+      mail.휴대폰 = formatPhone(phone);
     } else {
-      payload.company = value("company");
-      payload.manager = value("manager");
+      mail.회사명 = value("company");
+      mail.담당자 = value("manager");
+      mail.전화번호 = formatPhone(phone);
+    }
+    mail.동의 = "개인정보 수집·이용(필수), 분양일정 안내 수신(필수)";
+    var utm = utmString();
+    if (utm) mail.유입 = utm;
+    if (document.referrer) mail.이전페이지 = document.referrer.slice(0, 300);
+
+    // 자동 등록 차단: 숨김 필드가 채워졌거나 화면 진입 2초 안 제출이면 보내지 않는다.
+    var honey = (form.querySelector('[name="website"]') || {}).value || "";
+    if (honey || Date.now() - openedAt < 2000) {
+      showDone({ receiptNo: receipt }, type);
+      return;
     }
 
     submitBtn.disabled = true;
@@ -191,27 +209,27 @@
     var label = submitBtn.textContent;
     submitBtn.textContent = "등록 중…";
 
-    fetch("/api/pre-register", {
+    fetch(OWNER_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(mail),
     })
       .then(function (res) {
         return res.json().catch(function () {
-          return { ok: false };
+          return {};
         });
       })
       .then(function (result) {
-        if (!result || !result.ok) {
-          if (result && result.field) fieldError(result.field, result.error);
-          else showStatus((result && result.error) || "등록하지 못했습니다. 잠시 후 다시 시도하시거나 전화로 문의해 주세요.", true);
+        if (!result || String(result.success) !== "true") {
+          showStatus(FAIL_TEXT, true);
           return;
         }
+        notifyExtra(type, receipt, phone, utm);
         track("pre_register_complete", { register_type: type });
-        showDone(result, type);
+        showDone({ receiptNo: receipt }, type);
       })
       .catch(function () {
-        showStatus("네트워크 오류로 등록하지 못했습니다. 잠시 후 다시 시도하시거나 전화로 문의해 주세요.", true);
+        showStatus(FAIL_TEXT, true);
       })
       .then(function () {
         submitBtn.disabled = false;
@@ -220,19 +238,55 @@
       });
   });
 
+  var FAIL_TEXT = "지금은 온라인 등록을 처리하지 못했습니다. 분양문의 1833-3872로 연락 주시면 바로 등록해 드립니다.";
+
+  function makeReceipt() {
+    var d = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(2, 10).replace(/-/g, "");
+    var bytes = new Uint8Array(3);
+    (window.crypto || window.msCrypto).getRandomValues(bytes);
+    var hex = Array.prototype.map.call(bytes, function (b) {
+      return ("0" + b.toString(16)).slice(-2);
+    }).join("").toUpperCase();
+    return "PR" + d + "-" + hex;
+  }
+
+  function kstStamp() {
+    return new Date(Date.now() + 9 * 3600 * 1000).toISOString().replace("T", " ").slice(0, 16) + " (KST)";
+  }
+
+  // 카카오톡 등 추가 운영자 알림(설정된 경우에만 서버가 발송). 실패해도 접수에는 영향이 없다.
+  function notifyExtra(type, receipt, phone, utm) {
+    var payload = {
+      type: type,
+      receiptNo: receipt,
+      phone: phone,
+      consentPrivacy: true,
+      consentNotice: true,
+      elapsed: Date.now() - openedAt,
+      page: window.location.pathname,
+      utm: utm,
+    };
+    if (type === "personal") {
+      payload.name = value("name");
+      payload.birth = onlyDigits(value("birth"));
+    } else {
+      payload.company = value("company");
+      payload.manager = value("manager");
+    }
+    try {
+      fetch("/api/pre-register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        keepalive: true,
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
   function showDone(result, type) {
     if (!doneBox) return;
     var receipt = doneBox.querySelector("[data-prereg-receipt]");
-    var notice = doneBox.querySelector("[data-prereg-notice]");
     if (receipt) receipt.textContent = result.receiptNo || "";
-    if (notice) {
-      notice.textContent =
-        result.customerNotice === "sent"
-          ? "등록하신 연락처로 등록완료 메시지를 보내드렸습니다."
-          : type === "corporate"
-            ? "담당자 연락처로 등록 확인 연락을 드리겠습니다."
-            : "등록완료 메시지는 확인 후 순차 발송됩니다.";
-    }
     form.hidden = true;
     doneBox.hidden = false;
     doneBox.focus();
