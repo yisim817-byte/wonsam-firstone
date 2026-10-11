@@ -3,7 +3,7 @@
   "use strict";
 
   // 접수 원본: 운영자 이메일. 환경변수 없이 동작하며, 사이트별 첫 접수 때 FormSubmit 활성화 메일을 1회 승인해야 한다.
-  var OWNER_ENDPOINT = "https://formsubmit.co/ajax/yisim817@gmail.com";
+  var OWNER_ENDPOINT = "https://formsubmit.co/ajax/17a3126b25f4b5bf5caa58cb46bca74d"; // 운영자 Gmail 의 FormSubmit 별칭(주소 비노출)
 
   var form = document.getElementById("prereg-form");
   if (!form) return;
