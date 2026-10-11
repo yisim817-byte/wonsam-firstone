@@ -1,6 +1,6 @@
 # 사전고객등록 이벤트 운영 안내
 
-갱신 2026-10-11. 세 사이트(wonsam-firstone.co.kr · skwonsam.site · 용인원삼.kr)에 같은 구조로 들어가 있다.
+갱신 2026-10-11. 운영 반영 2026-10-11. 세 사이트(wonsam-firstone.co.kr · skwonsam.site · 용인원삼.kr)에 같은 구조로 들어가 있다.
 
 ## 1. 현재 운영 방식 (대표 지시 2026-10-11)
 
@@ -17,7 +17,6 @@
 | `pre-register.js` | 개인/법인 전환, 검증, FormSubmit 으로 운영자 이메일 접수, 접수번호 표시 |
 | `pre-register-popup.js` | 홈(index.html) 이벤트 팝업. "오늘 하루 보지 않기"는 방문자 브라우저에만 저장 |
 | `pre-register.css` | 배너·팝업·등록 페이지 스타일 |
-| `api/pre-register.js` | 선택: 운영자 카카오톡(나에게 보내기)·Resend 이메일 추가 알림. 환경변수가 없으면 아무것도 보내지 않음 |
 
 수집 항목: 개인(이름·생년월일·휴대폰), 법인(회사명·담당자 이름·전화번호). 필수 동의 2개.
 
@@ -37,17 +36,10 @@ FormSubmit 은 **새 폼 주소마다 첫 접수 때 활성화 메일**을 보�
 
 Gmail 필터: 제목 `사전고객등록` 으로 라벨을 걸면 사이트별 분류가 쉽다. 휴대폰 Gmail 앱 알림을 켜 두면 즉시 확인할 수 있다.
 
-## 5. 카카오톡 알림 (나중에 켤 때)
+## 5. 카카오톡 알림
 
-아크원 사이트의 알림 설정은 텔레그램·문자용이며 카카오톡 "나에게 보내기"가 아니다. 다른 Vercel 프로젝트의 비밀값은 열람·복사할 수 없어 재사용도 불가하다.
-카카오톡으로 받으려면 대표 카카오 계정으로 1회 로그인·동의가 필요하다.
-
-1. developers.kakao.com → 앱 추가 → REST API 키 확인.
-2. 카카오 로그인 ON, Redirect URI 등록, 동의항목 "카카오톡 메시지 전송(talk_message)" 사용.
-3. `https://kauth.kakao.com/oauth/authorize?client_id={REST_API_KEY}&redirect_uri={Redirect URI}&response_type=code&scope=talk_message` 로 동의 → 주소창 `code` 로 토큰 발급:
-   `curl -X POST https://kauth.kakao.com/oauth/token -d grant_type=authorization_code -d client_id={REST_API_KEY} -d redirect_uri={Redirect URI} -d code={code}`
-4. 세 Vercel 프로젝트에 `KAKAO_REST_API_KEY`, `KAKAO_REFRESH_TOKEN`(Sensitive) 입력 → 재배포.
-5. 리프레시 토큰은 약 2개월. 알림 끝에 `※ 카카오 토큰 갱신 필요` 가 붙으면 3~4번 반복.
+사용하지 않는다(대표 결정 2026-10-11: 이메일 수신으로 충분). 필요해지면 대표 카카오 계정 1회 로그인으로 "나에게 보내기"를 붙일 수 있다.
+아크원의 알림 설정은 텔레그램·문자용이며, 다른 Vercel 프로젝트 비밀값은 열람·복사가 불가해 재사용할 수 없다.
 
 ## 6. 고객 발신 재개 시
 

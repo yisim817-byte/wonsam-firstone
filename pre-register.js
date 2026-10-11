@@ -224,7 +224,6 @@
           showStatus(FAIL_TEXT, true);
           return;
         }
-        notifyExtra(type, receipt, phone, utm);
         track("pre_register_complete", { register_type: type });
         showDone({ receiptNo: receipt }, type);
       })
@@ -252,35 +251,6 @@
 
   function kstStamp() {
     return new Date(Date.now() + 9 * 3600 * 1000).toISOString().replace("T", " ").slice(0, 16) + " (KST)";
-  }
-
-  // 카카오톡 등 추가 운영자 알림(설정된 경우에만 서버가 발송). 실패해도 접수에는 영향이 없다.
-  function notifyExtra(type, receipt, phone, utm) {
-    var payload = {
-      type: type,
-      receiptNo: receipt,
-      phone: phone,
-      consentPrivacy: true,
-      consentNotice: true,
-      elapsed: Date.now() - openedAt,
-      page: window.location.pathname,
-      utm: utm,
-    };
-    if (type === "personal") {
-      payload.name = value("name");
-      payload.birth = onlyDigits(value("birth"));
-    } else {
-      payload.company = value("company");
-      payload.manager = value("manager");
-    }
-    try {
-      fetch("/api/pre-register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-        keepalive: true,
-      }).catch(function () {});
-    } catch (e) {}
   }
 
   function showDone(result, type) {
