@@ -3,7 +3,7 @@
   "use strict";
 
   // 접수 원본: 운영자 이메일. 환경변수 없이 동작하며, 사이트별 첫 접수 때 FormSubmit 활성화 메일을 1회 승인해야 한다.
-  var OWNER_ENDPOINT = "https://formsubmit.co/ajax/17a3126b25f4b5bf5caa58cb46bca74d"; // 운영자 Gmail 의 FormSubmit 별칭(주소 비노출)
+  var OWNER_ENDPOINT = "https://formsubmit.co/ajax/yisim817@gmail.com";
 
   var form = document.getElementById("prereg-form");
   if (!form) return;
@@ -209,10 +209,14 @@
     var label = submitBtn.textContent;
     submitBtn.textContent = "등록 중…";
 
+    // FormSubmit 응답이 늦어도 화면이 멈추지 않도록 25초에서 끊고 전화 안내를 띄운다.
+    var controller = window.AbortController ? new AbortController() : null;
+    var timer = controller ? window.setTimeout(function () { controller.abort(); }, 25000) : null;
     fetch(OWNER_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify(mail),
+      signal: controller ? controller.signal : undefined,
     })
       .then(function (res) {
         return res.json().catch(function () {
@@ -231,6 +235,7 @@
         showStatus(FAIL_TEXT, true);
       })
       .then(function () {
+        if (timer) window.clearTimeout(timer);
         submitBtn.disabled = false;
         submitBtn.removeAttribute("aria-busy");
         submitBtn.textContent = label;
