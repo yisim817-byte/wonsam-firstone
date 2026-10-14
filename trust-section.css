@@ -1,14 +1,14 @@
-.humane-trust-section {
+.site-trust-section {
   background: #f6f4f1;
   padding: 72px 20px 80px;
 }
 
-.humane-trust-inner {
+.site-trust-inner {
   width: min(1120px, 100%);
   margin: 0 auto;
 }
 
-.humane-trust-section h2 {
+.site-trust-section h2 {
   margin: 0;
   color: #263548;
   text-align: center;
@@ -18,7 +18,7 @@
   letter-spacing: -0.035em;
 }
 
-.humane-trust-accent {
+.site-trust-accent {
   display: block;
   width: 44px;
   height: 3px;
@@ -26,12 +26,12 @@
   background: #d47a3a;
 }
 
-.humane-trust-list {
+.site-trust-list {
   display: grid;
   gap: 12px;
 }
 
-.humane-trust-list p {
+.site-trust-list p {
   margin: 0;
   padding: 20px 28px;
   border-left: 4px solid #d47a3a;
@@ -46,15 +46,15 @@
 }
 
 @media (max-width: 640px) {
-  .humane-trust-section {
+  .site-trust-section {
     padding: 52px 16px 58px;
   }
 
-  .humane-trust-accent {
+  .site-trust-accent {
     margin-bottom: 24px;
   }
 
-  .humane-trust-list p {
+  .site-trust-list p {
     padding: 18px;
     font-size: 0.93rem;
     line-height: 1.7;
