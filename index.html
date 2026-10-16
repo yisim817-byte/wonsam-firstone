@@ -412,17 +412,20 @@
     </nav>
 
     <main id="top">
-      <section class="hero hero-video" aria-label="가칭 SK원삼 센트레빌 퍼스트원 메인 영상">
-        <video
-          class="hero-video__media"
-          src="assets/videos/wonsam-main-hero-copywriting.mp4"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-          aria-hidden="true"
-        ></video>
+      <section class="hero hero-video" aria-label="가칭 SK원삼 센트레빌 퍼스트원 메인 장면">
+        <!-- 홈 히어로 자동재생 영상은 방문마다 대용량을 받으므로 정지 이미지로 바꿨다. 영상 파일은 삭제하지 않고 참조만 제거했다. -->
+        <picture class="hero-video__media">
+          <source media="(max-width: 900px)" srcset="assets/images/hero/wonsam-hero-still-900.webp" type="image/webp" width="900" height="506">
+          <img
+            class="hero-video__media"
+            src="assets/images/hero/wonsam-hero-still.webp"
+            width="1832"
+            height="1030"
+            alt="용인 반도체클러스터 정문 앞 조감과 최초의 프리미엄 오피스텔 원삼 센트레빌 퍼스트원 문구가 있는 히어로 장면"
+            fetchpriority="high"
+            decoding="async"
+          >
+        </picture>
         <div class="hero-video__overlay" aria-hidden="true"></div>
         <div class="container hero-video__content">
           <h1 class="visually-hidden">가칭 <span class="brand-sk">SK</span>원삼 센트레빌 퍼스트원</h1>
