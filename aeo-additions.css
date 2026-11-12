@@ -105,3 +105,11 @@ details.aeo-faq:focus-within { border-color: var(--color-accent, #c99a4a); }
   details.aeo-faq p { font-size: 0.9rem; line-height: 1.8; word-break: keep-all; }
   .aeo-faq-section .aeo-faq-group { margin: 24px 0 10px; font-size: 0.88rem; }
 }
+
+/* WO-0 (2026-11-12) wonsam-firstone.co.kr — 모바일 표 캡션 세로쓰기 · 흐린 글자 수정 */
+@media (max-width: 640px) {
+  .aeo-overview-table.table-wrap caption { display: block; width: auto; text-align: left; }
+  .aeo-overview-table.table-wrap th { color: var(--color-primary, #17202a); }
+}
+.aeo-note a,
+details.aeo-faq a { color: #7d5f2e; }
