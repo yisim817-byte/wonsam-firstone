@@ -1,0 +1,83 @@
+/* WO-1b (2026-11-12) 원삼 공통 디자인 토큰 — A안: 흑백·회색 + 브라스 1색 / wonsam-firstone.co.kr */
+
+/* 0. 공통 토큰 (용인원삼.kr ws-theme.css와 동일) */
+:root {
+  --ws-ink: #0e1726;
+  --ws-ink-soft: #1a2436;
+  --ws-text: #3a4150;
+  --ws-muted: #5f6672;
+  --ws-bg: #ffffff;
+  --ws-surface: #f4f3f0;
+  --ws-line: #e2e0db;
+  --ws-point: #8a6a36;
+  --ws-point-deep: #6f552b;
+  --ws-font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --ws-radius: 8px;
+}
+
+/* 1. 기존 색·서체 변수를 공통 토큰으로 연결 */
+body.theme-airbnb {
+  --color-bg: var(--ws-surface);
+  --color-surface: var(--ws-bg);
+  --color-surface-soft: var(--ws-surface);
+  --color-card: var(--ws-bg);
+  --color-text: var(--ws-ink);
+  --color-muted: var(--ws-muted);
+  --color-primary: var(--ws-ink);
+  --color-primary-soft: var(--ws-ink-soft);
+  --color-accent: var(--ws-point);
+  --color-accent-soft: var(--ws-line);
+  --color-border: var(--ws-line);
+  --bg: var(--ws-surface);
+  --bg-soft: var(--ws-bg);
+  --bg-strong: var(--ws-surface);
+  --ink: var(--ws-ink);
+  --body-text: var(--ws-text);
+  --muted: var(--ws-muted);
+  --muted-soft: var(--ws-muted);
+  --hairline: var(--ws-line);
+  --hairline-soft: var(--ws-line);
+  --primary: var(--ws-ink);
+  --primary-active: var(--ws-point);
+  --primary-soft: var(--ws-surface);
+  --accent: var(--ws-point);
+  --on-primary: #ffffff;
+  font-family: var(--ws-font);
+}
+
+/* 2. 직접 지정된 색 정리 */
+body.theme-airbnb .top-nav { background: rgba(255, 255, 255, 0.94); }
+body.theme-airbnb .brand-sk { color: inherit; }
+body.theme-airbnb .hero-video__contact-badge { color: #fff; background: rgba(14, 23, 38, 0.86); border-color: rgba(255, 255, 255, 0.4); }
+body.theme-airbnb .hero-choice-card { border-color: rgba(255, 255, 255, 0.22); }
+body.theme-airbnb .zoom-badge { border-color: rgba(255, 255, 255, 0.4); }
+body.theme-airbnb .site-footer p,
+body.theme-airbnb .site-footer a { color: rgba(255, 255, 255, 0.78); }
+body.theme-airbnb .site-footer a[href^="tel:"] { color: #fff; }
+body.theme-airbnb .site-footer { border-top-color: rgba(255, 255, 255, 0.16); }
+body.theme-airbnb .site-footer strong { color: #fff; }
+body.theme-airbnb .footer-links { border-top-color: rgba(255, 255, 255, 0.12); }
+body.theme-airbnb .footer-links-label { color: rgba(255, 255, 255, 0.5); }
+body.theme-airbnb .footer-links-sep { color: rgba(255, 255, 255, 0.3); }
+body.theme-airbnb .aeo-note a,
+body.theme-airbnb details.aeo-faq a { color: var(--ws-point); }
+
+/* 2-1. 신뢰 안내 섹션 */
+body.theme-airbnb .site-trust-section { background: var(--ws-surface); }
+body.theme-airbnb .site-trust-section h2 { color: var(--ws-ink); }
+body.theme-airbnb .site-trust-accent { background: var(--ws-point); }
+body.theme-airbnb .site-trust-list p { border-left-color: var(--ws-line); border-radius: var(--ws-radius); background: var(--ws-bg); box-shadow: none; color: var(--ws-text); }
+
+/* 2-2. 히어로 사전등록 이벤트 버튼 — 금색 그라데이션·깜빡임 제거 */
+body.theme-airbnb .prereg-hero-cta { background: var(--ws-point); color: #fff !important; box-shadow: none; animation: none; border-radius: var(--ws-radius); }
+body.theme-airbnb .prereg-hero-cta__chip { background: rgba(255, 255, 255, 0.18); color: #fff; }
+body.theme-airbnb .prereg-hero-cta__go { border-left-color: rgba(255, 255, 255, 0.35); }
+
+/* 2-3. 사전등록 팝업 */
+body.theme-airbnb .prereg-pop__head { background: var(--ws-ink); }
+body.theme-airbnb .prereg-pop__chip { background: var(--ws-point); color: #fff; }
+body.theme-airbnb .prereg-pop__gift strong { color: #fff; }
+body.theme-airbnb .prereg-pop__body li::before { color: var(--ws-point); }
+body.theme-airbnb .prereg-pop__cta { background: var(--ws-point); color: #fff; border-radius: var(--ws-radius); }
+body.theme-airbnb .prereg-pop__note { color: var(--ws-muted); }
+body.theme-airbnb .prereg-pop__foot button { background: var(--ws-surface); color: var(--ws-text); }
