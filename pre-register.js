@@ -230,6 +230,7 @@
         }
         track("pre_register_complete", { register_type: type });
         showDone({ receiptNo: receipt }, type);
+        sendCompleteSms(type, receipt, source, phone, type === "corporate" ? mail.담당자 : mail.이름);
       })
       .catch(function () {
         showStatus(FAIL_TEXT, true);
@@ -243,6 +244,36 @@
   });
 
   var FAIL_TEXT = "지금은 온라인 등록을 처리하지 못했습니다. 분양문의 1833-3872로 연락 주시면 바로 등록해 드립니다.";
+
+  // 이메일 접수가 성공한 뒤에만 1회 호출한다. 문자 성공·실패와 관계없이 완료 화면은 그대로 둔다.
+  var smsSent = {};
+  function sendCompleteSms(type, receipt, source, phone, name) {
+    if (smsSent[receipt]) return;
+    smsSent[receipt] = true;
+    try {
+      fetch("/api/prereg-sms", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: type,
+          name: name || "",
+          phone: phone,
+          receipt: receipt,
+          site: source,
+        }),
+        keepalive: true,
+      })
+        .then(function (res) {
+          return res.json().catch(function () {
+            return {};
+          });
+        })
+        .then(function (result) {
+          if (result && result.sms === "sent") track("pre_register_sms_sent", { register_type: type });
+        })
+        .catch(function () {});
+    } catch (e) {}
+  }
 
   function makeReceipt() {
     var d = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(2, 10).replace(/-/g, "");
