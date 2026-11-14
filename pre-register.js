@@ -105,7 +105,7 @@
       if (!/^0\d{8,10}$/.test(phone)) return ["phone", "담당자 전화번호를 확인해 주세요."];
     }
     if (!checked("consentPrivacy")) return ["consentPrivacy", "개인정보 수집·이용에 동의해 주세요."];
-    if (!checked("consentNotice")) return ["consentNotice", "분양일정 안내 수신에 동의해 주세요."];
+    if (!checked("consentNotice")) return ["consentNotice", "재가동 및 분양일정 안내 수신에 동의해 주세요."];
     return null;
   }
 
@@ -192,7 +192,7 @@
       mail.담당자 = value("manager");
       mail.전화번호 = formatPhone(phone);
     }
-    mail.동의 = "개인정보 수집·이용(필수), 분양일정 안내 수신(필수)";
+    mail.동의 = "개인정보 수집·이용(필수), 재가동 및 분양일정 안내 수신(필수)";
     var utm = utmString();
     if (utm) mail.유입 = utm;
     if (document.referrer) mail.이전페이지 = document.referrer.slice(0, 300);
